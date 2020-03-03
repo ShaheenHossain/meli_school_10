@@ -53,21 +53,5 @@
             <field name="domain_force">['|',('school_id','=',False),('school_id.member_ids.user_id','=',user.id)]</field>
             <field name="groups" eval="[(4, ref('school.group_school_teacher'))]"/>
         </record>
-
-        <record id="student_leave_request_access" model="ir.rule">
-            <field name="name"> AAM Student Leave access</field>
-            <field name="model_id" ref="model_studentleave_request"/>
-            <field name="global" eval="True"/>
-            <field name="domain_force">[('student_id.school_id.id','=',user.campus.id)]</field>
-            <field name="groups" eval="[(4, ref('school.group_school_aam'))]"/>
-        </record>
-
-        <record id="student_leave_request_access_by_GM" model="ir.rule">
-            <field name="name"> GM Student Leave access</field>
-            <field name="model_id" ref="model_studentleave_request"/>
-            <field name="global" eval="True"/>
-            <field name="domain_force">[('student_id.school_id.id','=',user.campus.id)]</field>
-            <field name="groups" eval="[(4, ref('school.group_school_gm'))]"/>
-        </record>
     </data>
 </odoo>

@@ -15,6 +15,7 @@ class student_leave_request_inherited(models.Model):
 
 	@api.depends('student_id')
 	def _get_student_leaves(self):
+		print self.student_id.gender,'------------------'
 		if self.student_id:
 			rec=self.env['studentleave.request'].search([('student_id','=',self.student_id.name),('state','=','approve')])
 			obj=self.env['standard.semester'].search([('name','=',self.student_id.semester_id.name)])

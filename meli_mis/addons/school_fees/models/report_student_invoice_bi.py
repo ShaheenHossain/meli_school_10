@@ -25,6 +25,3 @@ class ReportStudentPayslip(models.AbstractModel):
         }
         render_model = 'school_fees.student_invoice_bi'
         return self.env['report'].render(render_model, docargs)
-
-
-

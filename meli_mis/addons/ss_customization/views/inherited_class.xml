@@ -71,20 +71,6 @@
 					</field>
 				</page>
                 <page string="Exam History">
-                    <field name="oyd_history" attrs="{'invisible':[('code','!=','DEL')]}">
-                        <tree>
-                        <field name="name"/>
-                        <field name="f_name"/>
-                        <field name="written"/>
-                        <field name="oral"/>
-                        <field name="total"/>
-                        <field name="percentage"/>
-                        <field name="grade"/>
-                        <field name="result"/>
-                        
-                    </tree>
-                        
-                    </field>
                     <field name="exam_history" attrs="{'invisible':[('code','!=','TYD')]}">
                         <tree>
                         <field name="s_name"/>

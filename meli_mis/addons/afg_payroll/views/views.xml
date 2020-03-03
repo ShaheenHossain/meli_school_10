@@ -26,12 +26,16 @@
           <header>
             <!-- <button string="Compute Sheet" type="object" name="get_all_data" class="oe_highlight"/> -->
 
-            <button name="conformation_paysip" type="object" string="Confirm" states='draft'/>
+            <button name="conformation_paysip" type="object" string="Confirm" states='draft' class="oe_highlight"/>
            
-            <button name="get_all_data" type="object" string="Compute Sheet" states='draft'/>
+            <button name="get_all_data" type="object" string="Compute Sheet" states='draft' class="oe_highlight"/>
+
+            <button name="SalaryPaymentAction" type="object" string="Validate" states="done" class="oe_highlight"/>
+
             <button name="compute_sheet" type="object" string="Refund" states='done'/>
+
             <button name="cancel" type="object" string="Cancel" states="draft"/>
-           <field name="state" readonly="1" statusbar_visible="draft,done" widget="statusbar"/>
+           <field name="state" readonly="1" statusbar_visible=" draft, verify, done, paid" widget="statusbar"/>
           
           </header>
           <sheet>
@@ -198,96 +202,6 @@
             </field>
         </record>
 
-<record model="ir.ui.view" id="teacher_payroll_tree_view">
-      <field name="name">Employee Payroll Tree</field>
-      <field name="model">teacher.payroll</field>
-      <field name="arch" type="xml">
-        <tree>
-            <field name="employee_id"/>
-            <field name="mobile"/>
-            <field name="email"/>
-            <field name="campus"/>
-            <field name="department"/>
-            <field name="designation"/>
-            <field name="date_of_join"/>
-        </tree>
-      </field>
-    </record>
-
-   <record id="teacher_payroll_form" model="ir.ui.view">
-      <field name="name">Teacher Payroll Form</field>
-      <field name="model">teacher.payroll</field>
-      <field name="arch" type="xml">
-        <form>
-           <header>
-            <!-- <button string="Compute Sheet" type="object" name="get_all_data" class="oe_highlight"/> -->
-
-            <button name="conformation_paysip" type="object" string="Confirm" states='draft'/>
-           
-            <button name="get_all_data" type="object" string="Compute Sheet" states='draft'/>
-            <button name="compute_sheet" type="object" string="Refund" states='done'/>
-            <button name="cancel" type="object" string="Cancel" states="draft"/>
-           <field name="state" readonly="1" statusbar_visible="draft,done" widget="statusbar"/>
-          
-          </header>
-          <sheet>
-            <div class="oe_title">
-                <label for="employee_id" class="oe_edit_only" />
-                <h1><field name="employee_id" placeholder="Teacher" domain="[('state','=','draft')]" options="{'no_create_edit': True,'no_open':True}"/></h1>
-            </div>
-            <group>
-              <group>
-                <label for="date_from" string="Period"/>
-                  <div>
-                      <field name="start_date" class="oe_inline"/> - <field name="end_date" class="oe_inline"/>
-                  </div>
-                  <field name="email"/>
-                  <field name="mobile"/>
-                  <field name="date_of_join"/>
-                  <!-- <field name="number"/> -->
-              </group>
-              <group>
-                  <field name="campus"/>
-                  <!-- <field name="contract_id"/> -->
-                  <field name="department"/>
-                  <field name="designation"/>
-                  
-              </group>
-            </group>
-           <group>
-            <group string="Worked Days">
-                <field name="days_of_month"/>
-                <field name="absent"/>
-                <field name="days_worked"/>
-                <field name="per_day_hours"/>
-                <field name="leaves_remaining"/>
-                <field name="overtime"/>
-              </group>
-              <group string="Salary Details">
-                <field name="base_salary"/>
-                <field name="lop"/>
-                <field name="bonus"/>
-                <field name="net_pay"/>
-                <field name="tax"/>
-                <field name="advance_salary"/>
-                <field name="security_deposite"/>
-                <field name="other_deductions"/>
-              </group>
-              <group>
-                <h2> Payable Salary : <field name="salary_payable" class= "oe_inline" readonly="1"/></h2>
-              </group>
-
-            </group>
-          </sheet>
-        </form>
-      </field>
-    </record>
-   <record model="ir.actions.act_window" id="teacher_payroll_action">
-    <field name="name">Teacher Payslips</field>
-    <field name="res_model">teacher.payroll</field>
-    <field name="view_mode">tree,form</field>
-  </record>
-
  
     <menuitem  
             id="hr_payroll_afg_payslip_batches" 
@@ -300,12 +214,6 @@
       sequence="1"
       groups="group_afg_payroll_user,group_afg_payroll_manager_approve,group_afg_payroll_hr_user,group_afg_payroll_ceo_approve"
       action="employee_payroll_action1"/>
-    <menuitem 
-      name="Teacher Payslips" 
-      id="teacher_payslip_menuitem" 
-      parent="hr_payroll_afg_payslip_batches" 
-      sequence="2"
-      action="teacher_payroll_action"/>
 
 
     <menuitem

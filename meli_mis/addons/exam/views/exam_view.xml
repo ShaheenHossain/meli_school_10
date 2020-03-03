@@ -15,19 +15,19 @@
 
         <!-- Inherited Form View Of Student -->
 
-        <record id="view_student_student_form3" model="ir.ui.view">
+        <!-- <record id="view_student_student_form2" model="ir.ui.view">
             <field name="name">student.student.form</field>
             <field name="model">student.student</field>
-            <field name="inherit_id" ref="school.view_student_student_form_2"/>
+            <field name="inherit_id" ref="school.view_student_student_form_1"/>
             <field name="arch" type="xml">
-                <field name="email" position="after">
-                    <field name="persian_name" invisible="1"/>
-                    <field name="persian_father_name" invisible="1"/>
-                    <field name="average" invisible="1"/>
-                    <field name="average_marks" invisible="1"/>
-                </field>
+                <data>
+                    <xpath expr="//div[@name='buttons']" position="inside">
+                        <button name="%(action_stu_result_form)d" class="oe_inline oe_stat_button" type="action" icon="fa-trophy" string="Result" attrs="{'invisible':[('state', 'in', ['draft','terminate','alumni','cancel'])]}" groups="school.group_school_administration,school.group_school_teacher,school.group_school_student">
+                        </button>
+                    </xpath>
+                </data>
             </field>
-        </record>
+        </record> -->
 
         <!-- Tree View Of Exam Information -->
 

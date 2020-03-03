@@ -174,7 +174,7 @@
       </record>
 
       
-      <menuitem id="website_support_parent_menu" name="Enquiries" parent='sales_team.menu_base_partner' sequence="0"/>
+      <menuitem id="website_support_parent_menu" name="Enquiries" parent='sales_team.menu_sale_config' sequence="0"/>
       <menuitem id="website_support_ticket_menu" name="Enquiries" parent="website_support_parent_menu" action="website_support_ticket_action" sequence="10"/>
       <!-- <menuitem id="website_support_config_menu" name="Settings" parent="website_support_parent_menu" sequence="1"/>
       <menuitem id="website_support_config_parent_menu" name="Enquiries" parent="website_support_config_menu" sequence="10"/> -->

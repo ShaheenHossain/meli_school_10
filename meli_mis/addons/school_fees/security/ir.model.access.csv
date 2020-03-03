@@ -42,20 +42,3 @@ access_student_payslip_reg,student.payslip,model_student_payslip,school.group_sc
 
 
 access_coordinator_payslip,student.payslip,model_student_payslip,school.group_school_program_coordinator,1,0,0,0
-
-access_councilor_permission,account.invoice,account.model_account_invoice,school.group_school_finance_officer,1,0,0,0
-student_finance,account.move.line,model_account_move_line,school.group_school_finance_officer,1,1,1,1
-student_finance_partial,account.partial.reconcile,model_account_partial_reconcile,school.group_school_finance_officer,1,1,1,1
-
-student_finance_account_type,account.account.type,model_account_account_type,school.group_school_finance_officer,1,1,1,1
-
-student_finance_depreciation_line,account.asset.depreciation.line,model_account_asset_depreciation_line,school.group_school_finance_officer,1,1,1,1
-
-student_finance_payment_method,account.payment.method,model_account_payment_method,school.group_school_finance_officer,1,1,1,1
-
-student_finance_account_payment_method,account.payment,model_account_payment,school.group_school_finance_officer,1,1,1,1
-
-student_finance_account_journal,account.journal,model_account_journal,school.group_school_finance_officer,1,1,1,1
-
-account_full_reconcile,aaccount.full.reconcile,model_account_full_reconcile,school.group_school_finance_officer,1,1,1,1
-

@@ -25,17 +25,29 @@
                     <header>
                         <button string="Confirm" type="object" name="confirm_resignation" states='draft' class="oe_highlight"/>
 
-                        <button string="Cancel" type="object" name="cancel_resignation" states='draft' class="oe_highlight"/>
+                        <button string="Send To HOD" type="object" name="requester_action" states="confirm" class="oe_highlight"/>
 
-                         <button string="Send to CEO" type="object" name="approve_resignation" groups="hr_resignation.group_resignation_user,hr.group_hr_manager" states='confirm' class="oe_highlight"/>
+                        <button string="Interview Schedule" type="object" name="hod_schedule_action" states="hod" class="oe_highlight"/>
 
-                        <button string="Approve" type="object" groups="hr_resignation.group_resignation_ceo_user" name="ceo_approve_resignation" states='hr_approve' class="oe_highlight"/>
+                        <button string="Send To HR" type="object" name="hod_action" states="hod_interview" class="oe_highlight"/>
 
+                        <button string="Interview Schedule" type="object" name="hr_schedule_action" states="hr" class="oe_highlight"/>
 
+                        <button string="Send To GM" type="object" name="hr_action" states="hr_interview" class="oe_highlight"/>
 
-                        <button string="Reject" type="object" groups="hr_resignation.group_resignation_ceo_user" name="reject_resignation" states='hr_approve' class="oe_highlight"/>
+                        <button string="Interview Schedule" type="object" name="gm_schedule_action" states="gm" class="oe_highlight"/>
 
-                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,hr_approve,approved"/>
+                        <button string="Send to Top Management" type="object" name="gm_action" states="gm,gm_interview" class="oe_highlight"/>
+
+                        <button string="Accepted" type="object" name="top_management_action" states="top_management" class="oe_highlight"/>
+
+                        <button string="retained" type="object" name="retained_action" class="oe_highlight" states="hod_interview,hr_interview,gm_interview"/>
+
+                        <button string="withdrawal" type="object" name="resignation_back" states="approved" class="oe_highlight"/>
+   
+
+                        <field name="state" widget="statusbar" statusbar_visible=" draft, confirm, hod, hod_interview, hr, hr_interview, gm, gm_interview, top_management, approved, withdrow"/>
+
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -45,38 +57,49 @@
                         </div>
                         <group>
                             <group>
-                                <field name="employee_id" domain="[('state','=','draft')]"/>
+                                <field name="employee_id"/>
                                 <field name="department_id"/>
                                 <field name="joined_date"/>
-                                <field name="resign_confirm_date" class="oe_read_only" attrs="{'invisible':[('resign_confirm_date','=','')]}"/>
+                                <field name="resign_confirm_date"/>
                             </group>
                             <group>
                                 <field name="expected_revealing_date"/>
-                                <field name="approved_revealing_date" states="hr_approve,approved"/>
-                                <field name="notice_period" states="hr_approve,approved"/>
+                                <field name="approved_revealing_date"/>
+                                <field name="notice_period"/>
+                                <field name="clearance_form" widget="binary" filename="file_name"/>
+                                <field name="file_name" invisible="1"/>
+
                             </group>
                         </group>
                         <group>
-                            <field name="reason"/>
+                            <field name="emp_reason"/>
                         </group>
-                        <group>
-                            <field name="hr_note" attrs="{'invisible':[('state','=','draft')]}"/>
+                        <group states="hod,hod_interview,hr,hr_interview,gm,gm_interview,top_management,approved,withdrow">
+                            <field name="hod_schedule_date" />
+                            <field name="hod_remark" states="hod_interview,hr,hr_interview,gm,gm_interview,top_management,approved,withdrow"/>
                         </group>
-                        <group>
-                            <field name="ceo_note" attrs="{'invisible':['|',('state','=','draft'),('state','=','confirm')]}"/>
+                        <group states="hr,hr_interview,gm,gm_interview,top_management,approved,withdrow">
+                            <field name="hr_schedule_date" />
+                            <field name="hr_remark" states="hr_interview,gm,gm_interview,top_management,approved,withdrow"/>
+                        </group>
+                        <group  states="gm,gm_interview,top_management,approved,withdrow">
+                            <field name="gm_schedule_date"/>
+                            <field name="gm_remark" states="gm_interview,top_management,approved,withdrow"/>
                         </group>
                         <notebook>
-                        <page string="Clearance Stock">
-                        <field name="resignation_ids">
-                            <tree string="Clerance Stock" editable="bottom" create="false" delete="false">
-                                <field name="name" readonly="1"/>
-                                <field name="category_id" readonly="1"/>
-                                <field name="serial_no" readonly="1"/>
-                                <field name="employee_assign"/>
-                            </tree>
-                        </field>
-                        </page>
-                    </notebook>
+                            <page string="Clearance Stock">
+                                <field name="resignation_ids">
+                                    <tree string="Clerance Stock" editable="bottom" create="false" delete="false">
+                                        <field name="s_no"/>
+                                        <field name="product_id"/>
+                                        <field name="quantity"/>
+                                        <field name="sequence"/>
+                                        <field name="Scheduled_date"/>
+                                        <field name="product_type"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                         <!-- <field name="reason"/> -->
                     </sheet>
                     <div class="oe_chatter">
@@ -91,16 +114,26 @@
             <field name="res_model">hr.resignation</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state', 'in', ('draft', 'confirm','hr_approve'))]</field>
+            <!-- <field name="domain">[('state', 'in', ('draft', 'confirm','hr_approve'))]</field> -->
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Employee Resignation Form
                 </p>
             </field>
         </record>
-        <menuitem id="employee_resignation" parent="hr.menu_hr_root" name="Resignation"
-                  groups="base.group_user" sequence="21"/>
-        <menuitem id="employee_resignation_request" parent="bi_hr.hr_requests_menu_main" name="Resignation Request"
-                  action="view_employee_resignation" groups="base.group_user" sequence="4"/>
+
+        <menuitem id="employee_resignation" 
+                parent="hr.menu_hr_root" 
+                name="Resignation" 
+                groups="base.group_user" 
+                sequence="21"/>
+
+        <menuitem id="employee_resignation_request" 
+                parent="bi_hr.hr_requests_menu_main" 
+                name="Resignation Request"
+                action="view_employee_resignation"  
+                sequence="4"/>
+
+                <!-- groups="base.group_user" -->
     
 
 
@@ -115,21 +148,10 @@
             <field name="body_html"><![CDATA[
                 <p>Dear ${object.employee_id.line_manager_id.name},</p>
                 <p>${object.employee_id.name} have submitted resignation request.</p>
-                <hr/>
-            
-                
-                
+                <hr/>    
             ]]>
             </field>
         </record>
-
-
-
-
-
-
-
-
 
 
 
@@ -148,10 +170,7 @@
                 <p></p>
                 <p></p>
                 <p> All The Best</p>
-                <hr/>
-            
-                
-                
+                <hr/>  
             ]]>
             </field>
         </record>
@@ -172,10 +191,7 @@
             </p>
             <p></p>
             <p> Thankyou</p>
-                <hr/>
-            
-                
-                
+                <hr/> 
             ]]>
             </field>
         </record>

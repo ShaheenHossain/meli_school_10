@@ -148,13 +148,6 @@
 		    <field name="target">new</field>
         </record>
 
-        <record model="ir.ui.menu" id="project.menu_main_pm">
-			<field name="name">Action Plan</field>
-		</record>
-		<record model="ir.ui.menu" id="mail.mail_channel_menu_root_chat">
-			<field name="name">DashBoard</field>
-		</record>
-
         <menuitem
             id="action_plan_trcker_menu"
             name="Action Plan Tracker"

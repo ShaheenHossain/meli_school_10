@@ -51,9 +51,9 @@ class TydDailyAttendance(models.TransientModel):
 		if self.date <= self.name.start_date:
 			raise UserError('Please Select date in between class dates')
 		if self.date>current_date:
-			raise UserError('Please Select Date after class is started')
+			raise UserError('sdhfgshf')
 		if self.date >= self.name.end_date:
-			raise UserError('Please Select date in between class dates')
+			raise UserError('Please Select date in between class dateswwww')
 
 
 		

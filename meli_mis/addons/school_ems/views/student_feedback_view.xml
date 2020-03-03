@@ -1,0 +1,413 @@
+<odoo>
+	<data>
+		<record id="student_feedback_tree" model="ir.ui.view">
+			<field name="name">Student Feedback Tree</field>
+			<field name="model">student.feedbackform</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="student_feedback_form" model="ir.ui.view">
+			<field name="name">Student Feedback form</field>
+			<field name="model">student.feedbackform</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="feedback_confirmation" type="object" string="Confirm" states="draft"/>
+						<button name='sending_SMS' type="object" string="SMS"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+					<sheet>
+						<separator string="Student Information"/>
+						<group>
+							<group >
+
+								<field name="name" attrs="{'readonly':[('state','=','confirm')]}" domain="[('state','=','done')]" />
+								<field name="s_id" attrs="{'readonly':[('state','=','confirm')]}"/>
+								<field name="d_joining" attrs="{'readonly':[('state','=','confirm')]}"/>
+								<field name="email" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</group>
+							<group>
+								<field name="no_days" attrs="{'readonly':[('state','=','confirm')]}"/>
+								<field name="course_level" attrs="{'readonly':[('state','=','confirm')]}"/><field name="campus" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</group>
+						</group>
+
+							<separator string="Course Survey"/>
+							<label for="course_survey" string="1). Course meets the mission and objectives" fonts="bold:True"/>
+                  			<div>
+								<field name="course_survey1" widget="radio" options="{'horizontal': true}" class="oe_inline" attrs="{'readonly':[('state','=','confirm')]}"/>
+                  			</div>
+                  			<separator/>
+
+                  			<label for="course_survey" string=" 2). Syllabus describes the information of the course clearly "/>
+                  			<div>
+							<field name="course_survey2" widget="radio" class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+
+							<label for="course_survey" string=" 3). Gained objectives in the syllabus."/>
+                  			<div>
+
+								<field name="course_survey3" widget="radio" class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="course_survey" string=" 4). Text books  And readings are appropriate "/>
+                  			<div>
+
+								<field name="course_survey4" widget="radio" class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="course_survey" string=" 5). Content of the course is appropriate"/>
+                  			<div>
+
+								<field name="course_survey5" widget="radio" class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="course_survey" string=" 6). Recommend it to other students"/>
+                  			<div>
+
+								<field name="course_survey6" widget="radio" class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+
+
+							<!-- Feedback For Curriculum and classes for the term  -->
+							<separator string="Curriculum and classes for the term" align="left"/>
+							<label for="classes_for_the_term" string="1). He class descriptions accurately described the content."/>
+                  			<div>
+								<field name="curriculum1" widget="radio" options="{'horizontal': true}" class="oe_inline" attrs="{'readonly':[('state','=','confirm')]}"/>
+                  			</div>
+                  			<separator/>
+
+                  			<label for="classes_for_the_term" string=" 2). I was academically prepared for the classes."/>
+                  			<div>
+							<field name="curriculum2" widget="radio" class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+
+							<label for="classes_for_the_term" string=" 3). The class sizes were appropriate."/>
+                  			<div>
+
+								<field name="curriculum3" widget="radio" class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="classes_for_the_term" string=" 4). The classes started and ended on time."/>
+                  			<div>
+
+								<field name="curriculum4" widget="radio" class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="classes_for_the_term" string=" 5). The classes increased my knowledge of the subject matter."/>
+                  			<div>
+
+								<field name="curriculum5" widget="radio" class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="classes_for_the_term" string=" 6). The overall quality of the classes was excellent."/>
+                  			<div>
+
+								<field name="curriculum6" widget="radio" class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="classes_for_the_term" string=" 7). I would recommend these classes to other students."/>
+                  			<div>
+
+								<field name="curriculum7" widget="radio" class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+
+							<separator string="Material"/>
+							<label for="material_feedback" string="1). The objectives and requirements for the classes were clearly stated."/>
+							<div>
+								<field name="material1" widget="radio"  class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="material_feedback" string="2). The textbooks and learning materials were relevant and useful."/>
+							<div>
+								<field name="material2" widget="radio"  class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="material_feedback" string="3). Tests and assignments were based on material covered in each class."/>
+							<div>
+								<field name="material3" widget="radio"  class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+
+							<separator string="Campus Environment"/>
+							<label for="campus_environment" string="1). The physical classroom environments were clean and comfortable."/>
+							<div>
+								<field name="environment1" widget="radio"  class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+
+							<label for="campus_environment" string="2). Is the restroom Clean and hygienic"/>
+							<div>
+								<field name="environment2" widget="radio"  class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="campus_environment" string="3). The common spaces were clean and comfortable."/>
+							<div>
+								<field name="environment3" widget="radio"  class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="campus_environment" string="4). Is the Classroom Climate controlled"/>
+							<div>
+								<field name="environment4" widget="radio"  class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+
+
+
+							<separator string="Trainers"/>
+							<label for="trainers" string="1). The trainers were qualified to teach these classes."/>
+							<div>
+								<field name="trainer1" widget="radio"  class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="trainers" string="2). The trainers demonstrated enthusiasm for the subject matter."/>
+							<div>
+								<field name="trainer2" widget="radio"  class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator/>
+							<label for="trainers" string="3). Are the  Trainers on time to the class"/>
+							<div>
+								<field name="trainer3" widget="radio"  class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+
+
+							<separator string="Recommendations"/>
+							<label for="recommendations" string="How likely are you to recommend our Institute to a friend or colleague."/>
+							<div>
+								<field name="remind" widget="radio"  class="oe_inline" options="{'horizontal': true}" attrs="{'readonly':[('state','=','confirm')]}"/>
+							</div>
+							<separator string="Comments"/>
+							<field name="comment" placeholder="Write on Something in Maximum 100 Characters"/>
+
+						
+
+					</sheet>
+				
+				</form>
+			</field>
+		</record>
+		<record id="student_feedback_action11" model="ir.actions.act_window">
+			<field name="name">Student Feedback Action</field>
+			<field name="res_model">student.feedbackform</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('state','!=','confirm')]</field>
+			
+		</record>
+
+		<record id="student_feedback_inherited11111" model="ir.ui.view">
+			<field name="name">Student Feedback Inherited</field>
+			<field name="model">student.student</field>
+			<field name="inherit_id" ref="school.view_student_student_form_1"/>
+			<field name="arch" type="xml">
+				<!-- <xpath expr="//form/sheet/div" position="inside"> -->
+					<div class="oe_button_box" position="inside">
+						<button name="student_feedback_count" type="object"
+							class="oe_stat_button" icon="fa-pencil-square-o" states='invoiced,done'>
+							<field string="FeedBack" name="feedback_count"
+								widget="statinfo" />
+						</button>
+					</div>
+				<!-- </xpath> -->
+			</field>
+		</record>
+
+		<record id="student_profile_action" model="ir.actions.act_window">
+			<field name="name">Student Profile Action</field>
+			<field name="res_model">student.student</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False"/>
+			<field name="domain">[('user_id','=',uid),]</field>
+			
+		</record>
+
+
+		<record id="student_feedback_profile_action" model="ir.actions.act_window">
+			<field name="name">Student Profile Details</field>
+			<field name="res_model">student.feedbackform</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,graph</field>
+			<field name="view_id" eval="False"/>
+			<field name="domain">[('state','=','confirm')]</field>
+		</record>
+
+		<record id="student_feedback_details_search" model="ir.ui.view">
+		<field name="name">Student Feedback Search</field>
+		<field name="model">student.feedbackform</field>
+		<field name="arch" type="xml">
+			<search string="Student Feedback">
+				<group col="10" colspan="4">
+					<field name="name" />
+					<field name="s_id" />
+					<field name="course_level"/>
+					<field name="campus"/>
+					
+				</group>
+				<newline />
+				<group expand="0" string="Group By..." colspan="12" col="10">
+					<filter icon="terp-project" string="Name" help="By Name"
+						context="{'group_by':'name'}" />
+					<filter icon="terp-project" string="Student Id" help="By Student Id"
+						context="{'group_by':'s_id'}" />
+					<filter icon="terp-project" string="Course Level" help="By Course Level"
+						context="{'group_by':'course_level'}" />
+					<filter icon="terp-project" string="Campus" help="By Course Level"
+						context="{'group_by':'campus'}" />
+					
+				</group>
+				
+			</search>
+		</field>
+	</record>
+
+	<record id="student_survey_form" model="ir.ui.view">
+
+		<field name="name">Student Survey From</field>
+		<field name="model">student.survey</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+				<group>
+					<group>
+						<field name="name"/>
+						<field name="s_id"/>
+						
+					</group>
+					<group>
+						<field name="d_joining"/>
+						<field name="course_level"/>
+						
+					</group>
+				</group>
+				<separator/>
+				<center><separator string="Course Survey"/></center>
+				<field name="s_ids" string="Course Survey">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="c_survey1" readonly="1"/>
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+					</tree>
+				</field>
+				<center><separator string="Classes for the term"/></center>
+				<field name="term_ids">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="term" readonly="1"/>
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+					</tree>
+				</field>
+
+				<center><separator string="Materials"/></center>
+				<field name="material_ids">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="material" readonly="1"/>
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+					</tree>
+				</field>
+				<center><separator string="Employee"/></center>
+				<field name="employee_ids">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="employee" readonly="1"/>
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+					</tree>
+				</field>
+				<center><separator string="Campus Environment"/></center>
+				<field name="environment_ids">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="environment" readonly="1"/>
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+					</tree>
+				</field>
+				<center><separator string="Trainers"/></center>
+				<field name="trainer_ids">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="trainer" readonly="1"/>
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+					</tree>
+				</field>
+				<field name="recommands" placeholder="What could we do to increase your level of satisfaction? Do you recommend us to change Muslim series to international series"/>
+
+			</sheet>
+
+			</form>
+
+		</field>
+
+	</record>
+
+	<record id="student_survey_action" model="ir.actions.act_window">
+		<field name="name">Student Survey Action</field>
+		<field name="res_model">student.survey</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+
+
+
+	
+
+		<menuitem 
+			id="student_feedback_setting"
+			action="student_feedback_action11"
+			name="Student Satisfaction Feedback"
+			parent="school.menu_students_parents"
+			groups="school.group_school_student,school.group_school_administration"/>
+		<menuitem 
+			id="student_profile"
+		    action="student_feedback_profile_action"
+		  	name="Feedback Details" 
+		  	parent="school.menu_students_parents"
+		  	groups="school.group_school_administration"
+
+		  	/>
+		
+		  	
+
+		 <menuitem
+		 	id="student_survey_action_menuitem"
+		 	action="student_survey_action"
+		 	name="Student Survey Form"
+		 	parent="school.menu_students_parents"/>
+
+		<menuitem 
+			id="student_feedback_profiles"
+		    action="student_profile_action"
+		  	name="Student Profile" 
+		  	parent="school.menu_students_parents" 
+		  	groups="school.group_school_student"/>
+
+
+
+	</data>
+</odoo>

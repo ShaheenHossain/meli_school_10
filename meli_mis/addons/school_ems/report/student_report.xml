@@ -17,20 +17,17 @@
 								<field name="program" widget="selection"/>
 								<field name="level_id" domain="[('standard_id','=',program)]" widget="selection"/>
 								<field name="followup"/>
-								<field name="terminated"/>
 							</group>
 							<group>
 								<field name="s_date"/>
 								<field name="e_date"/>
 								<field name="types"/>
 								<field name="converted"/>
-								<field name="total"/>
 							</group>
 						</group>
 						<separator/>
 						<field name="report_id">
 							<tree editable="bottom" edit='false' delete='false' create='false'>
-								<field name="s_no"/>
 								<field name="application_no"/>
 								<field name="name"/>
 								<field name="f_name"/>
@@ -99,12 +96,6 @@
 							<td class="text-center"><strong>Converted</strong></td>
 							<td class="text-center"><span t-esc="docs[7]"/></td>
 						</tr>
-						<tr>
-							<td class="text-center"><strong>Terminated</strong></td>
-							<td class="text-center"><span t-esc="docs[8]"/></td>
-							<td class="text-center"><strong>Total</strong></td>
-							<td class="text-center"><span t-esc="docs[9]"/></td>
-						</tr>
 		       		</table>
 		       		<table border="1" class="table table-condesed table-bordered" >
 						<tr>
@@ -145,17 +136,14 @@
 		   </t>
 		</template>
 
-	
-
 		<menuitem 
 			name="Sales Report"
 			id="student_report_menu_item"
-			parent="bi_queue_management.students_admission_target_menuitem"
+			parent='school.reigistration_process'
 			action="student_report_action_view"
-			groups="school.group_school_administration"
+			groups="school.group_school_registrar_officer,school.group_school_administration"
 			sequence='26'
 			/>
-
 
 	</data>
 </odoo>

@@ -226,6 +226,7 @@ class All_Classes_report(models.TransientModel):
 						fail_students=0
 						if x.campus.name == campus_id[1] and x.program.name == program[1] and x.level_id.name == level[1] and x.shift_id.code==s_id[1]:
 							if s_date <= x.class_id.start_date and e_date >= x.class_id.end_date:
+								print '888888888888888888888'
 								for y in x.subject_id:
 									results=[]
 									if y.total > 50:
@@ -238,6 +239,7 @@ class All_Classes_report(models.TransientModel):
 					return class_info
 
 				if s_type=='single' and r_type=='multiple':
+					print 'uuuuuuuuuuuuuuuuuuuu'
 					class_info={}
 					for x in student_name:
 						pass_students=0

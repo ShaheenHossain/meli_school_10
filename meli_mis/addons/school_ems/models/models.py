@@ -171,7 +171,6 @@ class tyd_class_timetable(models.Model):
 		self.pro=self.name.code
 		if self.classes:
 			self.room_number=self.classes.division_id.name
-
 class tyd_weekdays(models.Model):
 	_name="tyd.weekdays"
 
@@ -203,48 +202,12 @@ class tyd_weekdays(models.Model):
 							 ])
 	period6=fields.Selection([('1st Period','1st Period'),
 							 ])
-	oyd_periods=fields.Selection([('1st Period','1st Period'),
-							 	  ('2nd Period','2nd Period'),])
 
 
 	@api.onchange('name')
 	def _get_all_periods(self):
 		if self.name:
 			values=[]
-			if self.pro=='DEL':
-				if self.course_level.code in ('PB','SB'):
-					kay_val_dict = dict(self._fields['period6'].selection)
-					for key, val in kay_val_dict.items():
-						ele={
-							'period':val,
-							'course_level':self.course_level.id,
-							'campuses':self.campuses.id,
-							'shift_id':self.shift_id.id,
-							'classes':self.classes.id,
-							'room_number':self.room_number,
-							'name':self.name
-
-							}
-						values.append(ele)
-					self.period3=values
-				else:
-					kay_val_dict = dict(self._fields['oyd_periods'].selection)
-					for key, val in kay_val_dict.items():
-						ele={
-							'period':val,
-							'course_level':self.course_level.id,
-							'campuses':self.campuses.id,
-							'shift_id':self.shift_id.id,
-							'classes':self.classes.id,
-							'room_number':self.room_number,
-							'name':self.name
-
-							}
-						values.append(ele)
-					self.period3=values
-
-
-
 			if self.pro=='TYD':
 				kay_val_dict = dict(self._fields['period5'].selection)
 				for key, val in kay_val_dict.items():
@@ -255,7 +218,6 @@ class tyd_weekdays(models.Model):
 						'shift_id':self.shift_id.id,
 						'classes':self.classes.id,
 						'room_number':self.room_number,
-						'name':self.name
 
 						}
 					values.append(ele)
@@ -270,7 +232,6 @@ class tyd_weekdays(models.Model):
 						'shift_id':self.shift_id.id,
 						'classes':self.classes.id,
 						'room_number':self.room_number,
-						'name':self.name,
 						'teacher':self.classes.user_id.id
 						}
 					values.append(ele)
@@ -290,13 +251,12 @@ class tyd_saturday_timetable(models.Model):
 	
 	pro=fields.Char(string="Code")
 
-	name=fields.Selection([('all','Saturday-Thursday'),
-							 ('saturday','Saturday'),
+	name=fields.Selection([('saturday','Saturday'),
 							 ('sunday','Sunday'),
 							 ('monday','Monday'),
 							 ('tuesday','Tuesday'),
 							 ('wednesday','Wednesday'),
-							 ('thursday','Thursday')],readonly=True)
+							 ('thursday','Thursday')])
 	course_level=fields.Many2one('standard.semester',string="Course Level")
 	campuses=fields.Many2one('school.school',string='Campus')
 	classes=fields.Many2one('school.standard',string="Class")
@@ -329,7 +289,7 @@ class Substistute_Teacher_Process(models.Model):
 	s_ids=fields.One2many('substistute.teacher','s_id')
 
 
-	@api.onchange('day','date')
+	@api.onchange('day')
 	def teacher_timetable_process(self):
 		rec=self.env['tyd.timetable'].search([])
 		for x in rec:
@@ -508,18 +468,6 @@ class GettingFreeRooms(models.TransientModel):
 	 room_no=fields.Char(string="Room No")
 
 	 r_id = fields.Many2one('timetable.timetable')
-
-
-
-class UsersClassInherited(models.Model):
-
-	_inherit='res.users'
-
-	campus=fields.Many2one('school.school','Campus')
-
-
-
-
 
 
 

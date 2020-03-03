@@ -64,10 +64,9 @@
               <field name="name" readonly="1" />
               <field name="emp_id" readonly="1"/>
               <field name="date_of_joinning" readonly="1"/>
-              <field name="campus" readonly="1"/>
+              <field name="designation" readonly="1"/>
             </group>
             <group>
-              <field name="designation" readonly="1"/>
               <field name="date" />
               <field name="total" />
               <label for="percenatge" string="Percentage"/>
@@ -220,7 +219,7 @@
 
     <!-- Top menu item -->
     
-    <menuitem name="MNE" id="mne_department_main" groups="school.group_school_student,base.group_user,school.group_school_administration"/>
+    <menuitem name="MNE Department" id="mne_department_main" groups="school.group_school_student,base.group_user"/>
     
     <!-- menu categories -->
     

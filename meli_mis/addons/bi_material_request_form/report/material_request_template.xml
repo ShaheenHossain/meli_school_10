@@ -65,11 +65,11 @@
 
     <template id="product_tracker">
         <t t-call="report.html_container">     
-            <t t-call="report.external_layout">
-                <div class="page">
-                    <t t-foreach="self_data" t-as="s_data">
-                        <t t-foreach="self_data[s_data]" t-as="details">
-                            <table border="1" class="table table-condesed border-black">
+            <t t-foreach="self_data" t-as="s_data">
+                <t t-foreach="self_data[s_data]" t-as="details">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <table border="1" class="table table-condesed table-bordered">
                                 <t t-if="details['report_type'] == 'campus_wise'">
                                     <tr>
                                         <td class="text-center"><strong>Campus</strong></td>
@@ -133,7 +133,7 @@
                             <t t-if="details['on_issue']">
                                 <h3><center>Inventory Issued Product</center></h3>
 
-                                <table border="1" class="table table-condesed border-black">
+                                <table border="1" class="table table-condesed table-bordered">
                                     <tr>
                                         <td class="text-center"><strong>Employee</strong></td>
                                         <td class="text-center"><strong>sequence</strong></td>
@@ -156,11 +156,9 @@
                                     </t>
                                 </table>
                             </t>
-                        </t>
+                        </div>
                     </t>
-
-                </div>
-            
+                </t>
             </t>
         </t>
     </template>

@@ -30,8 +30,8 @@
 
                        <button name="done_transfer" type="object" string="Issue to Requester" class="oe_highlight" states="inventory"/>
 
-                       <button name="inventory_forward_action" type="object" string="Forward to GM" class="oe_highlight" states="inventory"/>
-
+                       <!-- <button name="inventory_forward_action" type="object" string="Forward to GM" class="oe_highlight" states="inventory"/>
+ -->
 
                        <button name="reject_action" type="object" string="Reject" class="oe_highlight" states="hod_manager,it,procurement"/>
 

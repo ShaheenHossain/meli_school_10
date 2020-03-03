@@ -218,7 +218,7 @@
 			id="student_feedback_profiles"
 		    action="student_profile_action"
 		  	name="Student Profile" 
-		  	parent="school.student_requests_process" 
+		  	parent="school.menu_students_parents" 
 		  	groups="school.group_school_student"/>
 
 

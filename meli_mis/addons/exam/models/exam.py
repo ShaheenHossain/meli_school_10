@@ -3,8 +3,6 @@
 import time
 from datetime import date, datetime, timedelta
 from odoo import models, fields, api, _
-from translate import Translator
-from persiantools import digits
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import ValidationError,Warning as UserError
 import babel
@@ -16,10 +14,6 @@ class StudentStudent(models.Model):
 	exam_results_ids = fields.One2many('exam.result', 'student_id',
 									   'Exam History', readonly=True)
 
-	persian_name=fields.Char('Persian Name',compute="_compute_persian_name")
-	persian_father_name=fields.Char('Father Name',compute="_compute_persian_name")
-	average=fields.Char('Grade')
-	average_marks=fields.Char('Average')
 	@api.model
 	def _search(self, args, offset=0, limit=None, order=None, count=False,
 				access_rights_uid=None):
@@ -32,21 +26,6 @@ class StudentStudent(models.Model):
 		return super(StudentStudent, self)._search(
 			args=args, offset=offset, limit=limit, order=order, count=count,
 			access_rights_uid=access_rights_uid)
-
-
-	@api.model
-	def _compute_persian_name(self):
-		if self.name and self.program_id.code=="DEL" and self.parent_id:
-			translator= Translator(to_lang="persian")
-			translation = translator.translate(self.name)
-			self.persian_name=translation
-			father_name = translator.translate(self.parent_id)
-			self.persian_father_name=father_name
-
-	
-
-
-
 
 
 class ExtendedTimeTable(models.Model):

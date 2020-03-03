@@ -1,11 +1,11 @@
 <odoo>
 	<data>
 
-<!-- <template id='assets_backend' name="school_ems"  inherit_id="web.assets_frontend">
+<template id='assets_backend' name="school_ems"  inherit_id="web.assets_frontend">
 	<xpath expr="." position="inside">
 		<link rel="stylesheet" href="/school_ems/static/css/style.css"/>
 	</xpath>
-</template> -->
+</template>
 
 
 		<template id="example_page11" name="Example page" page="True">

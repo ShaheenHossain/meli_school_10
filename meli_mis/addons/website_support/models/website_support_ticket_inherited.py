@@ -33,6 +33,9 @@ class Enquiries_inherited(models.Model):
 			display_value += ' ['
 			display_value += x.ticket_no or ""
 			display_value += ']'
+			print display_value,"4444444444444444444444"
+
+			
 		 	result.append((x.id,display_value))
 		return result
 

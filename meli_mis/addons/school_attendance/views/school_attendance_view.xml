@@ -278,7 +278,7 @@
 
         <!-- Menu Item Of Attendance -->
 
-        <menuitem id="menu_attendance" name="Attendance" parent="school.menu_students_parents" sequence="6" groups="school.group_school_administration,school.group_school_parent,school.group_school_attendance_officer"/>
+        <menuitem id="menu_attendance" name="Attendance" parent="school.menu_ems" sequence="6" groups="school.group_school_administration,school.group_school_parent,school.group_school_attendance_officer"/>
 
         <!-- Form View Of Daily Attendance Information -->
 
@@ -500,7 +500,7 @@
         <!-- <menuitem id="menu_daily_attendances" name="Daily Attendance Sheets" parent="menu_attendance"
                   action="action_daily_attendance_form" groups="school.group_school_administration,school.group_school_attendance_officer" sequence="51"/> -->
         <!-- Menu of Student Leave Request -->
-        <menuitem id="menu_student_leave_req" name="Student Leave Request" parent="school.student_requests_process" action="action_student_leave_form" groups="school.group_school_administration,school.group_school_aam,school.group_school_student,school.group_school_academic_officer,school.group_school_gm" sequence="2"/>
+        <menuitem id="menu_student_leave_req" name="Student Leave Request" parent="school.menu_students_parents" action="action_student_leave_form" groups="school.group_school_administration,school.group_school_aam,school.group_school_student,school.group_school_academic_officer,school.group_school_gm" sequence="2"/>
         
 
 </odoo>

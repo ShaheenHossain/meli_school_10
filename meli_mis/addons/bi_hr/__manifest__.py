@@ -4,7 +4,7 @@
 {
     'name': 'MELI',
     'version': '1.1',
-    'author': 'Karimiinfotech Pvt Ltd.',
+    'author': 'Bassam Infotech',
     'category': 'Hr',
     'website': 'https://www.bassaminfotech.com',
 

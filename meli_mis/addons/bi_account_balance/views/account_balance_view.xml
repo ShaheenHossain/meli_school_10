@@ -9,9 +9,9 @@
             <field name="arch" type="xml">
                 <tree string="Chart of accounts" toolbar="1" >
                     <!-- <field name="user_type_id" position="after"> -->
-                    <field name="debit"/>
-                    <field name="credit"/>
-                    <field name="balance"/>
+                    <field name="debit1"/>
+                    <field name="credit1"/>
+                    <field name="balance1"/>
                    <!-- </field>  -->
                 </tree>
             </field>
@@ -21,6 +21,11 @@
             <field name="model">account.account</field>
              <field name="inherit_id" ref="account.view_account_form"/>
             <field name="arch" type="xml">
+              <field name="tax_ids" position="before">
+                <field name="debit1"/>
+                <field name="credit1"/>
+                <field name="balance1"/>
+              </field>
 
               <form>
             <sheet>
