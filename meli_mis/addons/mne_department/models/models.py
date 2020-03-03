@@ -29,12 +29,8 @@ class MoneteringNEvaluationDepartment(models.Model):
 			employees=[]
 			for x in rec:
 				if self.name.name==x.school_id.name:
-					employees.append(({'name':x.id,'emp_id':x.code,'designation':x.job_id.name,'date':self.date,'state':'draft','date_of_joinning':x.date_of_join,'campus':x.school_id.id}))
+					employees.append(({'name':x.id,'emp_id':x.code,'designation':x.job_id.name,'date':self.date,'state':'draft','date_of_joinning':x.date_of_join}))
 			self.m_line_id=employees
-			for rec in self.m_line_id:
-				rec._get_course_data()
-
-		
 
 		if self.survey_type=='student':
 			obj=self.env['student.student'].search([])
@@ -44,11 +40,11 @@ class MoneteringNEvaluationDepartment(models.Model):
 					students.append(({'s_id':i.student_code,'name':i.id,'course_level':i.semester_id.name,'d_joining':i.admission_date,'state':'draft'}))
 			
 			self.student_line_id=students
-			for rec in self.student_line_id:
-				rec._get_course_data()
-		
 
-	
+
+			
+			
+
 
 
 class EmployeeSatisfactionForm(models.Model):
@@ -59,7 +55,6 @@ class EmployeeSatisfactionForm(models.Model):
 	emp_id=fields.Char('Employee ID No.')
 	date_of_joinning=fields.Date(string="Date of Joining")
 	designation=fields.Char(string="Designation")
-	campus=fields.Many2one('school.school',string="Campus")
 
 	language_id=fields.One2many('employee.language.lines','language_lines')
 	manager_id=fields.One2many('employee.manager.lines','manager_lines')
@@ -74,22 +69,20 @@ class EmployeeSatisfactionForm(models.Model):
 	total=fields.Integer('Total Marks',compute='_compute_marks')
 	percentage=fields.Integer('Percentage',compute='_compute_marks')
 
+	@api.onchange('date')
 	def _get_course_data(self):
+		print "2222222222222222ddddd"
 		rec=self.env['survey.questions'].search([])
 		courses=[]
 		terms=[]
 		material=[]
 		employee=[]
 		environment=[]
+		trainer=[]
 		for x in rec:
 			for y in x.survey_lines_id:
 				question_type = dict(x._fields['employee_question'].selection).get(x.employee_question)
 				if x.name=='employee':
-					self.language_id=False
-					self.manager_id = False
-					self.enablement_id = False
-					self.alignment_id = False
-					self.developement_id = False
 					if question_type == 'About Muslim English Language':
 						courses.append(({'term':y.question}))
 					self.language_id=courses

@@ -35,9 +35,9 @@
                     <field name="type" required="1"/>
                     <field name="parent_id" context="{'view_all': True}" />
                     <field name="level"/>
-                    <field name="debit"/>
-                    <field name="credit"/>
-                    <field name="balance"/>
+                    <field name="debit" invisible="1"/>
+                    <field name="credit" invisible="1"/>
+                    <field name="balance" invisible="1"/>
                     <field name = 'child_parent_ids' invisible="1"/>
                     <field name="child_id" invisible="1"/>
 

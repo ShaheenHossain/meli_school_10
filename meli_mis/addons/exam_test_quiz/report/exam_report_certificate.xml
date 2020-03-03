@@ -16,8 +16,7 @@
 		model="etq.result"
 		report_type="qweb-pdf"
 		name="exam_test_quiz.print_student_badge_new1"
-		file="exam_test_quiz.print_student_badge_new1"
-		groups="school.group_school_administration"/>
+		file="exam_test_quiz.print_student_badge_new1"/>
 
 	<template id="exam_test_quiz.print_student_badge_new1">
 		<t t-call="report.html_container">

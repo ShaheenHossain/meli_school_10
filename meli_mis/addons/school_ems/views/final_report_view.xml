@@ -49,7 +49,13 @@
 			<field name="target">new</field>
 		</record>
 
-		
+		<menuitem 
+			id='all_classes_menu_item'
+			name='All Classes Report'
+			parent='student_exam_information'
+			action='all_classes_report_action'
+			groups='school.group_school_administration'
+			sequence='8'/>
 
 	</data>
 </odoo>

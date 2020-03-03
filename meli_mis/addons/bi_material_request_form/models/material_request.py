@@ -553,7 +553,6 @@ class InventoryProductTracker(models.AbstractModel):
 
     @api.model
     def render_html(self, docids, data=None):
-    	
 		register_ids = self.env.context.get('active_ids', [])
 		lines_data = self.env['inventory.report'].search([('id','=',register_ids)])
 

@@ -353,7 +353,6 @@ class StandardSemester(models.Model):
 	book_ids = fields.Many2many('book.book', string="Books")
 	male_leaves = fields.Integer(string='Male Leaves')
 	female_leaves = fields.Integer(string='Female Leaves')
-	course_duration=fields.Integer('Course Duration')
 
 	
 
@@ -716,7 +715,7 @@ class SchoolStandard(models.Model):
 	class_room_id = fields.Many2one('class.room', 'Room Number')
 	semester_id = fields.Many2one('standard.semester','Course Level')
 	start_date = fields.Date("Start Date")
-	end_date = fields.Date("End Date",compute="_compute_ending_date")
+	end_date = fields.Date("End Date")
 	standard =fields.Char("Class")
 	state = fields.Selection([
 		('draft', 'New'),
@@ -1037,7 +1036,6 @@ class StudentHistory(models.Model):
 	start_date = fields.Date("Start Date")
 	end_date = fields.Date("End Date")
 	school_id = fields.Many2one('school.school', 'Campus',)
-	level_id=fields.Char('Course Level')
 	standard_id = fields.Char('Class')
 	percentage = fields.Char("Percentage")
 	result = fields.Char('Result')
@@ -1275,8 +1273,7 @@ class StudentTransfer(models.Model):
 
 	state = fields.Selection([('draft','New'),
 		('in progress','In Progress'),
-		('approve','From Campus AAM Approved'),
-		('t_approve','TO Campus AAM Approved'),
+		('approve','Approved'),
 		('rejected','Rejected')], index='true', default='draft')
 
 	medium_id = fields.Many2one('standard.medium', 'Shift Needed')
@@ -1384,11 +1381,7 @@ class StudentTransfer(models.Model):
 
 	@api.multi
 	def set_reject(self):
-		self.write({'state': 'rejected'})
-	@api.multi
-	def set_confirm(self):
-		self.write({'state': 't_approve'})
-
+		self.write({'state': 'rejected'})	
 
 	@api.multi
 	def set_to_reset(self):
@@ -1605,11 +1598,13 @@ class StaffTransfer(models.Model):
 	cmp_id = fields.Many2one('school.school', 'To Campus')
 	staff_purpose = fields.Text("Purpose Of Transfer")
 	staff_work_location = fields.Char('Work Location',compute='_compute_staff_details', store=True)
-
-	state = fields.Selection([('draft','New'),
-		('in progress','In Progress'),
-		('approve','Approved'),
-		('rejected','Rejected')], index='true', default='draft')
+	state = fields.Selection([('draft','Draft'),
+							('hod_aam','HOD/AAM'),
+							('hr','HR'),
+							('gm','GM'),
+							('top_management','Top Management'),
+							('approve','Approved'),
+							('rejected','Rejected')], index='true', default='draft')
 	
 
 	@api.depends('staff_id')
@@ -1618,15 +1613,25 @@ class StaffTransfer(models.Model):
 			self.staff_work_location = self.staff_id.work_location
 			self.staff_job_id = self.staff_id.job_id
 			self.current_company_id = self.staff_id.school_id.id
-			print self.staff_id.school_id.name,"11111111111"
+			# print self.staff_id.school_id.name,"11111111111"
 
 	@api.multi
 	def set_start(self):
-		self.send_mail_template()
-		self.write({'state': 'in progress'})
-		
-		
-	
+		# self.send_mail_template()
+		self.write({'state': 'hod_aam'})
+
+	@api.multi
+	def hod_amm_action(self):
+		self.write({'state':'hr'})
+
+	@api.multi
+	def hr_action(self):
+		self.write({'state':'gm'})
+
+	@api.multi
+	def gm_action(self):
+		self.write({'state':'top_management'})
+			
 	@api.multi
 	def send_mail_template(self):
 		# Find the e-mail template
@@ -1664,9 +1669,9 @@ class StaffTransfer(models.Model):
 	def set_reject(self):
 		self.write({'state': 'rejected'})	
 
-	@api.multi
-	def set_to_reset(self):
-		self.write({'state': 'draft'})
+	# @api.multi
+	# def set_to_reset(self):
+	# 	self.write({'state': 'draft'})
 
 
 

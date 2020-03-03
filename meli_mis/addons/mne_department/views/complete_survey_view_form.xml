@@ -7,6 +7,8 @@
 				<tree>
 					<field name="name"/>
 					<field name="campus"/>
+					<field name="level_id"/>
+					<field name="class_id"/>
 					<field name="date"/>
 					<field name="strength"/>
 					<field name="survey_student"/>
@@ -23,22 +25,21 @@
 						<group>
 							<group>
 								<field name="name"/>
-								<field name="campus" widget="selection"/>
-								<field name="program" attrs="{'invisible':[('name','!=','student')]}"/>
-								<field name="level_id" domain="[('standard_id','=',program)]" widget="selection" attrs="{'invisible':[('name','!=','student')]}"/>
+								<field name="campus"/>
+								<field name="program"/>
+								<field name="level_id" domain="[('standard_id','=',program)]" widget="selection"/>
 							</group>
 							<group>
-								<field name="shift_id" domain="[('program','=',program)]" widget="selection" attrs="{'invisible':[('name','!=','student')]}"/>
-								<field name="class_id" domain="[('standard_id','=',program),('semester_id','=',level_id),('school_id','=',campus),('state','=','running')]" widget="selection" attrs="{'invisible':[('name','!=','student')]}"/>
+								<field name="shift_id" domain="[('program','=',program)]" widget="selection"/>
+								<field name="class_id" domain="[('standard_id','=',program),('semester_id','=',level_id),('school_id','=',campus),('state','=','running')]" widget="selection"/>
 								<field name="date"/>
 								<field name="strength"/>
-								<field name="survey_student" attrs="{'invisible':[('name','!=','student')]}"/>
-								<field name="survey_employee" attrs="{'invisible':[('name','!=','employee')]}"/>
+								<field name="survey_student"/>
 
 							</group>
 						</group>
-						<separator string="Course Survey" attrs="{'invisible':[('name','!=','student')]}"/>
-						<field name="complete_lines" attrs="{'invisible':[('name','!=','student')]}">
+						<separator string="Course Survey"/>
+						<field name="complete_lines">
 							<tree editable="bottom" create='false' delete='false' edit='false'>
 								<field name="s_no"/>
 								<field name="question"/>
@@ -52,8 +53,8 @@
 								<field name="percentage" string="High Percentage"/>
 							</tree>
 						</field>
-						<separator string="Classes for the term" attrs="{'invisible':[('name','!=','student')]}"/>
-						<field name="term_lines" attrs="{'invisible':[('name','!=','student')]}">
+						<separator string="Classes for the term"/>
+						<field name="term_lines">
 							<tree editable="bottom" create='false' delete='false' edit='false'>
 								<field name="s_no"/>
 								<field name="question"/>
@@ -67,8 +68,8 @@
 								<field name="percentage"/>
 							</tree>
 						</field>
-						<separator string="Materials" attrs="{'invisible':[('name','!=','student')]}"/>
-						<field name="complete_material_lines" attrs="{'invisible':[('name','!=','student')]}">
+						<separator string="Materials"/>
+						<field name="complete_material_lines">
 							<tree editable="bottom" create='false' delete='false' edit='false'>
 								<field name="s_no"/>
 								<field name="question"/>
@@ -82,8 +83,8 @@
 								<field name="percentage" string="High Percentage"/>
 							</tree>
 						</field>
-						<separator string="Employee" attrs="{'invisible':[('name','!=','student')]}"/>
-						<field name="complete_employee_lines" attrs="{'invisible':[('name','!=','student')]}">
+						<separator string="Employee"/>
+						<field name="complete_employee_lines">
 							<tree editable="bottom" create='false' delete='false' edit='false'>
 								<field name="s_no"/>
 								<field name="question"/>
@@ -97,8 +98,8 @@
 								<field name="percentage" string="High Percentage"/>
 							</tree>
 						</field>
-						<separator string="Campus Environment" attrs="{'invisible':[('name','!=','student')]}"/>
-						<field name="complete_environment_lines" attrs="{'invisible':[('name','!=','student')]}">
+						<separator string="Campus Environment"/>
+						<field name="complete_environment_lines">
 							<tree editable="bottom" create='false' delete='false' edit='false'>
 								<field name="s_no"/>
 								<field name="question"/>
@@ -112,8 +113,8 @@
 								<field name="percentage" string="High Percentage"/>
 							</tree>
 						</field>
-						<separator string="Trainers" attrs="{'invisible':[('name','!=','student')]}"/>
-						<field name="complete_trainer_lines" attrs="{'invisible':[('name','!=','student')]}">
+						<separator string="Trainers"/>
+						<field name="complete_trainer_lines">
 							<tree editable="bottom" create='false' delete='false' edit='false'>
 								<field name="s_no"/>
 								<field name="question"/>
@@ -124,66 +125,6 @@
 								<field name="strongly_disagree"/>
 								<!-- <field name="frequency"/>
 								<field name="re_frequency"/> -->
-								<field name="percentage" string="High Percentage"/>
-							</tree>
-						</field>
-						<separator string="About Muslim English Language" attrs="{'invisible':[('name','!=','employee')]}"/>
-						<field name="complete_employee_lines_id" attrs="{'invisible':[('name','!=','employee')]}">
-							<tree editable="bottom" create='false' delete='false' edit='false'>
-								<field name="term"/>
-								<field name="strong_agree"/>
-								<field name="agree"/>
-								<field name="neutral"/>
-								<field name="dis_agree"/>
-								<field name="strongly_disagree"/>
-								<field name="percentage" string="High Percentage"/>
-							</tree>
-						</field>
-						<separator string="Manager" attrs="{'invisible':[('name','!=','employee')]}"/>
-						<field name="complete_manager_lines_id" attrs="{'invisible':[('name','!=','employee')]}">
-							<tree editable="bottom" create='false' delete='false' edit='false'>
-								<field name="term"/>
-								<field name="strong_agree"/>
-								<field name="agree"/>
-								<field name="neutral"/>
-								<field name="dis_agree"/>
-								<field name="strongly_disagree"/>
-								<field name="percentage" string="High Percentage"/>
-							</tree>
-						</field>
-						<separator string="Enablement" attrs="{'invisible':[('name','!=','employee')]}"/>
-						<field name="complete_enable_lines_id" attrs="{'invisible':[('name','!=','employee')]}">
-							<tree editable="bottom" create='false' delete='false' edit='false'>
-								<field name="term"/>
-								<field name="strong_agree"/>
-								<field name="agree"/>
-								<field name="neutral"/>
-								<field name="dis_agree"/>
-								<field name="strongly_disagree"/>
-								<field name="percentage" string="High Percentage"/>
-							</tree>
-						</field>
-						<separator string="Alignment" attrs="{'invisible':[('name','!=','employee')]}"/>
-						<field name="complete_alignment_lines_id" attrs="{'invisible':[('name','!=','employee')]}">
-							<tree editable="bottom" create='false' delete='false' edit='false'>
-								<field name="term"/>
-								<field name="strong_agree"/>
-								<field name="agree"/>
-								<field name="neutral"/>
-								<field name="dis_agree"/>
-								<field name="strongly_disagree"/>
-								<field name="percentage" string="High Percentage"/>
-							</tree>
-						</field>
-						<separator string="Development" attrs="{'invisible':[('name','!=','employee')]}"/>
-						<field name="complete_development_lines_id" attrs="{'invisible':[('name','!=','employee')]}">
-							<tree editable="bottom" create='false' delete='false' edit='false'>
-								<field name="term"/>
-								<field name="strong_agree"/>
-								<field name="agree"/>
-								<field name="neutral"/>
-								<field name="dis_agree"/>
-								<field name="strongly_disagree"/>
 								<field name="percentage" string="High Percentage"/>
 							</tree>
 						</field>

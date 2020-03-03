@@ -20,7 +20,6 @@ class student_fee_inherited(models.Model):
 
 	email=fields.Char(string="Email")
 	due_date=fields.Date(string="Due Date")
-	barcode=fields.Char(string="Barcode")
 
 
 
@@ -31,6 +30,24 @@ class student_fee_inherited(models.Model):
 
 
 	
+					# employee = self.env.ref('school_ems.student_reminder_message')
+					# self.env['mail.template'].browse(employee.id).send_mail(self.id, force_send=True)
+				# return response.text
+		
+		
+	# @api.onchange('due_date')
+	# def get_student_due_date(self):
+		
+		
+
+		# today = self.date 
+		# date_1 = datetime.datetime.strptime(today,'%Y-%m-%d')
+		# end_date = date_1 + datetime.timedelta(days=4)
+		# self.due_date=end_date
+		
+		# tomorrow = today + datetime.timedelta(4)
+		# dd=datetime.datetime.strftime(tomorrow,'%Y-%m-%d')
+		# print dd,"00000000000000000000000000000000000000"
 
 class student_transfer_inherited(models.Model):
 	_inherit = 'student.transfer'
@@ -143,17 +160,6 @@ class student_assign_class(models.Model):
 			count += 1
 		self.roll_no = count
 
-
-	@api.constrains('nid')
-	def VeryfyingTazkiraNnumber(self):
-		rec=self.env['student.student'].search([])
-		for x in rec:
-			if self.nid==x.nid:
-				if x.id=='terminate':
-					raise UserError(_('This Student in BlackList'))
-
-
-
 class AssigingClasses(models.Model):
 	_name = "class.assign"
 
@@ -198,62 +204,6 @@ class AssigingClassesLines(models.TransientModel):
 	assign_class = fields.Boolean(string="Assign")
 	state=fields.Char(string="State")
 	m2o = fields.Many2one('class.assign',"M2O")
-
-
-class StudentAnnouncement(models.Model):
-	_name = 'announcement.announcement'
-	_rec_name="announcement_type"
-	_inherit = ['mail.thread','ir.needaction_mixin']
-
-	announcement_type=fields.Selection([('class_based','Class Based Announcements'),('shift_based','Shift Based Announcements'),('campus_based','Campus Based Announcements')],string='Announcement Type')
-	campus=fields.Many2one('school.school',string="Campus")
-	program=fields.Many2one('standard.standard',string="Program")
-	level_id=fields.Many2one('standard.semester',string="Course Level")
-	class_id=fields.Many2one('school.standard',string="Class",ondelete='cascade', index=True, copy=False)
-	shift_id=fields.Many2one('standard.medium',string="Shift")
-	note=fields.Text('Message')
-	state=fields.Selection([('draft','Draft'),('send','Sent')], default='draft')
-	email=fields.Char('Email')
-	student_name=fields.Char(string='Student')
-
-
-
-
-	@api.multi
-	def warning_sent_to_students(self):
-		rec=self.env['student.student'].search([])
-		if self.announcement_type=='class_based':
-			for x in rec:
-				if self.campus.name==x.school_id.name and self.program.name==x.program_id.name and self.level_id.name==x.semester_id.name and self.shift_id.code==x.medium_id.code and self.class_id.standard==x.standard_id.standard:
-					if x.state=='done':
-						self.email=x.email
-						self.student_name=x.name
-						student = self.env.ref('school_ems.students_announcements')
-						self.env['mail.template'].browse(student.id).send_mail(self.id, force_send=True)
-					self.write({'state':'send'})
-
-		if self.announcement_type=='shift_based':
-			for x in rec:
-				if self.campus.name==x.school_id.name and self.program.name==x.program_id.name and self.level_id.name==x.semester_id.name and self.shift_id.code==x.medium_id.code :
-					if x.state=='done':
-						self.email=x.email
-						self.student_name=x.name
-						student = self.env.ref('school_ems.students_announcements')
-						self.env['mail.template'].browse(student.id).send_mail(self.id, force_send=True)
-					self.write({'state':'send'})
-
-		if self.announcement_type=='campus_based':
-			for x in rec:
-				if self.campus.name==x.school_id.name:
-					if x.state=='done':
-						self.email=x.email
-						self.student_name=x.name
-						student = self.env.ref('school_ems.students_announcements')
-						self.env['mail.template'].browse(student.id).send_mail(self.id, force_send=True)
-					self.write({'state':'send'})
-
-
-					
 
 
 			

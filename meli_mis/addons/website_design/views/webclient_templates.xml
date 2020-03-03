@@ -225,7 +225,7 @@
                 </li>
                 <t t-if="request.env.user.user_type == 'student'">
                     <li>
-                        <a href="/course/student">
+                        <a href="#">
                             <i class="fa fa-graduation-cap"></i>
                             My Course
                         </a>
@@ -588,7 +588,7 @@
                                 <div class="card-body card-7-5">
                                     <h4>Leave Request Form</h4>
                                     <div>
-                                        <form role="form" t-attf-action="/api/save" method="post">
+                                        <form role="form" t-attf-action="/student/saveLeaveRequest" method="post">
                                             <div class="row">
                                                 <div class="form-group col-md-3">
                                                     <label for="application_number">Application No.</label>
@@ -596,19 +596,11 @@
                                                 </div>
                                                 <div class="form-group col-md-3">
                                                     <label for="student_name">Student Name*</label>
-                                                    <select class="form-control" name="category">
-                                                         <t t-foreach="students" t-as="category">
-                                                             <option t-attf-value="#{category.id}"><t t-esc="category.name"/></option>
-                                                        </t>
-                                                     </select>
+                                                    <input type="text" class="form-control" id="student_name" required="required" placeholder="Student Name"/>
                                                 </div>
                                                 <div class="form-group col-md-3">
                                                     <label for="course_level">Course Level*</label>
-                                                    <select class="form-control" name="category">
-                                                         <t t-foreach="students" t-as="category">
-                                                             <option t-attf-value="#{category.id}"><t t-esc="category.semester_id.name"/></option>
-                                                        </t>
-                                                     </select>
+                                                    <input type="text" class="form-control" id="course_level" required="required" placeholder="Course Level"/>
                                                 </div>
                                                 <div class="form-group col-md-3">
                                                     <label for="phone_number">Phone Number</label>
@@ -622,7 +614,7 @@
                                                 <!--</div>-->
                                                 <div class="form-group col-md-6">
                                                     <div class="input-group">
-                                                        <input type="date" class="form-control datepicker" id="from_date" placeholder="From Date" required="required"/>
+                                                        <input type="text" class="form-control datepicker" id="from_date" placeholder="From Date" required="required"/>
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
@@ -630,7 +622,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <div class="input-group">
-                                                        <input type="date" class="form-control datepicker" id="to_date" placeholder="To Date" required="required"/>
+                                                        <input type="text" class="form-control datepicker" id="to_date" placeholder="To Date" required="required"/>
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
@@ -649,35 +641,6 @@
                                                 </div>
                                             </div>
                                         </form>
-                                         <table class="table-striped table">
-                                             <thead style="font-size: 23px;">
-                                             <tr>
-                                               <h6>
-                                                 <b>
-                                                   <th>Student Name</th>
-                                                   <th>Course Level</th>
-                                                   <th>Class</th>
-                                                   <th><b>Balance Leaves</b></th>
-                                                   <th><b>Durations</b></th>
-
-                                                   
-                                                 </b>
-                                               </h6>
-                                             </tr>
-                                             </thead>
-                                             <tbody>
-                                               <t t-foreach="leave" t-as="order">
-                                               <tr>
-                                               <td><span t-esc="order.student_id.name"/></td>
-                                               <td><span t-esc="order.course_level"/></td>
-                                               <td><span t-esc="order.standard_id.standard"/></td>
-                                               <td><span t-esc="order.taken_leaves"/></td>
-                                               <td><span t-esc="order.days"/></td>
-                                               </tr>
-                                               </t>
-                                             </tbody>
-                                           </table>
-
                                     </div>
                                 </div>
                             </div>
@@ -686,8 +649,6 @@
                 </div>
             </div>
         </t>
-
-
     </template>
     <template id="feedBackFrom" name="Feedback">
         <t t-call="website.layout">
@@ -753,30 +714,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </t>
-    </template>
-
-     <template id="course_details" name="Transfer Request">
-        <t t-call="website.layout">
-            <div id="wrap" class="custom_wrap">
-                <t t-call="website_design.DrawerSidebar" />
-                <div class="container">
-                    <div class="col-sm-6">
-                            <div class="card card-default">
-                                <div class="card-body card-7-5">
-                                    <h4>My Course</h4>
-                                    <div id="piechart"></div>
-                                    <t t-foreach="student" t-as="obj">
-                                    <div class="note">
-                                        <p> <span class="alert-danger"></span> <span t-esc="obj.program_id.name"/></p>
-                                        <p> <span class="alert-danger"></span> <span t-esc="obj.semester_id.name"/></p>
-                                    </div>
-                                </t>
-                                </div>
-                            </div>
-                        </div>
                 </div>
             </div>
         </t>
@@ -977,41 +914,4 @@
             </div>
         </t>
     </template>
-
-
-    <template id="sale_details_page" name="Sale Details">
-    <t t-call="website.layout">
-     <div class="oe_structure">
-       <div class="container">
-         <br />
-         <center><h3>Sale Order Details</h3></center>
-         <br />
-           <table class="table-striped table">
-             <thead style="font-size: 23px;">
-             <tr>
-               <h6>
-                 <b>
-                   <th>Sale Order</th>
-                   <th>Customer</th>
-                   <th>Date</th>
-                   <th><b>State</b></th>
-                 </b>
-               </h6>
-             </tr>
-             </thead>
-             <tbody>
-               <t t-foreach="leave" t-as="order">
-               <tr>
-               <td><span t-esc="order.student_id.name"/></td>
-              <!--  <td><span t-esc="order.partner_id.name"/></td>
-               <td><span t-esc="order.date_order"/></td>
-               <td><span t-esc="order.state"/></td> -->
-               </tr>
-               </t>
-             </tbody>
-           </table>
-       </div>
-     </div>
- </t>
-</template>
 </odoo>

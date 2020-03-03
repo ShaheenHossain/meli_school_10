@@ -5,7 +5,7 @@
     'name': 'Account Balance',
     'version': '1.1',
     'category': 'Accounting',
-     'author': 'Karimiinfotech Pvt Ltd.',
+     'author': 'Bassam Infotech LLP',
     'website': 'http://www.bassaminfotech.com/',
 
     'depends': ['account'],

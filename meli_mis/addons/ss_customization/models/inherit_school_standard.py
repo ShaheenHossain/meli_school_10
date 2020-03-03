@@ -153,7 +153,6 @@ class ClassReporting(models.Model):
         campus_dict = {}
         for record in class_lines:
             campus_dict.setdefault(record.teacher_id.school_id.name, []).append(record)
-
         for campus in campus_dict:
             print ("==============campus",campus)
             template = self.env.ref('ss_customization.email_template_daily_reporting')
@@ -166,7 +165,6 @@ class ClassReporting(models.Model):
             'report_name': campus + 'Daily Reporting'
         }
             print ("================template",campus_dict.get(campus))
-            print template_values,"@@@@@@@@@@@@@@@@@@@@@@@@@"
             teacher = {}
             for record in campus_dict.get(campus):
                 teacher.setdefault(record.teacher_id.name, []).append(record.class_id)
@@ -229,7 +227,6 @@ class SchoolTeacher(models.Model):
 
 class StudentTimetableRegular(models.Model):
     _name = 'student.timetable.regular'
-
     start_date = fields.Date('Start Date')
     end_date = fields.Date('End Date')
     campus = fields.Many2one('school.school', 'Campus')
@@ -353,7 +350,6 @@ class SchoolStandard(models.Model):
     extend_class_history = fields.One2many('school.class.extend', 'standard_id', "Extend Class")
     exam_history = fields.One2many('student.examhistory', 'exam_id')
     talk_history=fields.One2many('talk.history','talk_id')
-    oyd_history=fields.One2many('oyd.exam.history','oyd_lines')
     code=fields.Char(string="Code")
 
     @api.onchange('standard_id')
@@ -431,19 +427,6 @@ class StudentFeedbackSetting(models.Model):
         return res
 
     user_ids = fields.Many2many('res.users')
-
-class OneYearExamHistory(models.Model):
-    _name='oyd.exam.history'
-
-    name=fields.Many2one('student.student',string="Students Name",readonly=True)
-    f_name=fields.Char(string="F/Name",readonly=True)
-    written=fields.Integer(string="Written")
-    oral=fields.Integer(string="Oral")
-    total=fields.Integer(string="Total",)
-    percentage=fields.Char(string='Percentage',)
-    grade=fields.Char(string="Grade",)
-    oyd_lines=fields.Many2one('school.standard')
-    result=fields.Char(string="Results",)
 
 
 

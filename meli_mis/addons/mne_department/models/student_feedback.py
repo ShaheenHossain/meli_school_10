@@ -1,4 +1,4 @@
-
+from twilio.rest import Client
 import xlwt, xlsxwriter
 import base64
 from odoo.exceptions import UserError
@@ -19,7 +19,7 @@ class student_survey_from(models.Model):
 	state=fields.Selection([('draft','Draft'),('done','Done')])
 	date=fields.Date('Date')
 	total_marks=fields.Integer('Total Marks',compute="_compute_marks")
-	percentage=fields.Float('Percentage',compute="_compute_marks")
+	percentage=fields.Integer('Percentage',compute="_compute_marks")
 
 	s_ids=fields.One2many('student.survey.lines','survey_lines')
 	term_ids=fields.One2many('student.term.lines','term_lines')
@@ -28,7 +28,7 @@ class student_survey_from(models.Model):
 	environment_ids=fields.One2many('student.environment.lines','environment_lines')
 	trainer_ids=fields.One2many('student.trainers.lines','trainer_lines')
 
-	
+	@api.onchange('date')
 	def _get_course_data(self):
 		rec=self.env['survey.questions'].search([])
 		courses=[]
@@ -41,12 +41,6 @@ class student_survey_from(models.Model):
 			for y in x.survey_lines_id:
 				question_type = dict(x._fields['student_queston'].selection).get(x.student_queston)
 				if x.name=='student':
-					self.s_ids=False
-					self.term_ids=False
-					self.material_ids=False
-					self.employee_ids=False
-					self.environment_ids=False
-					self.trainer_ids=False
 					if question_type == 'Course Survey':
 						courses.append(({'c_survey1':y.question}))
 					self.s_ids=courses
@@ -72,9 +66,7 @@ class student_survey_from(models.Model):
 	@api.model
 	def _compute_marks(self):
 		count=0
-		total=0
 		for x in self.s_ids:
-			total+=1
 			if x.strong_agree==True:
 				count=count+4
 			if x.agree==True:
@@ -86,7 +78,6 @@ class student_survey_from(models.Model):
 			if x.strongly_disagree==True:
 				count=count+0
 		for x in self.term_ids:
-			total+=1
 			if x.strong_agree==True:
 				count=count+4
 			if x.agree==True:
@@ -98,7 +89,6 @@ class student_survey_from(models.Model):
 			if x.strongly_disagree==True:
 				count=count+0
 		for x in self.material_ids:
-			total+=1
 			if x.strong_agree==True:
 				count=count+4
 			if x.agree==True:
@@ -111,7 +101,6 @@ class student_survey_from(models.Model):
 				count=count+0
 
 		for x in self.employee_ids:
-			total+=1
 			if x.strong_agree==True:
 				count=count+4
 			if x.agree==True:
@@ -123,7 +112,6 @@ class student_survey_from(models.Model):
 			if x.strongly_disagree==True:
 				count=count+0
 		for x in self.environment_ids:
-			total+=1
 			if x.strong_agree==True:
 				count=count+4
 			if x.agree==True:
@@ -136,7 +124,6 @@ class student_survey_from(models.Model):
 				count=count+0
 
 		for x in self.trainer_ids:
-			total+=1
 			if x.strong_agree==True:
 				count=count+4
 			if x.agree==True:
@@ -147,10 +134,8 @@ class student_survey_from(models.Model):
 				count=count+1
 			if x.strongly_disagree==True:
 				count=count+0
-		self.total_marks=count
-
-		self.percentage=(count*100)/(total*4)
-		print self.percentage,'33333333333333333333333'
+		self.total=count
+		self.percentage=(count*100)/116
 
 		
 		

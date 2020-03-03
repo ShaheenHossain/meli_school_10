@@ -10,10 +10,10 @@
             <field name="arch" type="xml">
                 <form string="Warning Message">
                     <header>
-                        <button name="warning_confirm" class="fa fa-check" string="Send To Students" states="draft" type="object" groups="school.group_school_administration,school.group_school_attendance_officer"/>
+                        <button name="warning_confirm" class="fa fa-check" string="Send To AM" states="draft" type="object" groups="school.group_school_administration,school.group_school_attendance_officer,school.group_school_finance_officer"/>
                         
 
-                        <field name="state" widget="statusbar"  readonly="1" status_visible=' draft, approve'/>
+                        <field name="state" widget="statusbar" readonly="1"/>
                     </header>
                     <sheet>
                     
@@ -21,7 +21,6 @@
                                 <group>
                                <field name="student_id" domain="[('program_id','=',program),('semester_id','=',course_level),('school_id','=',campus),('medium_id','=',shift)]" widget='selection'/>
                                 <field name="roll_no"/>
-                                
                               
 
                             </group>
@@ -110,7 +109,7 @@
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//div[@name='buttons']" position="inside">
-                        <button name="%(action_stu_fees_form)d" type="action" class="oe_inline oe_stat_button" icon="fa-exclamation-triangle" attrs="{'invisible':[('state', 'in', ['draft','terminate','alumni','cancel'])]}" groups="school.group_school_administration,school.group_school_student,school.group_school_academic_officer">
+                        <button name="%(action_stu_fees_form)d" type="action" class="oe_inline oe_stat_button" icon="fa-exclamation-triangle" attrs="{'invisible':[('state', 'in', ['draft','terminate','alumni','cancel'])]}" groups="school.group_school_administration,school.group_school_student,school.group_school_finance_officer,school.group_school_academic_officer">
                           <field name="warning_count" widget="statinfo"/>
                         </button>
                     </xpath>
@@ -133,136 +132,8 @@
             </field>
         </record>
 
-
-
-        <!-- <record id="school.warning_message_send_to_students" model="mail.template">
-            <field name="name">Warning Message</field>
-            <field name="model_id" ref="school.model_student_warning"></field>
-            <field name="email_from">${}</field>
-            <field name="email_to">${object.student_id.email|safe}</field>
-            <field name="subject">Warning Message</field>
-            <field name="auto_delete" eval="False"/>
-            <field name="built_in" eval="True"/>
-            <field name="body_html"><![CDATA[
-                <p>Dear ${object.student_id.name},</p>
-                <p>${object.name} </p>
-
-                </p>
-                <p> Thanks&Regards </p>
-                <p> CEO </p>
-                    <hr/>
-                
-            ]]>
-            </field>
-        </record> -->
-
-        <record id="school.warning_message_send_to_students" model="mail.template">
-            <field name="name">Warning Template</field>
-            <field name="email_from">${}</field>
-            <field name="subject">Warning Message</field>
-            <field name="email_to">${object.student_id.email|safe}</field>
-            <field name="lang">${object.lang}</field>
-            <field name="model_id" ref="school.model_student_warning"/>
-            <field name="auto_delete" eval="True"/>
-            <field name="body_html">
-                <![CDATA[
-                <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-                <head>
-                    <meta charset="utf-8" />
-                    <title></title>
-                </head>
-                <body style='font-family:"Roboto", sans-serif;'>
-                    <div style="width:700px; margin:0 auto;
-                    margin-top: 20px;
-                    border: 1px solid #e4e2e2;    margin-bottom: 20px;">
-                        <div style="text-align:center;padding-top: 10px;background:#f0f0f0;padding-bottom: 10px;"><img src="http://muslim.af/wp-content/uploads/2015/07/muslim.png"></div>
-
-                        <div style="text-align:center;padding-top: 20px;padding-bottom: 13px;">
-                            
-                            <h4 style="text-align:left;padding-bottom: 2px;font-size: 14px;color: #245d58;line-height: 35px;margin-top: 22px;">
-
-
-
-
-                                &nbsp; Dear ${object.student_id.name},<br/><br/>
-
-                                &nbsp; &nbsp; &nbsp;This letter is with regards to the on ${object.name} on ${object.date} <br/></br>
-
-                                &nbsp; &nbsp; &nbsp;We would like to remind you that what you did &nbsp; &nbsp; &nbsp;was unacceptable at any level as and it is considered a clear violation of the code of conduct and MELI policies.<br/><br/>
-
-                                &nbsp; &nbsp; &nbsp;We request from you to familiarize yourself with the MELI policies and do your best to comply with them. <br/><br/>
-
-                                &nbsp; &nbsp; &nbsp;This is your ${object.warning_type} warning, this warning will go into your profile. We would like to remind you that the &nbsp; &nbsp; &nbsp;repeating of this offense may result in the black listing or termination of your being student at MELI. Let us &nbsp; &nbsp; &nbsp;hope it doesn't reach that point.<br/><br/>
-
-
-                              
-
-                                &nbsp; &nbsp; &nbsp; Best Regards.<br/><br/>
-
-                            <div style="padding-bottom:10px;"></div>
-                        </div>
-                    </h4>
-                        <div style="margin-top: -6px;padding-left: 9%;padding-right: 9%;padding-bottom: 21px;background:#f5f5f5;padding-top:20px;">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align:left;width:72%;vertical-align:top;">
-                                            <div style="color: #525353;font-size: 18px;padding-bottom: 1px;"><b>Thanks &amp; Regards,</b></div>
-                                            <div style="color: #6e6d6d;font-size: 16px;margin-top: 5px;">Muslim IT Solutions</div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table style="padding-top: 11px;color:#6f7b82">
-                                <tbody>
-                                    <tr>
-                                        <td width="30%">
-                                            <div style="font-size:15px;padding-bottom:0.3em;"><img src="http://ocasia.org/img/globe-icon.png" style="padding-right:8px;padding-top:2px;"><a href="http://k/" style="color:inherit;vertical-align: top;">www.muslim.af</a></div>
-                                        </td>
-                                        <td width="30%">
-                                            <div style="font-size:15px;padding-bottom:0.3em;"><img src="http://ocasia.org/img/email-icon.png" style="padding-right:8px;padding-top:2px;"><a href="mailto:info@ocasia.org" style="color:inherit;vertical-align: top;">info@muslim.af</a></div>
-                                        </td>
-                                        <td width="30%">
-                                            <div style="font-size:15px;padding-bottom:0.3em;">
-                                                <img src="http://ocasia.org/img/phone-icon.png" style="padding-top:2px;"><span style="vertical-align: top;">+999 999 9999</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </body>
-                </html>
-
-
-                ]]>
-          </field>
-        </record>
-
-        <record id="school.terminate_message_send_to_students" model="mail.template">
-            <field name="name">Blacklist or Terminate Message</field>
-            <field name="model_id" ref="school.model_student_warning"></field>
-            <field name="email_from">${}</field>
-            <field name="email_to">${object.student_id.email|safe}</field>
-            <field name="subject">Terminate Message</field>
-            <field name="auto_delete" eval="False"/>
-            <field name="built_in" eval="True"/>
-            <field name="body_html"><![CDATA[
-                <p>Dear ${object.student_id.name},</p>
-                <p>${object.name}  Your profile in Blacklist. Because you  got  three types  warning messages</p>
-
-                </p>
-                <p> Thanks&Regards </p>
-                <p> CEO </p>
-                    <hr/>
-                
-            ]]>
-            </field>
-        </record>
-
        
         <!-- memu Items for Fees -->
-        <menuitem id="menu_student_warning" name="Warning Message" parent="school.menu_ems" sequence="6" action="action_student_warning_form" groups="school.group_school_administration,school.group_school_aam"/>
+        <menuitem id="menu_student_warning" name="Warning Message" parent="school.menu_ems" sequence="6" action="action_student_warning_form" groups="school.group_school_administration"/>
        
 </odoo>

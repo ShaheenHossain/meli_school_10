@@ -23,8 +23,6 @@
 from odoo.addons.web.controllers.main import Home
 from odoo import http
 from odoo.http import request
-import requests
-import json
 
 
 class WebsiteDesign(Home):
@@ -40,20 +38,10 @@ class WebsiteDesign(Home):
         else:
             return response
 
-    # @http.route('/api/save', auth='public', methods=['POST'],website=True, csrf=False)
-    # def save_obj(self, **kw):
-    #     obj = json.loads(kw.get('data'))
-    #     http.request.env['studentleave.request'].write({
-    #         'reason': obj.get('reason_for_leave'),
-           
-    #     })
-
     @http.route('/student/leaveRequest', type='http', auth="public", website=True)
     def render_leave_request_form(self, **kw):
         if request.env.user.user_type and request.env.user.user_type == "student":
-            leave_details = request.env['studentleave.request'].sudo().search([('student_id.pid','=',request.env.user.login)])
-            student=request.env['student.student'].sudo().search([('pid','=',request.env.user.login)])
-            return request.render('website_design.leaveRequest', {'leave':leave_details,'students':student})
+            return request.render('website_design.leaveRequest', {})
         return request.render('website.404', {})
 
     @http.route('/student/feedBackFrom', type='http', auth="public", website=True)
@@ -87,12 +75,3 @@ class WebsiteDesign(Home):
             })
             return request.redirect('/tearcher/tomorrowsTopic')
             # return request.render('website_design.tomorrowsTopic', {'result': "success" if tomorrows_topic else "fail"})
-    
-
-    @http.route('/course/student', type='http', auth="public", website=True)
-    def render_transfer_request_form(self, **kw):
-        if request.env.user.user_type and request.env.user.user_type == "student":
-            student_details = request.env['student.student'].sudo().search([('pid','=',request.env.user.login)])
-
-            return request.render('website_design.course_details', {'student':student_details})
-        return request.render('website.404', {})

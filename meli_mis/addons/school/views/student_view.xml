@@ -17,7 +17,7 @@
 					<button class="oe_stat_button"
 						name="%(school.action_followup_wizard)d" string="Send To OFU"
 						type="action" states="draft,movesemester,repeat"
-						groups="school.group_school_administration,school.group_school_registrar_officer,school.group_school_academic_officer" attrs="{'invisible':[('state','in',('followup','done'))]}"/>
+						groups="school.group_school_administration,school.group_school_registrar_officer,school.group_school_academic_officer,school.group_school_finance_officer" attrs="{'invisible':[('state','in',('followup','done'))]}"/>
 
 					<button class="oe_highlight oe_stat_button"
 						name="%(school.action_terminate_wizard)d" string="Terminate"
@@ -42,22 +42,22 @@
 				<sheet>
 					<div class="oe_button_box" name="buttons">
 						<button name="action_view_leave" type="object"
-							class="oe_stat_button" icon="fa-pencil-square-o" states='invoiced,done' groups="school.group_school_administration">
+							class="oe_stat_button" icon="fa-pencil-square-o" states='invoiced,done'>
 							<field string="Leaves" name="leaves_count"
 								widget="statinfo" />
 						</button>
 						<button name="action_view_transfer" type="object"
-							class="oe_stat_button" icon="fa-pencil-square-o" states='invoiced,done' groups="school.group_school_administration">
+							class="oe_stat_button" icon="fa-pencil-square-o" states='invoiced,done'>
 							<field string="Transfer Request" name="transfer_req_count"
 								widget="statinfo" />
 						</button>
 						<button name="action_view_exam_eligibility" type="object"
-							class="oe_stat_button" icon="fa-pencil-square-o" states='invoiced,done' groups="school.group_school_administration">
+							class="oe_stat_button" icon="fa-pencil-square-o" states='invoiced,done'>
 							<field string="Exam Eligibility Request"
 								name="exam_eligibility_count" widget="statinfo" />
 						</button>
 						<button name="action_view_withdraw" type="object"
-							class="oe_stat_button" icon="fa-pencil-square-o" states='invoiced,done' groups="school.group_school_administration">
+							class="oe_stat_button" icon="fa-pencil-square-o" states='invoiced,done'>
 							<field string="Withdraw" name="withdraw_count"
 								widget="statinfo" />
 						</button>
@@ -83,10 +83,15 @@
 					<label for="name" class="oe_edit_only"/> 
 						<field  name="name" placeholder="First Name" nolabel="1"
 							required="1" attrs="{'readonly':[('state','=','alumni')]}" />
-						
+						<label for="middle" class="oe_edit_only"/><label style="color:white;" string="."/> <field name="middle" placeholder="Middle Name" nolabel="1"
+							attrs="{'readonly':[('state','=','alumni')]}" />
+						<label for="last" class="oe_edit_only"/><label style="color:white;" string="."/> <field name="last" placeholder="Last Name" nolabel="1"
+							attrs="{'readonly':[('state','=','alumni')]}" />
 					</div>
 					<h1 class="oe_read_only" style="color:#1e7272;">
 						<field name="temp_name"/><label style="color:white;" string="."/>
+						<field name="temp_middle"/><label style="color:white;" string="."/>
+						<field name="temp_last"/><label style="color:white;" string="."/>
 					</h1>
 					</div>
 					<!-- <div class="oe_right oe_button_box" name="buttons"></div> -->
@@ -98,7 +103,8 @@
 							<field name='atten_leaves' invisible='1'/>
 							<field name='total_attendance' invisible='1'/>
 
-							<field name="roll_no" help="Roll number of Student" attrs="{'readonly':[('state','in',('invoiced','done'))]}" />
+							<field name="roll_no" help="Roll number of Student"
+								 />
 							<field name="school_id" placeholder="Campus"
 								help="Campus of Student"
 								attrs="{'readonly':['|',('state','in',['alumni','terminate']),('teachr_user_grp','=',True)]}" />
@@ -131,10 +137,10 @@
 									options="{'no_create_edit': True,'no_create': True,'no_open': True}" />
 								<field name="is_class" invisible="1" />
 								<field name="division" placeholder="Class Room"
-									attrs="{'invisible':[('state','not in',['invoiced','done','alumni','terminate']),('is_class','!=',True)],'readonly':[('state','in',('invoiced','done'))]}"
+									attrs="{'invisible':[('state','not in',['invoiced','done','alumni','terminate']),('is_class','!=',True)]}"
 									options="{'no_create_edit': True,'no_create': True,'no_open': True}" />
 								<field name="start_class" 
-									attrs="{'invisible':[('state','in',['draft','movesemester','repeat','followup'])],'readonly':[('state','in',('invoiced','done'))]}" />
+									attrs="{'invisible':[('state','in',['draft','movesemester','repeat','followup'])]}" />
 							<field name="email" placeholder="Email Address"
 									String="Email"
 									attrs="{'readonly':[('state','in',['alumni','terminate'])]}" />
@@ -290,8 +296,7 @@
 								attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
 								options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}">
 								<tree string="History">
-									<field name="level_id"  />
-									<field name="standard_id" />
+									<field name="standard_id" required="1" />
 									<field name="start_date" />
 									<field name="end_date" />
 									<field name="roll_no" />
@@ -351,9 +356,10 @@
 				<field name="semester_id" />
 				<field name="admission_date" />
 				<field name="gender" />
+				<field name="state" />
 				<field name="school_id" />
 				<field name="mobile" />
-				<field name="state" />
+				<field name="email" />
 				<field name="followup_id"
 					attrs="{'invisible':[('state','!=','followup')]}" />
 				<field name="availability"
@@ -580,18 +586,200 @@
 								<group>
 									<h3>
 									<field name="name" placeholder="First Name" nolabel="1" required="1" class="oe_inline" string="."/>
-									<field name="last"  nolabel="1" attrs="{'readonly':[('state','=','alumni')]}" />
+									<label for="last" class="oe_edit_only"/><label style="color:white;" string="."/>
+									<field name="last" placeholder="Last Name" nolabel="1" class="oe_inline"/>
 									
 									
+									<!-- <field name="last" placeholder="Last Name" nolabel="1" class="oe_inline"/> -->
 									<br/>
 
 								</h3>
-						
+								<!-- <h1 class="oe_read_only" style="color:#1e7272;">
+						<field name="temp_name"/><label style="color:white;" string="."/>
+						<field name="temp_middle"/><label style="color:white;" string="."/>
+						<field name="temp_last"/><label style="color:white;" string="."/>
+					</h1> -->
 									<field name="active" invisible="1"/>
 								</group>
 							</div>
 						</div>
 						
+						
+
+					<!-- Rearrange form view by sitaram solutions -->
+					<!-- <div class="oe_button_box" name="buttons1">
+					</div>
+					<field name="photo" widget="image" class="oe_avatar"
+						options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}" />
+					<div class="oe_title oe_row oe_edit_only">
+					
+					<label for="name" class="oe_edit_only"/> 
+						<field  name="name" placeholder="First Name" nolabel="1"
+							required="1" attrs="{'readonly':[('state','=','alumni')]}" />
+						<label for="middle" class="oe_edit_only"/><label style="color:white;" string="."/> <field name="middle" placeholder="Middle Name" nolabel="1"
+							attrs="{'readonly':[('state','=','alumni')]}" />
+						<label for="last" class="oe_edit_only"/><label style="color:white;" string="."/> <field name="last" placeholder="Last Name" nolabel="1"
+							attrs="{'readonly':[('state','=','alumni')]}" />
+					</div>
+					<h1 class="oe_read_only" style="color:#1e7272;">
+						<field name="temp_name"/><label style="color:white;" string="."/>
+						<field name="temp_middle"/><label style="color:white;" string="."/>
+						<field name="temp_last"/><label style="color:white;" string="."/>
+					</h1>
+ -->
+<!-- 					<group col='3'> -->
+<!-- 						<group> -->
+
+<!-- 							<div> -->
+<!-- 								<h1><span>Current Address</span></h1><br/> -->
+<!-- 								<field name="street" placeholder="Street..." -->
+<!-- 									class="o_address_street" -->
+<!-- 									attrs="{'readonly': [('state','=','alumni')]}" /> -->
+<!-- 								<field name="city" placeholder="City" -->
+<!-- 									class="o_address_city" -->
+<!-- 									attrs="{'readonly': [('state','=','alumni')]}" /> -->
+<!-- 								<field name="state_id" class="o_address_state" -->
+<!-- 									placeholder="State" options="{&quot;no_open&quot;: True}" -->
+<!-- 									attrs="{'readonly': [('state','=','alumni')]}" -->
+<!-- 									context="{'country_id': country_id, 'zip': zip}" /> -->
+<!-- 								<field name="zip" placeholder="ZIP" class="o_address_zip" -->
+<!-- 									attrs="{'readonly': [('state','=','alumni')]}" /> -->
+<!-- 								<field name="country_id" placeholder="Country" -->
+<!-- 									class="o_address_country" -->
+<!-- 									options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" -->
+<!-- 									attrs="{'readonly': [('state','=','alumni')]}" /> -->
+<!-- 							</div> -->
+
+<!-- 						</group> -->
+<!-- 						<group > -->
+<!-- 						<center> -->
+<!-- 						<br/><br/><br/> -->
+<!-- 						<button name="same_address" type='object' class="oe_edit_only oe_highlight" string="Same Address"/></center> -->
+<!-- 						</group> -->
+<!-- 						<group> -->
+<!-- 							<br/> -->
+
+<!-- 							<div> -->
+<!-- 								<h1><span>Permanent Address</span></h1><br/> -->
+<!-- 								<field name="permanent_street" class="o_address_street" placeholder="Street..." -->
+<!-- 									attrs="{'readonly':[('state','in',['alumni','terminate'])]}" /> -->
+<!-- 								<field name="permanent_city" placeholder="City" -->
+<!-- 									class="o_address_city"  -->
+<!-- 									attrs="{'readonly':[('state','in',['alumni','terminate'])]}" /> -->
+<!-- 								<field name="permanent_state_id" -->
+<!-- 									domain="[('country_id','=',country_id)]" -->
+<!-- 									class="o_address_state"  placeholder="State" -->
+<!-- 									options="{&quot;no_open&quot;: True}" -->
+<!-- 									attrs="{'readonly':[('state','in',['alumni','terminate'])]}" /> -->
+<!-- 								<field name="permanent_zip" placeholder="District" -->
+<!-- 									class="o_address_zip" -->
+<!-- 									attrs="{'readonly':[('state','in',['alumni','terminate'])]}" /> -->
+<!-- 								<field name="permanent_country_id" placeholder="Country" -->
+<!-- 									class="o_address_country,oe_no_button" -->
+<!-- 									options="{&quot;no_open&quot;: True}"  -->
+<!-- 									attrs="{'readonly':[('state','in',['alumni','terminate'])]}" /> -->
+<!-- 							</div> -->
+
+
+<!-- 							<field name="phone" widget="phone"/> -->
+<!-- 							<field name="mobile" widget="phone"/> -->
+<!-- 							<field name="email" widget="email"/> -->
+<!-- 							<field name="admission_user_id" required="1" readonly="1"/> -->
+<!-- 						</group> -->
+<!-- 					</group> -->
+
+					<!-- &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; -->
+					<!-- <div class="oe_inline"> -->
+					<!-- <newline /> -->
+					<!-- <separator string="Personal Information" /> -->
+					<!-- <field name="photo" widget="image" class="oe_avatar oe_left" style="max-width:100px;max-height:117px;" 
+						/> -->
+					<!-- <div class="oe_title"> -->
+					<!-- <group> -->
+					<!-- <field name="pid" nolabel="1" readonly="1"/> -->
+					<!-- <br /> -->
+					<!-- <field name="name" placeholder="First Name" nolabel="1" required="1" 
+						attrs="{'readonly':[('state','=','alumni')]}" style="width:60%%"/> -->
+					<!-- <br /> -->
+					<!-- <field name="middle" placeholder="Middle Name" nolabel="1" attrs="{'readonly':[('state','=','alumni')]}" 
+						style="width:60%%"/> -->
+					<!-- <br /> -->
+					<!-- <field name="last" placeholder="Last Name" nolabel="1" attrs="{'readonly':[('state','=','alumni')]}" 
+						style="width:60%%"/> -->
+					<!-- <br/> -->
+					<!-- <field name="active" invisible="1"/> -->
+					<!-- </group> -->
+					<!-- </div> -->
+					<!-- </div> -->
+					<!-- <group> -->
+					<!-- <group string="Campus Information"> -->
+					<!-- <field name="school_id" placeholder="Campus Name" required="1" -->
+					<!-- attrs="{'readonly':[('state','=','alumni')]}" options="{&quot;no_open&quot;: 
+						True, &quot;no_create&quot;: True}"/> -->
+					<!-- <field name="availability" attrs="{'invisible':[('state','in',['done','alumni'])]}"/> -->
+					<!-- </group> -->
+					<!-- <group string="Program Information" > -->
+					<!-- <field name="program_id" placeholder="Program" required="1" options="{'no_create_edit': 
+						True,'no_create': True,'no_open': True}"/> -->
+					<!-- <field name="medium_id" placeholder="Shift" required="1" options="{'no_create_edit': 
+						True,'no_create': True,'no_open': True}"/> -->
+					<!-- <field name="semester_id" domain="[('standard_id','=',program_id)]" 
+						required="1" options="{'no_create_edit': True,'no_create': True,'no_open': 
+						True}"/> -->
+					<!-- <field name="standard_id" placeholder="Class" domain="[('school_id','=',school_id),('medium_id','=',medium_id),('standard_id','=',program_id),('semester_id','=',semester_id),('state','!=','close')]" 
+						attrs="{'invisible':[('state','not in',['invoiced','done','alumni','terminate']),('is_class','!=',True)]}" 
+						options="{'no_create_edit': True,'no_create': True,'no_open': True}"/> -->
+					<!-- <field name="is_class" invisible="1" /> -->
+					<!-- <field name="division" placeholder="Class Room" attrs="{'invisible':[('state','not 
+						in',['invoiced','done','alumni']),('is_class','!=',True)]}" options="{'no_create_edit': 
+						True,'no_create': True,'no_open': True}"/> -->
+					<!-- <field name="start_class" readonly="1" attrs="{'invisible':[('state','in',['draft','done','movesemester','repeat','alumni','followup'])]}" 
+						/> -->
+					<!-- </group> -->
+					<!-- </group> -->
+					<!-- <group colspan="4"> -->
+					<!-- <group> -->
+					<!-- <label for="street" string="Current Address" /> -->
+					<!-- <div class="o_address_format"> -->
+					<!-- <field name="street" class="o_address_street" attrs="{'readonly':[('state','=','alumni')]}"/> -->
+					<!-- <field name="street2" class="o_address_street" attrs="{'readonly':[('state','=','alumni')]}"/> -->
+					<!-- <field name="city" placeholder="City" class="o_address_city" required="1" 
+						attrs="{'readonly':[('state','=','alumni')]}"/> -->
+					<!-- <field name="state_id" class="o_address_state" domain="[('country_id','=',country_id)]" 
+						placeholder="State" options="{&quot;no_open&quot;: True}" required="1" attrs="{'readonly':[('state','=','alumni')]}"/> -->
+					<!-- <field name="zip" placeholder="District" class="o_address_zip" 
+						attrs="{'readonly':[('state','=','alumni')]}"/> -->
+					<!-- <field name="country_id" placeholder="Country" class="o_address_country,oe_no_button" 
+						required="1" options="{&quot;no_open&quot;: True}" attrs="{'readonly':[('state','=','alumni')]}"/> -->
+					<!-- </div> -->
+					<!-- </group> -->
+					<!-- <group> -->
+					<!-- <label for="permanent_street" string="Permanent Address" /> -->
+					<!-- <div class="o_address_format"> -->
+					<!-- <field name="permanent_street" class="o_address_street" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/> -->
+					<!-- <field name="permanent_street2" class="o_address_street" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/> -->
+					<!-- <field name="permanent_city" placeholder="City" class="o_address_city" 
+						required="1" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/> -->
+					<!-- <field name="permanent_state_id" domain="[('country_id','=',country_id)]" 
+						class="o_address_state" required="1" placeholder="State" options="{&quot;no_open&quot;: 
+						True}" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/> -->
+					<!-- <field name="permanent_zip" placeholder="District" class="o_address_zip" 
+						attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/> -->
+					<!-- <field name="permanent_country_id" placeholder="Country" class="o_address_country,oe_no_button" 
+						options="{&quot;no_open&quot;: True}" required="1" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/> -->
+					<!-- </div> -->
+					<!-- </group> -->
+					<!-- <group> -->
+					<!-- <field name = "same_address"/> -->
+					<!-- </group> -->
+					<!-- <group> -->
+					<!-- <field name="phone" placeholder="Phone Number" attrs="{'readonly':[('state','=','alumni')]}"/> -->
+					<!-- <field name="mobile" placeholder="Mobile Number" attrs="{'readonly':[('state','=','alumni')]}"/> -->
+					<!-- <field name="email" placeholder="Email Address" String="Email" 
+						attrs="{'readonly':[('state','=','alumni')]}"/> -->
+					<!-- <field name="admission_user_id" required="1" readonly="1"/> -->
+					<!-- </group> -->
+					<!-- </group> -->
 					<notebook>
 						<page string="General">
 							<group string="General Information">
@@ -611,7 +799,7 @@
 <!-- 									<field name="phone" placeholder="Phone Number" -->
 <!-- 										attrs="{'readonly':[('state','=','alumni')]}" /> -->
 									<field name="mobile" placeholder="Mobile Number"
-										attrs="{'readonly':[('state','=','alumni')]}" required="1" />
+										attrs="{'readonly':[('state','=','alumni')]}" />
 										<field name="school_id" placeholder="Campus Name"
 										required="1" attrs="{'readonly':[('state','=','alumni')]}"
 										options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
@@ -621,7 +809,22 @@
 									<field name="state_id" placeholder="State" attrs="{'readonly': [('state','=','alumni')]}"/>
 									<field name="country_id" placeholder="Country" attrs="{'readonly': [('state','=','alumni')]}"/>
 									
-
+<!-- 									<strong><span>Current Address</span></strong>	 -->
+<!-- 									<div> -->
+<!-- 								<field name="street" placeholder="Street..." -->
+<!-- 									attrs="{'readonly': [('state','=','alumni')]}" /><br/> -->
+<!-- 								 <field name="city" placeholder="City" -->
+<!-- 									attrs="{'readonly': [('state','=','alumni')]}" string="city" /><br/> -->
+<!-- 								 <field name="state_id"  -->
+<!-- 									placeholder="State" options="{&quot;no_open&quot;: True}" -->
+<!-- 									attrs="{'readonly': [('state','=','alumni')]}" -->
+<!-- 									context="{'country_id': country_id}" /><br/> -->
+<!-- 								 <field name="country_id" placeholder="Country" -->
+<!-- 									options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" -->
+<!-- 									attrs="{'readonly': [('state','=','alumni')]}" /> -->
+<!-- 									</div> -->
+									
+<!-- 									<field name = "same_address"/> -->
 
 
 								</group>
@@ -860,15 +1063,6 @@
 		model="ir.actions.act_window">
 		<field name="name">Students Terminated</field>
 		<field name="domain">[('state','=','terminate')]</field>
-		<field name="res_model">student.student</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,kanban,form</field>
-	</record>
-
-	<record id="action_student_blocklist"
-		model="ir.actions.act_window">
-		<field name="name">Students Blocklist</field>
-		<field name="domain">[('state','=','block')]</field>
 		<field name="res_model">student.student</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,kanban,form</field>

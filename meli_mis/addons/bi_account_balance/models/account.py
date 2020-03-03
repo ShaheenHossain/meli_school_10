@@ -20,7 +20,7 @@ class AccountAccount(models.Model):
     #============================================
 
 
-    @api.depends('account_move_lines.credit','account_move_lines.debit')
+    @api.depends('account_move_lines')
     def _find_account_balance(self):
         
         for account in self:
@@ -28,17 +28,19 @@ class AccountAccount(models.Model):
             total_debit = 0.0
             total_credit = 0.0
             for value in values:
-                total_debit = total_debit + value.debit 
-                total_credit = total_credit + value.credit       
+                if value.debit != 0:
+                    total_debit = total_debit + value.amount_currency
+                if value.credit != 0: 
+                    total_credit = total_credit + value.amount_currency       
             account.update({
-                    'credit': total_credit,
-                    'debit': total_debit,
-                    'balance': total_debit - total_credit,
+                    'credit1': total_credit,
+                    'debit1': total_debit,
+                    'balance1': total_debit + total_credit,
                 })
     account_move_lines = fields.One2many('account.move.line', 'account_id', string='Move Lines', copy=False)
-    credit = fields.Monetary(string='Credit', readonly=True, compute='_find_account_balance')
-    debit = fields.Monetary(string='Debit', readonly=True, compute='_find_account_balance')
-    balance = fields.Monetary(string='Balance', readonly=True, compute='_find_account_balance')
+    credit1 = fields.Monetary(string='Credit', readonly=True, compute='_find_account_balance')
+    debit1 = fields.Monetary(string='Debit', readonly=True, compute='_find_account_balance')
+    balance1 = fields.Monetary(string='Balance', readonly=True, compute='_find_account_balance')
 
 
     

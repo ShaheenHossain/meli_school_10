@@ -357,7 +357,7 @@
  <field name="act_window_id" ref="action_main_menu_teacher"/>
 </record>
             
-            <menuitem id="main_menu_teacher" name="Teacher MIS" parent="menu_ems" action="action_main_menu_teacher" groups="school.group_school_administration,school.group_school_aam" sequence="2"/>
+            <menuitem id="main_menu_teacher" name="Teacher MIS" parent="menu_teachers" action="action_main_menu_teacher" groups="school.group_school_administration" sequence="1"/>
 
 
 		<!-- Form View Of Teahcer's Profiles -->

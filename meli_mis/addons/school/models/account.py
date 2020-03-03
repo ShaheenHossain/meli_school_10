@@ -65,7 +65,7 @@ class AccountInvoice(models.Model):
 	student_id = fields.Many2one('student.student',string='Student')
 	picking_count = fields.Integer(string="Count")
 	invoice_picking_id = fields.Many2one('stock.picking', string="Picking Id")
-	picking_type_id = fields.Many2one('stock.picking.type', 'Picking Type', required=True,
+	picking_type_id = fields.Many2one('stock.picking.type', 'Picking Type',
 									  default=_default_picking_transfer,
 									  help="This will determine picking type of incoming shipment")
 
@@ -191,6 +191,7 @@ class AccountInvoice(models.Model):
 		type_obj = self.env['stock.picking.type']
 		company_id = self.env.context.get('company_id') or self.env.user.company_id.id
 		picking_type_id = type_obj.search([('code', '=', 'outgoing'), ('warehouse_id.company_id', '=', company_id),('warehouse_id.school_id','=',self.school_id.id)], limit=1)
+		print picking_type_id,"666666666666666666666666666666"
 		for invoice in self:
 			if invoice.student_payslip_id:
 				for order_line in invoice.invoice_line_ids:
@@ -215,6 +216,8 @@ class AccountInvoice(models.Model):
 
 	@api.multi
 	def action_view_picking(self):
+
+		
 		action = self.env.ref('stock.action_picking_tree_ready')
 		result = action.read()[0]
 		result.pop('id', None)

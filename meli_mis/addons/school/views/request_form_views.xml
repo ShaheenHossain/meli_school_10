@@ -110,7 +110,7 @@
 
 	<menuitem id="menu_exam_eligibility_request" 
 		name="Exam Eligibility Request" 
-		parent="student_requests_process" 
+		parent="menu_students_parents" 
 		action="action_exam_eligible_request_form" 
 		sequence="3"
 		groups="school.group_school_administration"/>

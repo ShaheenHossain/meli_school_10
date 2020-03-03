@@ -235,7 +235,7 @@
                 </group>
                 <separator/>
                 <field name="period3" context="{'default_course_level': course_level,'default_campuses':campuses,'default_classes':classes,'default_room_number':room_number,'default_shift_id':shift_id,'default_name':name,'default_pro':pro}">
-                  <tree editable="bottom"  delete='false'>
+                  <tree editable="bottom" create='false' delete='false'>
                     <field name="pro" invisible="1"/>
                     <field name="period" readonly="1"/>
                    
@@ -462,24 +462,12 @@
     </field>
   </record>
 
-  <record id="user_class_inherited_view" model="ir.ui.view">
-    <field name="name">User Inherited</field>
-    <field name="model">res.users</field>
-    <field name="inherit_id" ref="base.view_users_form"/>
-    <field name="arch" type="xml">
-      <field name="user_type" position="after">
-        <field name="campus" widget='selection'/>
-      </field>
-    </field>
-  </record>
-
-
 
 
     <menuitem 
       id="menu_school_standard_form3333" 
       name="Class Timetable"
-      parent="school.menu_students_parents"
+      parent="school.menu_ems"
       groups="school.group_school_program_coordinator,school.group_school_head_of_the_incharge"
       sequence='7'/>
 

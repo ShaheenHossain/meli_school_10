@@ -1,13 +1,101 @@
 <?xml version="1.0" encoding='UTF-8'?>
 <odoo>
 
+<menuitem id="school.admission_register" name="Admission Register" parent="school.menu_ems" sequence="2" groups="school.group_school_administration,school.group_is_admission,school.group_school_registrar_officer,school.group_school_academic_officer,school.group_school_finance_officer"/>
+<menuitem id="school.menu_students_parents" name="Student" parent="school.menu_ems" sequence="3"/>
+<menuitem id="school.menu_student_warning" name="Warning Message" parent="school.menu_ems" sequence="4" action="school.action_student_warning_form" groups="school.group_school_administration,school.group_school_student,school.group_school_teacher,school.group_school_attendance_officer,school.group_school_finance_officer,school.group_school_academic_officer"/>
+<menuitem id="school.menu_reminders" name="Reminders" parent="school.menu_ems" action="school.action_student_reminder" sequence="5" groups="school.group_school_administration,school.group_school_student,school.group_school_teacher,school.group_school_parent,school.group_school_attendance_officer,school.group_school_finance_officer,school.group_school_academic_officer"/>
+<menuitem id="schoolfees_menu_fees" name="Fees" parent="school.menu_ems" groups="school.group_school_administration,school.group_school_parent,school.group_school_finance_officer" sequence="6"/>
+<menuitem id="school_attendance.menu_attendance" name="Attendance" parent="school.menu_ems" sequence="7" groups="school.group_school_administration,school.group_school_parent,school.group_school_attendance_officer"/>
+<menuitem id="school.menu_teachers" name="Teacher" parent="school.menu_ems" sequence="8"/>
 
 
-<menuitem id="school.menu_student_warning" name="Warning Message" parent="school.menu_ems" sequence="15" action="school.action_student_warning_form" groups="school.group_school_administration,school.group_school_aam"/>
+<!-- <record id="student_feedback_form" model="ir.ui.view">
+                <field name="name">student.feedback.form</field>
+                <field name="model">student.feedback</field>
+                <field name="arch" type="xml">
+                    <form string="Student Feedback">
+                    <header>
+                    	<button name="send_main_feedback" string="send" type="object" class="oe_highlight"/>
+                    </header>
+                    <group>
+                    	<field name="student_id"/>
+                    	<field name="subject"/>
+                    	<field name="submit_to"/>
+                    	<field name="type"/>
+                    </group>
+                    <group>
+                    	<field name="feedback"/>
+                    </group>
+                    </form>
+                    </field>
+                    </record>
+                    
+                    <record id="student_feedback_tree" model="ir.ui.view">
+                <field name="name">student.feedback.tree</field>
+                <field name="model">student.feedback</field>
+                <field name="arch" type="xml">
+                    <tree string="Student Feedback">
+                    <field name="student_id"/>
+                    <field name="feedback"/>
+                    </tree>
+                    </field>
+                    </record> -->
+                    
+                              <!--  <record id="student_feedback_action_form" model="ir.actions.act_window">
+                <field name="name">Feedback</field>
+                <field name="res_model">student.feedback</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+            </record> -->
 
+<!-- <record id="student_feedback_setting_form" model="ir.ui.view">
+                <field name="name">student.feedback.setting.form</field>
+                <field name="model">student.feedback.setting</field>
+                <field name="arch" type="xml">
+                    <form string="Student Feedback Setting">
+                    <sheet>
+                    <group string="User to send mails for feedback">
+                    	<field name="user_ids" nolabel="1">
+                    	<tree editable="1">
+                    		<field name="name"/>
+                    		</tree>
+                    	</field>
+                    	</group>
+                    </sheet>
+                    </form>
+                    </field>
+                    </record>
 
-
-
+            <record id="student_feedback_action" model="ir.actions.act_window">
+                <field name="name">Feedback Setting</field>
+                <field name="res_model">student.feedback.setting</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">form</field>
+            </record> -->
+            
+            
+<!-- <record id="class_extend_request_form" model="ir.ui.view"> -->
+<!--                 <field name="name">class.extend.request.form</field> -->
+<!--                 <field name="model">school.class.extend</field> -->
+<!--                 <field name="arch" type="xml"> -->
+<!--                     <form string="Class Extend"> -->
+<!--                     <sheet> -->
+<!--                     <group > -->
+<!--                     <group> -->
+<!--                     	<field name="name"></field> -->
+<!--                     	<field name="date_to"></field> -->
+<!--                     	<field name="reason"/> -->
+<!--                     </group> -->
+<!--                     <group> -->
+<!--                     	<field name="date_from"/> -->
+<!--                     	<field name="standard_id"/> -->
+<!--                     </group> -->
+<!--                     	</group> -->
+<!--                     	</sheet> -->
+<!--                     </form> -->
+<!--                     </field> -->
+<!--                     </record> -->
                     
                     <record id="class_extend_request_tree" model="ir.ui.view">
                 <field name="name">class.extend.request.tree</field>
@@ -122,8 +210,8 @@
                     	</group>
                     	<group>
                     		<field name="class_id"/>
-                    		<field name="enter_time" widget="timepicker2"/>
-                    		<field name="exit_time" widget="timepicker2"/>
+                    		<field name="enter_time" widget="float_time"/>
+                    		<field name="exit_time" widget="float_time"/>
                     		
                     	</group>
                     	</group>
@@ -233,7 +321,7 @@
 
 <menuitem id="menu_book_request" name="Book Request" parent="school.menu_ems" action='action_book_request' sequence="9"/>
 <!-- <menuitem id="student_feedback_setting" action="student_feedback_action" name="Feedback setting" parent="school.menu_students_parents"/> -->
-<!-- <menuitem id="menu_timetable_regular_wizard" name="Timetable" parent="timetable.menu_timetable_1" action="action_timetable_wizard"/> -->
-<menuitem id="menu_class_reportings" name="Class Reporting" parent="school.menu_ems" action="action_class_reporting"/>
-<!-- <menuitem id="menu_class_extend_request" name="Class Extend" parent="school.menu_teachers" action="action_class_extend_request"/> -->
+<!-- <menuitem id="menu_timetable_regular_wizard" name="Timetable" parent="timetable.menu_timetable_1" action="action_timetable_wizard"/>
+<menuitem id="menu_class_reportings" name="Class Reporting" parent="school.menu_teachers" action="action_class_reporting"/>
+<menuitem id="menu_class_extend_request" name="Class Extend" parent="school.menu_teachers" action="action_class_extend_request"/> -->
 </odoo>

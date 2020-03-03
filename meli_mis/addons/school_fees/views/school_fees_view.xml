@@ -41,15 +41,18 @@
             <field name="arch" type="xml">
                 <form string="Student Fees Structure">
                     <sheet>
-                        <group col="6" colspan="4">
-
-                            <field name="name" widget="selection"/>
-                            <field name="code" placeholder="Code"/>
+                        <group>
+                            <group>
+                                <field name="name" widget="selection"/>
+                                <field name="code" placeholder="Code"/>
+                            </group>
+                            <group>
+                                <field name="semester_id" widget="selection" domain="[('standard_id','=',name)]"/>
+                                <field name="sem_type" invisible="1"/>
+                                <field name="school_id"/>
+                            </group>
                         </group>
-                        <group col="6" colspan="4">
-                            <field name="semester_id" widget="selection" domain="[('standard_id','=',name)]"/>
-                            <field name="sem_type" invisible="1"/>
-                        </group>
+                        
                         <notebook colspan="4">
                             <page string="Fees Structure">
                                 <field name="line_ids" nolabel="1" colspan="4"/>
@@ -68,6 +71,7 @@
                     <field name="semester_id"/>
                     <field name="name"/>
                     <field name="code"/>
+                    <field name="school_id"/>
                 </tree>
             </field>
         </record>
@@ -145,7 +149,7 @@
                     <group col="4">
                         <field name="sequence" readonly="1"/>
                         <field name="name"/>
-                        <field name="product_id" widget='selection'/>
+                        <field name="product_id"/>
                         <field name="code"/>
                         <field name="fee_type"/>
                     </group>
@@ -207,11 +211,11 @@
                         <button name="discount_confirm" class="fa fa-check" string="Approve Concession" states="submit_discount" type="object" groups="school.group_school_administration,school.group_school_academic_director"/>
                         <button name="payslip_confirm" class="fa fa-check" string="Confirm" states="draft,discount_state,reject_discount" type="object" groups="school.group_school_administration,school.group_school_finance_officer"/>
                         <button name="student_pay_fees" class="fa fa-share" string="Payment" states="confirm" type="object" groups="school.group_school_administration,school.group_school_finance_officer"/>
-                        <field name="state" widget="statusbar" statusbar_visible=" draft, submit_discount, reject_discount, discount_state, confirm, pending, paid"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
-                            <button name="invoice_view" string="Invoice" icon="fa-pencil-square-o" widget="stateinfo" class="oe_stat_button" states="pending,paid" type="object" groups="school.group_school_administration,school.group_school_finance_officer">
+                            <button name="invoice_view" string="Invoice" icon="fa-pencil-square-o" widget="stateinfo" class="oe_stat_button" states="pending,paid" type="object" groups="school.group_school_administration">
                                 <field name="invoice_count"/>
                             </button>
                         </div>
@@ -235,17 +239,13 @@
                                 <field name="standard_id" placeholder="Class" widget="selection" attrs="{'readonly':[('state','not in','draft')]}" readonly="1"/>
                                  <field name="pid" invisible="1"/>
                                  <field name="parent_id" invisible="1"/>
-                                 <field name="semester_id" invisible="1"/>
-                                 <field name="payment_words" invisible="1"/>
-
+                                 <field name="semester_id" invisible="1"/>`
                                
                             </group>
-
                         </group>
-                      <!--   <field name="note"/> -->
                         <group col="4">
                             <separator string="Fees Structure" colspan="4"/>
-                            <field name="fees_structure_id"  force_save="1" placeholder="Fee Structure"  options="{&quot;no_create&quot;: True}" attrs="{'readonly':[('state','!=','confirm')]}"/>
+                            <field name="fees_structure_id" required="1" placeholder="Fee Structure"  options="{&quot;no_create&quot;: True}" attrs="{'readonly':[('state','!=','confirm')]}"/>
                             <field name="journal_id" widget="selection" placeholder="Journal" domain="[('type','=','sale')]" attrs="{'readonly':[('state','not in','draft')]}"/> 
                             <field name="concession_reason" attrs="{'invisible':[('state','in',['draft'])]}" readonly="1"/>
                             <notebook colspan="4">
@@ -475,6 +475,7 @@
                     
                     <xpath expr='//group[2]' position="inside">
                         <field name="school_id"/>
+                        <field name="slip_number"/>
                     </xpath>
                 </field>
         </record>
@@ -606,32 +607,9 @@
             </field>
         </record>
 
-        <record id="student_fee_payslip_mail" model="mail.template">
-            <field name="name">Fee Receipt</field>
-            <field name="model_id" ref="school_fees.model_student_payslip"></field>
-            <field name="email_from">${}</field>
-            <field name="email_to">${object.student_id.email|safe}</field>
-            <field name="subject">Muslim English Institute  Fee Receipt</field>
-            <field name="lang">${object.lang}</field>
-            <field name="auto_delete" eval="True"/>
-            <field name="body_html"><![CDATA[
-                <p>Dear ${object.name},</p>
-                <p> Fee Receipt.. </p>
-                
-            </p>
-            <p> Thanks&Regards </p>
-            <p> CEO </p>
-                <hr/>
-                
-            ]]>
-                
-            </field>
-        </record>
-
-
        
         <!-- memu Items for Fees -->
-        <menuitem id="menu_fees" name="Fees" parent="school.menu_students_parents" groups="school.group_school_administration,school.group_school_finance_officer" sequence="5"/>
+        <menuitem id="menu_fees" name="Fees" parent="school.menu_ems" groups="school.group_school_administration,school.group_school_finance_officer" sequence="5"/>
         <menuitem id="menu_student_payslip" name="Fees Receipts" parent="menu_fees" action="action_student_payslip_form"
                   groups="school.group_school_administration,school.group_school_finance_officer" sequence="111"/>
         <menuitem id="menu_student_payslip_concession" name="Fees Concession Requests" parent="menu_fees" action="action_student_payslip_form_concession" groups="school.group_school_administration,school.group_school_finance_officer" sequence="112"/>

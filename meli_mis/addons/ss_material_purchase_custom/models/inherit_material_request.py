@@ -116,5 +116,5 @@ class MaterialRequest(models.Model):
 class InventoryInherited(models.Model):
     _inherit = 'product.template'
 
-    types=fields.Selection([('it','IT'),('consumable','Consumable'),('general','General')],string='Product Type')
+    types=fields.Selection([('it','IT'),('consumable','Consumable'),('construction','Constructions')],string='Product Type')
     s_no=fields.Integer(string='Serial No')

@@ -7,7 +7,7 @@
     'author': 'Bassam Infotech',
     'website': 'http://www.bassaminfotech.com',
     'license': 'AGPL-3',
-    'depends': ['base','school','sales_team'],
+    'depends': ['base','school','bi_hr'],
     'data': [
         'security/security_view.xml',
         'security/ir.model.access.csv',
@@ -15,6 +15,5 @@
         'views/queue_management.xml',
         # 'report/token_view.xml',
         'report/token_management_report.xml',
-        'report/target_sale_report.xml',
     ]
 }

@@ -45,41 +45,6 @@
 
 		       			
 		       		</table>
-		       		<t t-if="docs[5]== 'DEL'">
-	          	<div>
-	          		<h2 class="text-center"><strong>One Year Diploma</strong> </h2>
-	          	</div>
-	          		
-
-	          	<table border="1" class="table table-condesed table-bordered" >
-					<tr>
-						<td class="text-center"><strong>Student Name</strong></td>
-						<td class="text-center"><strong>Father Name</strong></td>
-						<td class="text-center"><strong>Written</strong></td>
-						<td class="text-center"><strong>Oral</strong></td>
-						<td class="text-center"><strong>Total</strong></td>
-						<td class="text-center"><strong>Percentage</strong></td>
-						<td class="text-center"><strong>Grade</strong></td>
-						<td class="text-center"><strong>Results</strong></td>
-					</tr>
-					
-						<t t-foreach="students[o]" t-as="p">
-						<tr>
-							<td class="text-center"><span t-esc="p[0]"/></td>
-							<td class="text-center"><span t-esc="p[1]"/></td>
-							<td class="text-center"><span t-esc="p[2]"/></td>
-							<td class="text-center"><span t-esc="p[3]"/></td>
-							<td class="text-center"><span t-esc="p[4]"/></td>
-							<td class="text-center"><span t-esc="p[5]"/></td>
-							<td class="text-center"><span t-esc="p[6]"/></td>
-							<td class="text-center"><span t-esc="p[7]"/></td>
-							
-						
-						</tr>
-					</t>
-
-				</table>
-			</t>
 		       		
 	          		
 		       		<t t-if="docs[5]== 'TYD'">

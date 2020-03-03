@@ -10,8 +10,8 @@
         Long description of module's purpose
     """,
 
-    'author': "Karimi InfoTech Pvt Ltd.",
-    'website': "http://www.karimiinfotech.com",
+    'author': "My Company",
+    'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/10.0/odoo/addons/base/module/module_data.xml
@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','l10n_in_hr_payroll','hr_contract','report_xlsx','hr_payroll','hr_holidays','hr_attendance','sale_timesheet','hr_recruitment','hr_recruitment_survey','hr_expense','school','resource','bi_mustroll_excel','bi_sqlconnector','dev_employee_profile','hr_public_holidays','oh_employee_documents_expiry','mail','hr_payroll_account'],
+    'depends': ['base','hr_contract','report_xlsx','hr_holidays','hr_attendance','hr_recruitment_survey','hr_expense','hr_public_holidays','mail','account'],
 
     # always loaded
     'data': [
@@ -28,8 +28,8 @@
         'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
-        'views/payslip_batches.xml',
         'wizards/payslip_batches_wizard.xml',
+        'views/payslip_batches.xml',
         'views/excel_view.xml',
         'views/payslips_validation_approve.xml',
         'wizards/payslip_batch_pdf_wizard.xml',

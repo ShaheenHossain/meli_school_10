@@ -3,11 +3,9 @@
 
 import time
 import requests
-import random2
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError, Warning as UserError
 from datetime import datetime
-import inflect
 import odoo.addons.decimal_precision as dp
 from odoo.tools import float_is_zero, float_compare
 from odoo.tools.misc import formatLang
@@ -111,50 +109,6 @@ class StudentFeesRegister(models.Model):
 					   'state': 'confirm'})
 		return True
 
-class Account_Move_Line(models.Model):
-    _inherit="account.move.line"
-
-
-    sad=fields.Char('hgsdf')
-
-
-class Account_Move_Lines(models.Model):
-    _inherit="account.partial.reconcile"
-
-
-    sad=fields.Char('hgsdf')
-
-class Account_Account_Type(models.Model):
-    _inherit="account.account.type"
-
-
-    sad=fields.Char('hgsdf')
-
-class AccountDepreciation(models.Model):
-    _inherit="account.asset.depreciation.line"
-
-
-    sad=fields.Char('hgsdf')
-   
-
-class AccountPaymentMethod(models.Model):
-    _inherit="account.payment.method"
-
-
-    sad=fields.Char('hgsdf')
-
-class AccountJournal(models.Model):
-    _inherit="account.journal"
-
-
-    sad=fields.Char('hgsdf')
-
-class AccountJournals(models.Model):
-    _inherit="account.full.reconcile"
-
-
-    sad=fields.Char('hgsdf')
-
 
 class StudentPayslipLine(models.Model):
 	'''Student PaySlip Line'''
@@ -257,7 +211,6 @@ class StudentFeesStructureLine(models.Model):
 							('repeat', 'Repeat'),
 							('other', 'Other')],
 							'Fees Type', required=True)
-	
 
 	@api.model
 	def create(self, vals):
@@ -287,6 +240,7 @@ class StudentFeesStructure(models.Model):
 								'fees_id', 'slip_id', 'Fees Structure')
 	semester_id = fields.Many2one('standard.semester', string="Semester", required=True)
 	sem_type = fields.Selection([('normal', 'Normal'),('repeat', 'Repeat'),('exam', 'Exam'),('lateexam', 'Late Exam')], "Type", required=True, default='normal')
+	school_id = fields.Many2one('school.school', string="Company", required=True)
 
 	_sql_constraints = [('code_uniq', 'unique(code)',
 						 '''The code of the Fees Structure must
@@ -316,9 +270,14 @@ class StudentPayslip(models.Model):
 		return [('state','in',('submit_discount','draft','submit_discount','discount_state','pending'))]
 
 
-	@api.multi
-	def _get_default_journal(self):
-		return self.env['account.journal'].search([('code', '=', 'INV')], limit=1).id
+	# @api.multi
+	# def _get_default_journal(self):
+	# 	print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+	# 	obj = self.env['account.journal'].search([('code', '=', 'INV')])
+	# 	for rec in obj:
+	# 		print self.company_id,"222222222",rec.company_id,"############"
+	# 		if self.school_id == rec.company_id:
+	# 			return rec.id
 
 	@api.depends('line_ids.price_subtotal')
 	def _amount_total_all(self):
@@ -328,7 +287,15 @@ class StudentPayslip(models.Model):
 				total += line.price_subtotal
 			order.update({
 				'total': total,
-			})	
+			})
+
+	# @api.multi
+	# def _compute_campany(self):
+	# 	print "@@@@@@@@@@@@@@@@@@@@@@@@@@"
+	# 	obj = self.env['res.users'].search([])
+	# 	for rec in obj:
+	# 		if self.school_id.name == rec.name:
+	# 			self.company_id = rec.id
 
 	
 
@@ -347,13 +314,13 @@ class StudentPayslip(models.Model):
 					   help="Current Date of payslip",
 					   default=lambda * a: time.strftime('%Y-%m-%d'))
 	line_ids = fields.One2many('student.payslip.line', 'slip_id',
-							   'PaySlip Line',states={'discount_state': [('readonly',True)]})
+							   'PaySlip Line',readonly=True,states={'draft': [('readonly',False)]})
 	total = fields.Monetary("Total", store=True, readonly=True, compute='_amount_total_all', track_visibility='always',
 							help="Total Amount")
 	state = fields.Selection([('draft', 'Draft'),('submit_discount','Concession Requested'),('reject_discount','Concession Rejected'),('discount_state','Concession Approved'), ('confirm', 'Confirmed'),
 							  ('pending', 'Pending'), ('paid', 'Paid')],
 							 'State', readonly=True, default='draft')
-	journal_id = fields.Many2one('account.journal', 'Journal', required=False,default=_get_default_journal)
+	journal_id = fields.Many2one('account.journal', 'Journal', required=False, compute="_get_default_journal")
 	invoice_count = fields.Integer(string="# of Invoices",
 								   compute="_compute_invoice")
 	paid_amount = fields.Monetary('Paid Amount', help="Amount Paid")
@@ -374,10 +341,7 @@ class StudentPayslip(models.Model):
 							 ('in_refund', 'Supplier Refund'),
 							 ], 'Type', required=True,
 							change_default=True, default='out_invoice')
-	company_id = fields.Many2one('res.company', 'Campus', required=True,
-								 change_default=True, readonly=True,
-								 default=lambda obj_c: obj_c.env['res.users'].
-								 browse([obj_c._uid])[0].company_id)
+	company_id = fields.Many2one('res.company', 'Campus', required=True, readonly=True)
 	school_id = fields.Many2one('school.school', 'Campus')
 	semester_id = fields.Many2one('standard.semester','Course Level') 
 	discount_approval = fields.Boolean('Discount Approved')
@@ -388,8 +352,15 @@ class StudentPayslip(models.Model):
 	parent_id = fields.Char('Father Name', related='student_id.parent_id', store=True)
 	refund_amount = fields.Float("Refund Amount",required=False)
 	nid=fields.Char(string="Tazkira Number")
-	payment_words=fields.Text('Payment')
-	# note=fields.Text('NOTE')
+
+
+	@api.depends('company_id')
+	def _get_default_journal(self):
+		obj = self.env['account.journal'].search([('code', '=', 'INV')])
+		for rec in obj:
+			if self.company_id == rec.company_id:
+				self.journal_id = rec.id
+				return True
 
 
 
@@ -445,10 +416,14 @@ class StudentPayslip(models.Model):
 			self.semester_id = self.student_id.semester_id.id
 
 			self.nid=self.student_id.nid
-			fees_structure = self.env['student.fees.structure'].search([('semester_id','=',self.student_id.semester_id.name)], limit=1)
+			fees_structure = self.env['student.fees.structure'].search([])
 			for x in fees_structure:
-				if x.semester_id.name==self.student_id.semester_id.name:
+				if x.semester_id.name==self.student_id.semester_id.name and x.school_id == self.school_id:
 					self.fees_structure_id = x.id
+			obj = self.env['res.company'].search([])
+			for rec in obj:
+				if self.school_id.name == rec.name:
+					self.company_id = rec.id
 		
 
 
@@ -588,11 +563,6 @@ class StudentPayslip(models.Model):
 	@api.multi
 	def payslip_confirm(self):
 		'''Method to confirm payslip'''
-		for total in self:
-			p = inflect.engine()
-			p1=p.number_to_words(int(total.total))
-			self.payment_words=p1
-	
 		for rec in self:
 			if not rec.journal_id:
 				raise ValidationError(_('Kindly, Select Account Journal!'))
@@ -623,7 +593,6 @@ class StudentPayslip(models.Model):
 					   'due_amount': amount,
 					   'currency_id': rec.company_id.currency_id.id or False
 					   })
-
 		return True
 
 	@api.multi
@@ -740,17 +709,6 @@ class StudentPayslip(models.Model):
 
 	@api.multi
 	def student_pay_fees(self):
-		'''Generate invoice of student fee'''
-		# half_fee=self.env['student.details.exam'].search([])
-		# for x in half_fee:
-		# 	print x.name.name,"0000000000000000000000"
-		# 	print self.student_id.name
-		# 	if self.student_id.name==x.name.name:
-		# 		 if x.written <= 35 and  x.viva_voice<=15:
-				 	
-
-
-
 				
 		for rec in self:
 			if rec.number == 'New':
@@ -759,13 +717,17 @@ class StudentPayslip(models.Model):
 													 ) or _('New')
 			rec.write({'state': 'pending'})
 			partner = rec.student_id and rec.student_id.partner_id
+
+			test = self.env['account.journal'].search([('code', '=', 'CSH1'),('company_id','=',self.company_id.id)], limit=1)
+			
 			vals = {'partner_id': partner.id,
 					'date_invoice': rec.date,
 					'account_id': partner.property_account_receivable_id.id,
-					'journal_id': rec.journal_id.id,
+					'journal_id': test.id,
 					'slip_ref': rec.number,
 					'student_payslip_id': rec.id,
 					'school_id':rec.school_id.id,
+					'company_id':rec.company_id.id,
 					'type': 'out_invoice'}
 			invoice_line = []
 			for line in rec.line_ids:
@@ -788,6 +750,7 @@ class StudentPayslip(models.Model):
 									 'price_subtotal': line.price_subtotal}
 				invoice_line.append((0, 0, invoice_line_vals))
 			vals.update({'invoice_line_ids': invoice_line})
+
 			# creates invoice
 			account_invoice_id = self.env['account.invoice'].create(vals)
 			account_invoice_id.action_invoice_open()\
@@ -946,7 +909,18 @@ class AccountPayment(models.Model):
 
 	@api.multi
 	def post(self):
-		print "###########################"
+		print "1111111111111111111"
+
+		if self.payment_type == "outbound":
+			print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+			if self.journal_id.default_debit_account_id.balance1 < self.amount:
+				print "##################################"
+				raise UserError(_('''Payment Cancel...\n 
+					Your Campany balance %s Less than Payment amount.''')%(self.journal_id.default_debit_account_id.balance1))
+
+
+
+
 		'''Method to change state to paid when state in invoice is paid'''
 		add=self.env['student.student'].search([])
 		ir_sequence = self.env['ir.sequence']
@@ -975,7 +949,6 @@ class AccountPayment(models.Model):
 							'refund_amount': refund_amount,
 							}
 				if invoice.student_payslip_id and invoice.state == 'open':
-					print "@@@@@@@@@@@@@@@@@@@@@@@@@@"
 					# Calculate paid amount and due amount and changes state
 					# to pending
 					# fees_payment = (invoice.student_payslip_id.paid_amount +
@@ -992,7 +965,6 @@ class AccountPayment(models.Model):
 							'refund_amount': refund_amount,}
 				invoice.student_payslip_id.write(vals)
 				if invoice.student_payslip_id.student_id.state =="draft":
-					print "7777777777777777777777777777"
 					invoice.student_payslip_id.student_id.write({'state':'invoiced'})
 				elif invoice.student_payslip_id.student_id.state =="followup":
 					invoice.student_payslip_id.student_id.write({'state':'invoiced'})
@@ -1001,42 +973,65 @@ class AccountPayment(models.Model):
 				elif invoice.student_payslip_id.student_id.state =="repeat":
 					invoice.student_payslip_id.student_id.write({'state':'invoiced'})		
 			
+				client_obj = self.env['sms.smsclient'].search([],limit=1)
+				student_obj = self.env['res.partner'].search([('id','=',rec.partner_id.id)])
+				data={
+					'gateway': client_obj.id,
+					'mobile_to': student_obj.mobile,
+					'text': "You have paid   " + str(rec.amount) +"  only, And your balance is  " + str(invoice.residual),
+					'validity': client_obj.validity, 
+					'classes': client_obj.classes, 
+					'deferred': client_obj.deferred, 
+					'priorirty': client_obj.priority, 
+					'coding': client_obj.coding, 
+					'tag': client_obj.tag, 
+					'nostop': client_obj.nostop,
+				}
 				
+				
+				# active_id = self.env.context.get('active_id')
+				# print active_id,'------------------'
+				# due_date_model = self.env['student.payslip'].search([('id','==',active_id)])
+				# due_date_model.date_of_due=self.due_date
+			
+
+
+
+				
+				# payslip=self.env['student.payslip'].search([])
+				# account=self.env['account.invoice'].search([])
+				# for x in payslip:
+				# 	for y in account:
+				# 		if x.student_id.student_code==y.student_id.student_code:
+				# 			print x.due_date,"-----------2222"
+				# 			y.date_of_due=x.due_date
+
+
+				if not client_obj:
+					raise UserError(_('You can only select one partner'))
+				else:
+					client_obj.send_msg_2(data)
 		for rec in add:
 			domain = [('school_id', '=', rec.school_id.id)]
 			if not rec.student_code:
 				fees = self.env['student.payslip'].search([('student_id','=',rec.id),('state','=','paid')])
-				print fees,"666666666666666666666666666666"
-				if fees:
-				
-					fees.write({
-							'program_id':rec.program_id.id,
-							'standard_id':rec.standard_id.id,
-						})
-					reg_code = ir_sequence.next_by_code('student.registration')
-					registation_code = (str(rec.school_id.state_id.name) + str('/') +
-										str(rec.school_id.city) + str('/') +
-										str(rec.school_id.name) + str('/') +
-										str(reg_code))
-					stu_code = ir_sequence.next_by_code('student.code')
-					rec.student_code = (str(rec.school_id.code)+'/'+str(rec.program_id.code) + str('/')+str(stu_code))
+				fees.write({
+						'program_id':rec.program_id.id,
+						'standard_id':rec.standard_id.id,
+					})
+				reg_code = ir_sequence.next_by_code('student.registration')
+				registation_code = (str(rec.school_id.state_id.name) + str('/') +
+									str(rec.school_id.city) + str('/') +
+									str(rec.school_id.name) + str('/') +
+									str(reg_code))
+				stu_code = ir_sequence.next_by_code('student.code')
+				rec.student_code = (str(rec.school_id.code)+'/'+str(rec.program_id.code) + str('/')+str(stu_code))
 			de=self.env['student.payslip'].search([])
 			for x in de:
 				for y in add:
-					if y.student_code==x.student_id.student_code and x.name==y.semester_id.name:
+					if y.stu_name==x.student_id.stu_name and x.name==y.semester_id.name:
 						if x.state=="paid":
-							rec=random2.randint(100000000000,999999999999)
-							if x.barcode==False:
-								if x.program_id.code=='DEL':
-									x.barcode='DEL'+str(rec)
-								if x.program_id.code=='TYD':
-									x.barcode='TYD'+str(rec)
-								if x.program_id.code=='TT':
-									x.barcode='TT'+str(rec)
 							y.admission_donedate=datetime.now()
-							# if x.email:
-							# 	student_fee_mail = self.env.ref('school_fees.student_fee_payslip_mail')
-							# 	self.env['mail.template'].browse(student_fee_mail.id).send_mail(x.id, force_send=True)
 							
 
 		# self.ensure_one()
@@ -1055,8 +1050,9 @@ class AccountPayment(models.Model):
 
 
 	journal_id = fields.Many2one('account.journal', string='Payment Journal', required=True, domain=[('type', 'in', ('bank', 'cash'))],default=_get_default_journal)	
-	communication = fields.Char(string='Description',readonly=True)
+	communication = fields.Char(string='Description')
 	school_id = fields.Many2one('school.school', 'Campus')
+	slip_number = fields.Char(string="Slip Number")
 
 	
 	@api.model
