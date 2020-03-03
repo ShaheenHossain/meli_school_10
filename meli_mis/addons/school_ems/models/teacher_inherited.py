@@ -2,10 +2,14 @@ import time
 import re
 import requests
 import math
+
+import datetime
 from datetime import datetime, timedelta, date
+import pandas as pd
 from dateutil import relativedelta
 import dateutil.parser
 from openerp.exceptions import UserError
+from twilio.rest import Client
 
 
 
@@ -81,14 +85,15 @@ class warning_message_for_students(models.Model):
 	shift=fields.Many2one('standard.medium',string="Shift")
 	classes=fields.Many2one('school.standard',string="Class")
 	student_code=fields.Char(string="Student Code")
+	warning_type=fields.Char('Type Of Warning',readonly=True)
 
 
-	@api.constrains('student_code')
-	def show_exception(self):
-		rec=self.env['student.warning'].search([])
-		for x in rec:
-			if x.student_code==self.student_code:
-				raise UserError(_('Already Given Warning for this Student'))
+	# @api.constrains('student_code')
+	# def show_exception(self):
+	# 	rec=self.env['student.warning'].search([])
+	# 	for x in rec: 
+	# 		if x.student_code==self.student_code:
+	# 			raise UserError(_('Already Given Warning for this Student'))
 
 
 class subjects_inherited(models.Model):
@@ -150,19 +155,88 @@ class classes_inherited(models.Model):
 		rec=self.env['standard.standard'].search([('name','=',self.standard_id.name)])
 		rec1=self.env['student.subjects'].search([('program_id','=',self.standard_id.name),('semester_id','=',self.semester_id.name)])
 		rec2=self.env['final.results'].search([])
+		var = self.env['student.student'].search([])
 		length=len(rec1)
 		for students in  self.student_ids:
 			count = 0
 			fail_count=0
-			for i in rec2:
-				for j in i.subject_id:
-					if  i.class_id.standard == self.standard and j.name.name==students.name:
-						if (j.total)>50:
-							count+=1
-						if (j.total)<50:
-							fail_count+=1  
-			
+			if self.code=='DEL':
+				for i in rec2:
+					for j in i.talk_ids:
+						if  i.class_id.standard == self.standard and j.name.student_code==students.student_code:
+							if j.result=='Pass':
+								count+=1
+							if j.result=='Fail':
+								fail_count+=1 
+				if count==length:
+					if self.standard:
+						var_list = []
+						for a in var:
+							if a.student_code==students.student_code:
 
+								if var:
+									ele = {
+										'program_id': self.standard_id.name,
+										'level_id':self.semester_id.name,
+										'roll_no':self.roll_no,
+										'standard_id': self.standard,
+										'start_date': self.start_date,
+										'end_date':self.end_date,
+										}
+									var_list.append(ele)
+							a.history_ids = var_list
+							for x in rec.semester_ids:
+								if x.sequence==self.semester_id.sequence+1 :
+									a.semester_id=x.id
+									a.standard_id=False
+									a.division=False
+									a.roll_no=False
+									a.start_class=False
+									a.promotion_status='Promoted To Next Level'
+									a.state='draft'
+									break
+
+				if count!=length and fail_count>2:
+					if self.standard:
+						var_list = []
+						for a in var:
+							if a.student_code==students.student_code:
+								if var:
+									ele = {
+										'program_id': self.standard_id.name,
+										'level_id':self.semester_id.name,
+										'standard_id': self.standard,
+										'start_date': self.start_date,
+										'end_date':self.end_date,
+										'roll_no':self.roll_no
+
+										
+										}
+									var_list.append(ele)
+							
+							a.history_ids = var_list
+							for x in rec.semester_ids:
+								if x.sequence==self.semester_id.sequence+1 :
+									
+									a.standard_id=False
+									a.division=False
+									a.roll_no=False
+									a.start_class=False
+									a.promotion_status='repeat'
+									a.state='draft'
+									break
+				
+
+
+			if self.code=='TYD':
+				for i in rec2:
+					for j in i.subject_id:
+						if  i.class_id.standard == self.standard and j.name.name==students.name:
+							if (j.total)>50:
+								count+=1
+							if (j.total)<50:
+								fail_count+=1 
+	
 			var = self.env['student.student'].search([])
 			if count==length:
 				if self.standard:
@@ -172,24 +246,25 @@ class classes_inherited(models.Model):
 							if var:
 								ele = {
 									'program_id': self.standard_id.name,
-									'semester_id':self.semester_id.name,
+									'level_id':self.semester_id.name,
 									'standard_id': self.standard,
 									'start_date': self.start_date,
 									'end_date':self.end_date,
+									'roll_no':self.roll_no
 									}
 								var_list.append(ele)
 						
-							a.history_ids = var_list
-
-							for x in rec.semester_ids:
-								if x.sequence==self.semester_id.sequence+1 :
-									a.semester_id=x.id
-									a.standard_id=False
-									a.division=False
-									a.roll_no=False
-									a.start_class=False
-									a.promotion_status='Promoted To Next Level'
-									break
+						a.history_ids = var_list
+						for x in rec.semester_ids:
+							if x.sequence==self.semester_id.sequence+1 :
+								a.semester_id=x.id
+								a.standard_id=False
+								a.division=False
+								a.roll_no=False
+								a.start_class=False
+								a.promotion_status='Promoted To Next Level'
+								a.state='draft'
+								break
 
 			if count!=length and fail_count>2:
 				if self.standard:
@@ -199,7 +274,7 @@ class classes_inherited(models.Model):
 							if var:
 								ele = {
 									'program_id': self.standard_id.name,
-									'semester_id':self.semester_id.name,
+									'level_id':self.semester_id.name,
 									'standard_id': self.standard,
 									'start_date': self.start_date,
 									'end_date':self.end_date,
@@ -211,23 +286,63 @@ class classes_inherited(models.Model):
 
 							for x in rec.semester_ids:
 								if x.sequence==self.semester_id.sequence+1 :
-									
 									a.standard_id=False
 									a.division=False
 									a.roll_no=False
 									a.start_class=False
 									a.promotion_status='repeat'
+									a.state='draft'
 									break
-	
+			
 
+	@api.one
+	@api.model
+	def _compute_ending_date(self):
+		rec=self.env['standard.standard'].search([])
+		for x in rec:
+			for y in x.semester_ids:
+				if self.start_date:
+					if self.standard_id.name==x.name and self.semester_id.name==y.name:
+						print self.start_date,'2222222222222222'
+						enddate = pd.to_datetime(self.start_date) + pd.DateOffset(days=y.course_duration)
+						self.end_date=enddate
 
 
 
 class student_results_inherited(models.Model):
 	_inherit='student.student'
 
+	def MuslimInvitation(self):
+		print "rrrrrrrrrrrrrrrrrrrrrrrrrrr"
+		rec=self.env['student.student'].search([])
+		for x in rec:
+			if str(datetime.now().date()) == str(x.admission_date):
+				print x.email,"33333333333333333"
+				student = self.env.ref('school_ems.fsgfsgfjhsgfadssadeefdsfsd')
+				self.env['mail.template'].browse(student.id).send_mail(self.id, force_send=True)
+				
+
+	
 	@api.multi
 	def student_results(self):
+		if self.program_id.code=='DEL':
+			print "55555555555555"
+			return{
+		        'type': 'ir.actions.act_window',
+		        'name':'Result',
+		        'view_mode': 'tree',
+		        'res_model': 'oyd.exam',
+		        'view_id': self.env.ref('school_ems.student_oyd_results').id,
+		        'domain':[('name.pid','=',self.pid)],
+		        'context': {
+			        'create':False,
+			        'edit' : False,
+			        'delete' : False,
+			        'group_by':'level_id'
+
+			        
+			        }
+		    	}
 		if self.program_id.code=='TYD':
 			return{
 		        'type': 'ir.actions.act_window',
@@ -240,6 +355,7 @@ class student_results_inherited(models.Model):
 			        'create':False,
 			        'edit' : False,
 			        'delete' : False,
+			        'group_by':'level_id'
 			        
 			        }
 		    	}
@@ -263,19 +379,33 @@ class student_results_inherited(models.Model):
 
 	@api.multi
 	def send_student_fee_reminder1(self):
+		print "3333333333333"
 		b=str(datetime.today())
 		d = dateutil.parser.parse(b).date()
 		rec=self.env['student.student'].search([])
 		for x in rec:
-			if  str(d)==str(x.due_date) :
-				url = "https://www.fast2sms.com/dev/bulk"
-				payload = "sender_id=FSTSMS&message=Dear"+str(x.name)+" You need to pay  Due Amount. &language=english&route=p&numbers="+str(x.mobile)
-				headers = {
-				'authorization': "WnE3TqV6AIv5qf8ir5PKnVjXxCzhCFCHasABU58gXRhO9JFqFluWZXvlbsv9",
-				'Content-Type': "application/x-www-form-urlencoded",
-				'Cache-Control': "no-cache",
-					}
-				response = requests.request("POST", url, data=payload, headers=headers)
+			if  str(d)==str(x.date_of_birth) :
+				sid='AC1f14a7f931620ce90d26e007d8f93783'
+				token='a74b10489ae826dee260b9f52d63e513'
+				client = Client(sid,token)
+				from_whatsapp_number='whatsapp:+14155238886'
+				to_whatsapp_number='whatsapp:+91'+str(x.mobile)
+				client.messages.create(body='Dear '+x.name+' many more happy returns Of the day',
+                       from_=from_whatsapp_number,
+                       to=to_whatsapp_number)
+
+				student = self.env.ref('school_ems.students_happy_birthday_wishes')
+				self.env['mail.template'].browse(student.id).send_mail(x.id, force_send=True)
+
+			# if  str(d)==str(x.due_date) :
+			# 	url = "https://www.fast2sms.com/dev/bulk"
+			# 	payload = "sender_id=FSTSMS&message=Dear"+str(x.name)+" You need to pay  Due Amount. &language=english&route=p&numbers="+str(x.mobile)
+			# 	headers = {
+			# 	'authorization': "WnE3TqV6AIv5qf8ir5PKnVjXxCzhCFCHasABU58gXRhO9JFqFluWZXvlbsv9",
+			# 	'Content-Type': "application/x-www-form-urlencoded",
+			# 	'Cache-Control': "no-cache",
+			# 		}
+			# 	response = requests.request("POST", url, data=payload, headers=headers)
 
 	@api.multi
 	def student_regular_timetable(self):
@@ -285,7 +415,7 @@ class student_results_inherited(models.Model):
 		        'view_mode': 'tree',
 		        'view_id': self.env.ref('school_ems.tyd_student_timetable_view11').id,
 		        'res_model': 'tyd.teacher.timetable',
-		        'domain':[('classes','=',self.standard_id.standard),('classes.state','=','running')],
+		        'domain':[('classes.standard','=',self.standard_id.standard)],
 		        'context': {
 			        'create':False,
 			        'edit' : False,
@@ -314,14 +444,32 @@ class student_results_inherited(models.Model):
 
 	@api.multi
 	def student_makeup_exam_timetable(self):
-		if self.program_id.code=='TYD':
+		if self.program_id.code == 'DEL':
 			return{
 			        'type': 'ir.actions.act_window',
 			        'name':'MakeUp Exam Time Table',
 			        'view_mode': 'tree',
 			        'view_id': self.env.ref('school_ems.tyd_makeup_scheduling_tree').id,
 			        'res_model': 'tyd.schdule',
-			        'domain':[('s_name','=',self.name)],
+			        'domain':[('s_name.student_code','=',self.student_code)],
+			        'context': {
+			        	
+				        'create':False,
+				        'edit' : False,
+				        'delete' : False,
+
+				       
+				        }
+			    	}
+
+		if self.program_id.code == 'TYD':
+			return{
+			        'type': 'ir.actions.act_window',
+			        'name':'MakeUp Exam Time Table',
+			        'view_mode': 'tree',
+			        'view_id': self.env.ref('school_ems.tyd_makeup_scheduling_tree').id,
+			        'res_model': 'tyd.schdule',
+			        'domain':[('s_name.student_code','=',self.student_code)],
 			        'context': {
 			        	
 				        'create':False,
@@ -332,14 +480,14 @@ class student_results_inherited(models.Model):
 				        }
 			    	}
 			
-		if self.program_id.code=='TT':
+		if self.program_id.code == 'TT':
 			return{
 			        'type': 'ir.actions.act_window',
 			        'name':'MakeUp Exam Time Table',
 			        'view_mode': 'tree',
 			        'view_id': self.env.ref('school_ems.student_makeup_scheduling_tree').id,
 			        'res_model': 'schdule.makeup',
-			        'domain':[('s_name','=',self.name)],
+			        'domain':[('s_name.student_code','=',self.student_code)],
 			        'context': {
 				        'create':False,
 				        'edit' : False,
@@ -353,23 +501,13 @@ class payment_inherited(models.Model):
 
 
 	due_date=fields.Date(string="Due Date")
-
-
-	@api.onchange('school_id')
-	def SchoolOnchangeAction(self):
-		obj = self.env['account.journal'].search([('code', '=', 'CSH1')])
-		('company_id','=',self.company_id.id)
-		for rec in obj:
-			if self.school_id.name == rec.company_id.name:
-				self.journal_id = rec.id
-
-
-
-
+	note=fields.Char(string="Note")
 # class AccountInvoiceLine(models.Model):
 # 	_inherit = 'account.invoice.line'
 
 # 	disc=fields.Float(string='Disc.(%)')
+
+
 
 	
 

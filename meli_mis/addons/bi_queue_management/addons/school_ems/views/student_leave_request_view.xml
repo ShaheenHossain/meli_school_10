@@ -1,0 +1,17 @@
+<odoo>
+	<data>
+		<record id="student_leave_request_inherited" model="ir.ui.view">
+			<field name="name">Student Leave Request Inherited</field>
+			<field name="model">studentleave.request</field>
+			<field name="inherit_id" ref="school_attendance.student_leave_req_form"></field>
+			<field name="arch" type="xml">
+				<field name="standard_id" position="after">
+					<field name="actual_leaves" readonly="1" force_save="1"/>
+					<field name="taken_leaves"/>
+					<field name="course_level"/>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</odoo>

@@ -198,14 +198,7 @@
 		</record>
 		
 
-		<!-- <menuitem 
-			id="student_exam_schduling_menu111"
-		    action="student_exam_action_window"
-		  	name="Exam Schduling" 
-		  	parent="student_exam_information"
-		  	groups='school.group_school_exam_officer'
-		  	sequence="2"/>
-		  	/> -->
+		
 		<!-- <menuitem 
 			id="student_exam_date_action"
 		    action="student_exam_dates_action"

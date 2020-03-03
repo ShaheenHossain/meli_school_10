@@ -97,6 +97,7 @@ class BiInvoicePayment(models.Model):
 
 	@api.multi
 	def post(self):
+		print "&&&&&&&&&&&&&&&&&&&&&"
 		aml_dict = {}
 		apl_dict = {}
 		payment_id = []

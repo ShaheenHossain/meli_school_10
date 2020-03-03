@@ -6,7 +6,8 @@
 		model="student.student"
 		report_type="qweb-html"
 		name="bi_employee_card.print_student_badge_new1"
-		file="bi_employee_card.print_student_badge_new1"/>
+		file="bi_employee_card.print_student_badge_new1"
+		groups="school.group_school_administration"/>
 
 	<template id="bi_employee_card.print_student_badge_new1">
 		<t t-call="report.html_container">

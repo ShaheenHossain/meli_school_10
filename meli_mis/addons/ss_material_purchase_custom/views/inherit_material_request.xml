@@ -11,8 +11,8 @@
 			<data>
 			<h1 class="hidden-xs" position="before">
 				<div class="oe_button_box" name="button_box">
-                    <button class="oe_stat_button" name="button_purchase_order" string="Purchase Order" type="object" icon="fa-bars"/>
-                </div>
+                            <button class="oe_stat_button" name="button_purchase_order" string="Purchase Order" type="object" icon="fa-bars"/>
+                        </div>
 			</h1>
 				<field name="issued_by" position="after">
 					<field name="warehouse_id" />
@@ -28,16 +28,11 @@
 	</record>
 
     <record model="ir.ui.menu" id="bi_queue_management.menu_queue_details">
-      <field name="name">IT</field>
+      <field name="name">IT </field>
     </record>
-    
 
 	<record model="ir.ui.menu" id="stock.menu_stock_root">
       <field name="name">Procurement</field>
-    </record>
-
-    <record model="ir.ui.menu" id="project.menu_main_pm">
-      <field name="name">Action Plan</field>
     </record>
 
     <!-- <record model="ir.ui.menu" id="purchase.menu_purchase_root">
@@ -56,10 +51,10 @@
                 <field name="s_no"/>
             </field>
 
-            <field name="type" position="attributes">
+            <!-- <field name="type" position="attributes">
                 <attribute name='invisible'>1</attribute>
                 <attribute name='required'>0</attribute>
-            </field>
+            </field> -->
             <field name="default_code" position="attributes">
                 <attribute name='invisible'>1</attribute>
             </field>

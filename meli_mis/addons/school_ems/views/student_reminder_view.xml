@@ -9,6 +9,7 @@
 					<field name="standard_id" position="after">
 					<field name="email"/>
 					<field name="due_date" readonly='1'/>
+                    <field name="barcode" readonly='1'/>
 			</field>
 				
 			</field>
@@ -26,7 +27,7 @@
     	<field name="inherit_id" ref="school.view_student_student_form_1"></field>
     	<field name="arch" type="xml">
     		<xpath expr="//form/header/button[5]" position="after">
-    			<button name="assining_class" string="Assign Class" type="object" states="draft,invoiced,extend" groups="school.group_school_program_coordinator,school.group_school_head_of_the_incharge,school.group_school_administration"/>
+    			<button name="assining_class" string="Assign Class" type="object" states="draft,invoiced,extend" groups="school.group_school_program_coordinator,school.group_school_head_of_the_incharge,school.group_school_administration,school.group_school_attendance_officer"/>
                 
     			
     		</xpath>
@@ -45,7 +46,8 @@
         <field name="arch" type="xml">
             
            <xpath expr="//form/header/button[5]" position="after">
-                <button name="assining_class1" string="Check Class" type="object" states="draft" groups="school.group_school_program_coordinator,school.group_school_head_of_the_incharge,school.group_school_administration"/>
+                <button name="assining_class1" string="Check Class" type="object" states="draft" groups="school.group_school_program_coordinator,school.group_school_head_of_the_incharge,school.group_school_administration,school.group_school_finance_officer"/>
+                
             </xpath>
 
             
@@ -79,6 +81,93 @@
             	</form>
             </field>
         </record>
+        <record id="announcement_tree_view" model="ir.ui.view">
+            <field name="name">Announcements</field>
+            <field name="model">announcement.announcement</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="campus"/>
+                    <field name="program"/>
+                    <field name="level_id"/>
+                    <field name="shift_id"/>
+                    <field name="class_id"/>
+                    <field name="announcement_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="announcement_process_form" model='ir.ui.view'>
+            <field name="name">Announcements</field>
+            <field name="model">announcement.announcement</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="warning_sent_to_students" type="object" string="Send To Students" class='oe_highlight' states="draft"/>
+                        <field name="state" widget='statusbar'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="announcement_type"/>
+                                <field name="campus" widget="selection"/>
+                                <field name="program" attrs="{'invisible':[('announcement_type','=','campus_based')]}" widget="selection"/>
+                            </group>
+                            <group>
+                                <field name="level_id" domain="[('standard_id','=',program)]" widget="selection" attrs="{'invisible':[('announcement_type','=','campus_based')]}"/>
+                                <field name="shift_id" domain="[('program','=',program)]" widget="selection" attrs="{'invisible':[('announcement_type','=','campus_based')]}"/>
+                                <field name="class_id" domain="[('standard_id','=',program),('semester_id','=',level_id),('school_id','=',campus)]" widget="selection" attrs="{'invisible':[('announcement_type','!=','class_based')]}"/>
+                                <field name="email" invisible="1"/>
+                                <field name="student_name" invisible="1"/>
+                            </group>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="school_ems.students_announcements" model="mail.template">
+            <field name="name">Student announcement</field>
+            <field name="model_id" ref="school_ems.model_announcement_announcement"></field>
+            <field name="email_from">${}</field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="subject">Warning Message</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="built_in" eval="True"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.student_name},</p>
+                <p>${object.note} </p>
+
+                </p>
+                <p> Thanks&Regards </p>
+                <p> CEO </p>
+                    <hr/>
+                
+            ]]>
+                
+        
+            </field>
+        </record>
+
+        <record id="announcement_action_view" model="ir.actions.act_window">
+            <field name="name">Announcements</field>
+            <field name="res_model">announcement.announcement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            id="announcement_menuitem"
+            name="Announcement"
+            parent="school.menu_ems"
+            sequence="14"
+            groups="school.group_school_aam"
+            />
+        <menuitem 
+            id="announcement_sub_menu"
+            name="Announcement"
+            action="announcement_action_view"
+            parent="announcement_menuitem"
+            groups="school.group_school_aam"/>
 		
        
 

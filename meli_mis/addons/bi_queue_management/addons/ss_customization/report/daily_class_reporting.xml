@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <template id="daily_class_reporting">
+      <t t-call="report.html_container">
+              <t t-call="report.internal_layout">
+                  <div class="page">
+                  <h1><span t-esc="campus"/> <span> Daily Reporting</span></h1>
+                  <table class="table table-bordered mb32" style="table-layout:auto">
+                  	<thead>
+                        <tr>
+                            <th>Teacher</th>
+                            <th>Total Attended Class</th>
+                            <th>Attended Class</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                        <t t-foreach="data" t-as="o">
+                            <tr>
+                                <td >
+                                    <t t-esc="o"/>
+                                </td>
+                                <td >
+                                    <t t-esc="total_class(o)"/>
+                                </td>
+                                <td >
+                                    <t t-esc="classes(o)"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                  </table>
+                  </div>
+              </t>
+          </t>
+    </template>
+</odoo>

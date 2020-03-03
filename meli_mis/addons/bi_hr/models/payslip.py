@@ -309,6 +309,7 @@ class Employee(models.Model):
 					 'login': employee_id.work_email,
 					 'email': employee_id.work_email,
 					 'user_type':'staff',
+					 'campus':employee_id.school_id.id
 					 }
 		# ctx_vals = {'teacher_create': True,
 		# 			'school_id': employee_id.school_id.company_id.id}

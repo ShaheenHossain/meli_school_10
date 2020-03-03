@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <template id="student_attendace_report">
+      <t t-call="report.html_container">
+              <t t-call="report.external_layout">
+                  <div class="page">
+                  <center><h1><span t-esc='get_student_name'> </span> Attendance Report</h1></center>
+                                      <table class="table table-bordered mb32" style="table-layout:auto">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Check In</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                        <t t-foreach="docs" t-as="o">
+                            <tr>
+                                <td >
+                                    <t t-esc="o.standard_id.standard_id.standard"/>
+                                </td>
+                                <td>
+                                <t t-esc="o.check_in"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                            </table>
+                  </div>
+              </t>
+          </t>
+    </template>
+</odoo>

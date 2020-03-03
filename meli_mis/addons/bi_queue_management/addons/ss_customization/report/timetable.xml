@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <template id="report_student_timetable">
+      <t t-call="report.html_container">
+              <t t-call="report.internal_layout">
+                  <div class="page">
+                  <center><h1><span t-esc='get_student_name'> </span> TImetable</h1></center>
+                 <table class="table table-bordered mb32" style="table-layout:auto">
+                    <thead>
+                        <tr>
+                            <th>Teacher</th>
+                            <th>Class</th>
+                            <th>Room No.</th>
+                            <th>Semester</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Spend Days</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                        <t t-foreach="data" t-as="o">
+                            <tr>
+                                <td >
+                                    <t t-esc="o.teacher_id.name"/>
+                                </td>
+                                <td >
+                                    <t t-esc="o.standard"/>
+                                </td>
+                                <td >
+                                    <t t-esc="o.division_id.name"/>
+                                </td>
+                                <td >
+                                    <t t-esc="o.semester_id.name"/>
+                                </td>
+                                <td >
+                                    <t t-esc="o.start_date"/>
+                                </td>
+                                <td >
+                                    <t t-esc="o.end_date"/>
+                                </td>
+                                <td >
+                                    <t t-esc="find_days(o.start_date,o.end_date)"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                            </table>
+                  </div>
+              </t>
+          </t>
+    </template>
+</odoo>

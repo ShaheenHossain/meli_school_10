@@ -10,10 +10,11 @@
     'license': "AGPL-3",
     'complexity': 'easy',
     'summary': 'A Module For Fees Management In School',
-    'depends': ['account', 'account_accountant', 'school','mail'],
+    'depends': ['account', 'account_accountant', 'school','mail','report','account_asset'],
     'images': ['static/description/SchoolFees.png'],
-    'data': ['security/ir.model.access.csv',
+    'data': [
              'security/security_fees.xml',
+             'security/ir.model.access.csv',
              'wizard/concession_view.xml',
              'wizard/school_fee_wizard.xml',
              'views/bi_report_invoice_student.xml',

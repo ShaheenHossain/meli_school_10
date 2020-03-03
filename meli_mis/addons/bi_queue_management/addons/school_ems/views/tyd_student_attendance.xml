@@ -1,0 +1,191 @@
+<odoo>
+	<data>	
+
+		<record id="tyd_student_attendance_tree" model="ir.ui.view">
+			<field name="name">TYD Student Attendance</field>
+			<field name="model">tyd.daily.attendance</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="date"/>
+					<field name="campus_id"/>
+					<field name="program_id"/>
+					<field name="semester_id"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="tyd_student_attendance_form" model="ir.ui.view">
+			<field name="name">TYD Student Attendance</field>
+			<field name="model">tyd.daily.attendance</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="campus_id" widget="selection"/>
+								<field name="program_id" widget="selection"/>
+								<field name="semester_id" domain="[('standard_id','=',program_id)]" widget="selection"/>
+								<field name="shift_id" domain="[('program','=',program_id)]" widget="selection"/>
+							</group>
+							<group>
+								<field name="name" domain="[('school_id','=',campus_id),('standard_id','=',program_id),('semester_id','=',semester_id),('medium_id','=',shift_id),('state','=','running')]" widget="selection"/>
+								<field name="division_id" widget="selection"/>
+								<field name="date"/>
+								<field name="tt" invisible="1"/>
+								<field name="periods" attrs="{'invisible':['|',('tt','=','TT'),('tt','=','LADO')]}"/>
+								<field name="subjects" domain="[('program_id','=',program_id),('semester_id','=',semester_id)]" widget="selection" attrs="{'invisible':['|',('tt','=','TT'),('tt','=','LADO')]}"/>
+							</group>
+							<button name="get_attendance_data" string="Attendance" type="object" class=" oe_highlight"/>
+						</group>
+							<!-- <button name="clear_data_action" string="Clear Data" type="object" class="oe_inline oe_highlight" style="background-color:red;"/> -->
+						
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+
+
+
+		<record id="tyd_student_attendance_action" model="ir.actions.act_window">
+			<field name="name">TYD Student Attendance</field>
+			<field name="res_model">tyd.daily.attendance</field>
+			<field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+		</record>
+
+        <record id="attendance_form_actions" model="ir.actions.server">
+	        <field name="name">Student Attendance</field>
+	        <field name="model_id" ref="model_tyd_daily_attendance"/>
+	        <field name="code">action = model.attendance_form()</field>
+	    </record>
+
+		<menuitem
+            id="tyd_student_attendance_menu"
+            name="Student Attendance"
+            action="attendance_form_actions"
+            parent="school_attendance.menu_attendance"
+            groups="school.group_school_attendance_officer"
+            sequence="60"
+            />
+
+
+
+       	<record id="tyd_attendance_report_form" model="ir.ui.view">
+			<field name="name">TYD Student Attendance</field>
+			<field name="model">tyd.daily.report</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<!-- <group>
+							<field name="class_name"/>
+						</group> -->
+						<group>
+							<group>
+								<field name="program_id"/>
+								<field name="semester_id" domain="[('standard_id','=',program_id)]" widget="selection"/>
+
+								<field name="class_name" domain="[('standard_id','=',program_id),('semester_id','=',semester_id)]"/>
+								<field name="subjects" domain="[('program_id','=',program_id),('semester_id','=',semester_id)]"  attrs="{'invisible':['|',('tt','=','TT'),('tt','=','LADO')]}"/>
+							</group>
+							<group>
+								
+								<field name="start_date"/>
+								<field name="end_date"/>
+								<field name="tt" attrs="{'invisible':['|',('tt','=','TT'),('tt','=','LADO')]}" invisible="1"/>
+							</group>
+						</group>
+					</sheet>
+					<footer>
+                        <group colspan="1">
+                            <button class="oe_highlight" string="Generate Report" name="tyd_classwise_students_report" type="object" />
+                            <button class="oe_link" special="cancel" string="Cancel" />
+                        </group>
+                    </footer>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="tyd_attendance_report_action11" model="ir.actions.act_window">
+			<field name="name">TYD Student Attendance</field>
+			<field name="res_model">tyd.daily.report</field>
+			<field name="view_mode">form</field>
+	        <field name="view_type">form</field>
+	        <field name="target">new</field>
+		</record>
+
+		<menuitem
+            id="tyd_attendance_report_menu"
+            name="Attendance Report"
+            action="tyd_attendance_report_action11"
+            parent="school_attendance.menu_attendance"
+            groups="school.group_school_attendance_officer"
+            sequence="61"
+            />
+
+        <record id="tyd_attendance_form" model="ir.ui.view">
+			<field name="name">TYD Student Attendance</field>
+			<field name="model">tyd.attendance</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<field name="state" statusbar_visible=" draft, done" widget="statusbar"/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="campus_id" readonly="1"/>
+								<field name="program_id" readonly="1"/>
+								<field name="semester_id" readonly="1"/>
+								<field name="shift_id" readonly="1"/>
+								<field name="tt" invisible="1"/>
+							</group>
+							<group>
+								<field name="name" readonly="1"/>
+								<field name="division_id" readonly="1"/>
+								<field name="date" readonly="1"/>
+								<field name="subjects" readonly="1" attrs="{'invisible':['|',('tt','=','TT'),('tt','=','LADO')]}"/>
+								<field name="periods" readonly="1" attrs="{'invisible':['|',('tt','=','TT'),('tt','=','LADO')]}"/>
+							</group>
+						</group>
+				
+						<field name="attendance_lines" >
+							<tree editable="bottom" delete="false" create="false">
+								<field name="s_no" readonly="1"/>
+								<field name="name" readonly="1"/>
+								
+
+								<field name="photo" nolabel="1" widget="image" class="oe_right oe_avatar"/>
+
+								<field name="is_present" invisible="1"/>
+								<field name="is_absent" invisible="1"/>
+
+								<button name="present" type="object" string="Present" class="oe_highlight" attrs="{'invisible':[('is_absent', '==', True)]}" />
+                                
+                                <button name="absent" type="object" string="Absent" class="oe_highlight" attrs="{'invisible':[('is_present', '==', True)]}" />
+                                
+                                <field name="leave"/>
+                                
+                                <field name="total_presents" readonly="1"/>
+                                <field name="total_absents" readonly="1"/>
+                                <field name="total_work_days" readonly="1"/>
+							</tree>
+						</field>
+
+						<group>
+							<button name="confirm_action" type="object" string="Validate" class="oe_highlight"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		
+	</data>
+</odoo>
+
+

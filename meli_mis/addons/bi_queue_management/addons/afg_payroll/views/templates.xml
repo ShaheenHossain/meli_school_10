@@ -1,0 +1,141 @@
+<odoo>
+    <data>
+        <report
+            id="afg_payslip_details"
+            model="hr.afg.payroll"
+            string="PaySlip"
+            report_type="qweb-pdf"
+            name="afg_payroll.report_payrolldetails" 
+            file="afg_payroll.report_payrolldetails"
+        />
+       
+    
+ <template id="afg_payroll.report_payrolldetails">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.external_layout">
+                <div class="page">
+                    <h2 align="center"> <span t-field="o.name"/></h2>
+                   
+
+                    <table class="table table-condensed table-bordered">
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td><span t-field="o.employee_id"/></td>
+                            <td><strong>Designation</strong></td>
+                            <td><span t-field="o.designation"/></td>
+
+                        </tr>
+                        <tr>
+                            <td><strong>Mobile</strong></td>
+                            <td><span t-field="o.mobile"/></td>
+                            <td><strong>Department</strong></td>
+                            <td><span t-field="o.department"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email</strong></td>
+                            <td><span t-field="o.email"/></td>
+                            <td><strong>Campus</strong></td>
+                            <td><span t-field="o.campus"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reference</strong></td>
+                            <td><span t-field="o.number"/></td>
+                            
+                            
+                        </tr>
+                        <tr>
+                            <td><strong>Date From</strong></td>
+                            <td><span t-field="o.start_date"/></td>
+                            <td><strong>Date To</strong></td>
+                            <td><span t-field="o.end_date"/></td>
+                        </tr>
+                    </table>
+
+                    <h3 align="center">Details by Salary Rule Category</h3>
+                   <table align="center">
+                        <tr>
+                            <td width="400">
+                                <table class="table table-condensed table-bordered" >
+                                     <tr>
+                                            <td  width="300"><strong>Days Of Month</strong></td>
+                                            <td><span t-field="o.days_of_month"/></td>
+                                    </tr>
+                                    <tr>
+                                         <td  width="300"><strong>Absent</strong></td>
+                                         <td><span t-field="o.absent"/></td>
+                                     </tr>
+                                    <tr>
+                                        <td  width="300"><strong>Days Worked</strong></td>
+                                        <td><span t-field="o.days_worked"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td  width="300"><strong>Overtime</strong></td>
+                                        <td><span t-field="o.overtime"/></td>
+                                    </tr>
+                                    <tr>
+                                          <td  width="300"><strong>Leave Balance</strong></td>
+                                          <td><span t-field="o.leaves_remaining"/></td>
+                                    </tr>
+                                    
+                                </table>
+                            </td>
+                            
+                            <td width="400">
+                                <table class="table table-condensed table-bordered" >
+                                    
+                                        <tr >
+                                            <td width="300"><strong>Basic Salary</strong></td>
+                                            <td><span t-esc="'%.2f'%o.base_salary"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="300"><strong>Loss Of Pay</strong></td>
+                                        <td><span t-esc="'%.2f'%o.lop"/></td>
+                                    </tr>
+                                   
+                                    <tr >
+                                        <td  width="300"><strong>Bonus</strong></td>
+                                        <td><span t-esc="'%.2f'%o.bonus"/></td>
+                                    </tr>
+                                    <tr width="300">
+                                        <td  width="300"><strong>Net pay</strong></td>
+                                        <td><span t-esc="'%.2f'%o.net_pay"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="300"><strong>Tax</strong></td>
+                                        <td><span t-esc="'%.2f'%o.tax"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="300"><strong>Advance Salary</strong></td>
+                                        <td><span t-esc="'%.2f'%o.advance_salary"/></td>
+                           
+                                    </tr>
+                                    <tr>
+                                        <td width="300"><strong>Security Deposite</strong></td>
+                                        <td><span t-esc="'%.2f'%o.security_deposite"/></td>
+                                
+                                    </tr>
+                                    <tr>
+                                        <td width="300"> <strong>Other Deductions</strong></td>
+                                        <td><span t-esc="'%.2f'%o.other_deductions"/></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><h2 align="right">Salary Payble <span t-field="o.salary_payable"/></h2></td>
+                        </tr>
+                        <tr>
+                            <td height="200">
+                                
+                            </td>
+                        </tr>
+                    </table>
+                    <p class="text-right"><strong>Authorized signature</strong></p>
+                </div>
+            </t>
+            </t>
+        </t>
+    </template>
+    </data>
+</odoo>

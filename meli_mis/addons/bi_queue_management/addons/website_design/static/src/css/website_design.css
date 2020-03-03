@@ -1,0 +1,124 @@
+form.oe_login_form{
+    margin: 125px auto;
+}
+.body_login {
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+div#wrap{
+    height: 100%;
+}
+button.custom_btn{
+    width: 100%;
+    background-color: #FF8C00;
+    border: none;
+}
+form.oe_login_form{
+    max-width: 350px;
+}
+form.oe_login_form input[type=text], form.oe_login_form input[type=password]{
+    height: 50px;
+}
+.custom_footer{
+    background-color: #CCC;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+.user_menu{
+    padding: 10px 15px;
+}
+.avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.avatar_small{
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.header_search{
+    float: left;
+    padding: 10px 15px;
+}
+div#wrap.custom_wrap{
+    display: flex;
+    align-items: stretch;
+}
+div.custom_wrap div.container{
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+div.row.row_bottom_border{
+    border-bottom: thin solid #CCC;
+    padding: 10px 0px;
+}
+table.timetable thead{
+    background: #000033;
+    color: #FFF;
+}
+table.timetable thead th{
+    text-align: center;
+}
+table.timetable tbody{
+    background: #ffd68b;
+    color: #000033;
+    font-weight: bold;
+}
+table.timetable tbody td{
+    text-align: center;
+}
+.font-weight-bold{
+    font-weight: bold;
+}
+.custom_selection .btn{
+    font-size: 16px;
+    background: #FFF;
+    color: #000;
+    font-weight: bold;
+    border: none;
+}
+.custom_selection .btn.active{
+    background: #191970;
+    color: #FFF;
+}
+/*
+==============
+Card CSS
+==============
+*/
+.card{ background-color: #fff; border-radius: 6px; }
+.card .card-body{
+    display: table;
+    width: 100%;
+    padding: 15px;
+    box-shadow: 0 4px 8px 3px rgba(0,0,0,0.2);
+}
+.card .card-body h1:first-child,
+.card .card-body h2:first-child,
+.card .card-body h3:first-child,
+.card .card-body h4:first-child,
+.card .card-body .h1,
+.card .card-body .h2,
+.card .card-body .h3,
+.card .card-body .h4{ margin-top: 0; }
+.card .card-body .heading{ display: block;  }
+.card .card-body .heading:last-child{ margin-bottom: 0; }
+
+/* -- default theme ------ */
+.card-default{
+  border-color: #ddd;
+  background-color: #fff;
+  margin-bottom: 24px;
+}
+.card-default > .card-body{  }
+.card-default .card-caption { color: #fff; text-align: center; text-transform: uppercase; }
