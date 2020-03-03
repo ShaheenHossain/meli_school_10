@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+	<record id="view_material_request_form_inherit_to_add_warehouse_company_field"
+		model="ir.ui.view">
+		<field name="name">view.material.request.form.inherit.to.add.warehouse.company.field</field>
+		<field name="model">material.request</field>
+		<field name="inherit_id" ref="bi_material_request_form.view_material_request_form" />
+		<field name="arch" type="xml">
+			<data>
+			<h1 class="hidden-xs" position="before">
+				<div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="button_purchase_order" string="Purchase Order" type="object" icon="fa-bars"/>
+                        </div>
+			</h1>
+				<field name="issued_by" position="after">
+					<field name="warehouse_id" />
+					<field name="company_id" />
+				</field>
+				<notebook position="inside">
+				<page string="Pickings">
+				<field name="picking_ids"/>
+				</page>
+				</notebook>
+			</data>
+		</field>
+	</record>
+
+    <record model="ir.ui.menu" id="bi_queue_management.menu_queue_details">
+      <field name="name">IT </field>
+    </record>
+
+	<record model="ir.ui.menu" id="stock.menu_stock_root">
+      <field name="name">Procurement</field>
+    </record>
+
+    <!-- <record model="ir.ui.menu" id="purchase.menu_purchase_root">
+      <field name="parent">stock.menu_stock_root</field>
+    </record> -->
+
+
+
+    <record id="inventory_inherited111" model='ir.ui.view'>
+    <field name="name">Inventory Inherited</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="types"/>
+                <field name="s_no"/>
+            </field>
+
+            <!-- <field name="type" position="attributes">
+                <attribute name='invisible'>1</attribute>
+                <attribute name='required'>0</attribute>
+            </field> -->
+            <field name="default_code" position="attributes">
+                <attribute name='invisible'>1</attribute>
+            </field>
+            
+        </field>
+    </record>
+    <record id="inventory_tree_view_inherited" model='ir.ui.view'>
+    	<field name="name">Inventory Tree View Inherited</field>
+    	<field name="model">product.template</field>
+    	<field name="inherit_id" ref='product.product_template_tree_view'/>
+    	<field name="arch" type="xml">
+    		<field name="type" position='replace'>
+    			<field name='types'/>
+    		</field>
+    	</field>
+    </record>
+
+
+
+
+</odoo>
+        

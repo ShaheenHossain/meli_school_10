@@ -1,0 +1,2719 @@
+<odoo>
+
+		
+    <template id="tmp_customer_form" name="Partner Form">
+    	  <t t-call="website.layout">
+        <t t-call="report.html_container">
+
+            <div id="wrap">
+                <div class="container-fluid">
+                    <div class="col-md-12">
+                        
+                        	<head>
+							<meta name="viewport" content="width=device-width, initial-scale=1"/>
+							<style>
+							body {
+							  margin: 0;
+							  font-family: Arial, Helvetica, sans-serif;
+							}
+
+							.topnav {
+							  overflow: hidden;
+							  background-color: #393185 ;
+							}
+
+							.topnav a {
+							  float: right;
+							  margin-right:15px;
+
+							  color: #f2f2f2;
+							  text-align: center;
+							  padding: 14px 16px;
+							  text-decoration: none;
+							  font-size: 15px;
+							}
+
+							.topnav a:hover {
+							  background-color: #393185;
+							  color: #EF7f1A;
+							}
+
+a:hover{text-decoration:none;}
+img{
+  max-width: 100%;
+}
+.headerTop{background-color:#182983; padding-top:4px; }
+.headerTop ul{list-style:none; float:right;}
+.headerTop ul li{padding:10px 90px 0px -1px; margin: 10px 65px 0px -65px;word-spacing:5px;}
+.headerTop ul li a{color:#fff; text-transform:uppercase; font-size:14px;}
+.headerTop ul li a:hover{color:#fe941e !important; text-decoration:none;}
+
+.headerBlock{padding:7px 0px;}
+.headerBlock .logoBlock{float:left; margin-right:-100%;}
+.headerBlock .logoimg{width:169px; float:left;}
+.headerBlock .logoBlockRight{float:right; padding-top: 5px;}
+.headerBlock .logoBlockRight img{float:left; padding-right:10px;}
+.headerBlock .needhelp{float:left; padding-right:40px;}
+.headerBlock .needhelp h6{padding:0px 0px 0px 0px; margin:0px; color:#182983; font-size: 14px; font-weight: 400;}
+.headerBlock .needhelp h5{padding:3px 0px 0px 0px; margin:0px; color:#182983; font-weight: 600; font-size: 16px;}
+.headerBlock .applynow-lang{float:left;}
+.headerBlock .applynow{background-color:#fe941e; color:#fff; display:block; padding: 4px 15px; margin-bottom: 6px;}
+.headerBlock .applynow:hover{background-color:#e9861a; text-decoration:none;}
+.headerBlock .language{background-color:#2e3192; color:#fff; display:block; padding: 4px 15px;}
+.headerBlock .language:hover{background-color:#1d1f5a; text-decoration:none;}
+
+.menuBlock{background-color:#cccccc;}
+.menuBlock .wsmenu-list{position:relative;}
+.menuBlock .nav-main{float:left;}
+.menuBlock .wsmenu-list{width:inherit;}
+.menuBlock .wsmenu-list li a{font-size:16px; font-weight: 600;}
+.menuBlock .wsmenu-submenu li{text-decoration:none; display:block;}
+
+.menuLogin{float:right; padding: 16px 0px 0px 0px;}
+.menuLogin i{padding-right: 20px; font-size: 18px;}
+.menuLogin li{font-size:16px; color:#182983; padding-right:10px;}
+.menuLogin a{font-size: 16px; color: #182983; font-weight: 600;}
+.menuLogin a:hover{color:#ff931e; text-decoration: none;}
+
+.bannerBlock{position:relative;}
+.bannerBlock img{width:100%;height:"42";}
+.bannerHeading{ padding:300px 70px 50px 70px; position:absolute; top:0px; z-index:9; width:100%;}
+.bannerHeading h1{color: #fff; font-size: 40px; font-weight: 600; line-height:50px; margin-bottom: 30px;}
+.bannerHeading a{background-color:#ff931e; color:#fff; padding: 7px 22px; margin-top:20px;     margin-right: 12px; }
+.bannerHeading a:hover{text-decoration:none; background-color:#e9861a;}
+.bannerHeading .leaveMessage{background-color:#ff931e; padding:10px 15px; color:#fff; float:right; font-size:16px; border-radius:2px;
+ margin-top:39px;}
+.bannerHeading .leaveMessage img{margin-left:35px; width:auto;}
+
+.bannerBottom {margin-top:-80px;}
+.bannerBottom .container-fluid{padding:0px;}
+.bannerBottom .col-md-4{padding: 0px;}
+.bannerBottom h3{text-align:center; color:#fff; font-size:29px; text-transform:uppercase; padding:20px 10px; font-weight:600;
+background-color: rgba(255,255,255,0.4);  margin: 0px 0px 0px;}
+.bannerBottom-content{ background-color: #2e3192; padding: 50px 70px 4px 70px; margin-top: 5px;}
+.bannerBottom-content p{color: #fff; font-size: 16px; line-height: 24px; font-weight: 400; text-align: justify; min-height: 100px;}
+.bannerBottom-content a{padding:0px 0px; font-size:14px; color:#fff; background-color:#1b1464; text-align:center;
+margin: auto; display:block; width: 140px;  text-transform:uppercase;}
+.bannerBottom-content a:hover{text-decoration:none; background-color:#544ca9;}
+.bannerBottom-org h3{background-color: rgba(255,255,255,0.2);}
+.bannerBottom-org .bannerBottom-content{background-color:#f8931f;}
+.bannerBottom-org .bannerBottom-content p{min-height: 100px;}
+
+.blockTitle{padding:50px 0px 30px 0px;}
+.blockTitle h3{font-size:29px; text-transform:uppercase; color:#1a1a1a; text-align:center; font-weight:600;}
+.blockTitle h6{font-size:20px; color:#f8931f; text-align:center; padding-bottom:15px; line-height:28px;}
+
+
+.coursesBlock{background-color:#e6e7e9; position:relative; margin-top:3px; padding-bottom:15px;}
+.coursesBlock .left-services{position:absolute; z-index:2; left:28px; font-size:23px; top:45%;}
+.coursesBlock .right-services{position:absolute; z-index:2; right:28px; font-size:23px; top:45%;  }
+.coursesBlock .slick-dots li{background:#f8931f; width: 46px; height:6px;}
+
+
+.coursesCont{background-color: #fff; border-bottom: solid 6px #f8931f; padding: 27px 12px 27px 12px; margin-left: 10px; margin-right: 10px;margin-top: 90px; margin-bottom:20px; display: grid; padding:0px 45px 0px 45px; } 
+
+.coursesCont img{margin-top: -118px; margin-left: 0px; margin-right: 0px;}
+.coursesCont p{font-size:14px; color:#000; font-weight: 600; display:block; padding:25px 0px; min-height: 100px;}
+.coursesCont .coursesViewRating{display:block; padding-bottom: 30px;}
+.coursesCont .coursesViewRating img{margin-top: -3px; display: inline-block; padding-right: 3px;}
+.coursesCont .coursesViewRating span{font-size:15px; font-weight:600; padding-right: 15px;}
+.coursesCont .coursesRating{float:right;}
+.coursesCont .coursesRating span{padding-right:4px;}
+.coursesCont .coursesRating span.checked {color:#fcc81a;}
+.coursesCont a{padding:12px 0px; color:#fff; background-color:#f8931f; border-radius:4px;  text-transform:uppercase; 
+text-align:center; margin:auto; font-size:15px; width:140px; margin-bottom:-20px;}
+.coursesCont a:hover{text-decoration:none; background-color:#e9861a; }
+.coursesCont.coursesCont2{border-bottom: solid 6px #c1282d;}
+.coursesCont.coursesCont2 a{background-color:#c1282d;}
+.coursesCont.coursesCont2 a:hover{background-color:#ad262a;}
+
+
+.specialStaff{padding-top:30px; padding-bottom:60px;display:}
+.specialStaff .blockTitle{padding: 5px 0px 30px 0px;}
+.specialStaff .slick-next {right: -25px;  background: url(/school_ems/static/img/next.png) no-repeat; right: 47%;}
+.specialStaff .slick-prev { background: url(/school_ems/static/img/pre.png) no-repeat;  left: 47%;}
+.specialStaff  .slick-prev, .specialStaff .slick-next{top:auto !important;    bottom: -71px !important;   width:29px;
+    height:29px;}
+.staffCont img{border-radius: 100%;  width: 250px;  height: 250px; border:solid 2px #f8931f;}
+.staffCont h3{text-align:center; font-size:27px;}
+.staffCont h6{text-align:center; font-size:15px;}
+
+
+
+.straightBlock{background-color:#f8931f;}
+.straightBlock .blockTitle h3{color:#fff; }
+.straightBlock .blockTitle h6{color:#fff;}
+.straightBlock ul{list-style:none; margin-bottom:40px; padding: 0px;}
+.straightBlock ul li{display:inline-block; padding:15px; border-right:solid 1px #f4c388; width: 19.6%;}
+.straightBlock ul li h3{color:#fff;  text-align: center; font-weight: 600; font-size: 50px;}
+.straightBlock ul li h6{color:#fff;  text-align: center; font-weight: 400; font-size: 15px; padding-top:4px;}
+
+
+
+.albumBlock{background-color:#d2d3d5; padding-bottom:30px;}
+
+.albumBlock .blockTitle h6{color:#000;}
+.albumBlock .row{padding-left: 8px;  padding-right: 8px; background: #fff;}
+.albumImag{background-color:#fff; padding-right:8px; padding-left:8px; padding-top:15px; transition:2s; }
+.albumImag:hover{transform:scale(1.3);z-index: 2; box-shadow: 0px 2px 20px #fff; opacity: 1;} 
+.albumImag.albumImag3:hover{transform:scale(1.3);z-index: 2; box-shadow: 0px 2px 20px #fff; opacity: 1;}
+
+
+.testimonialsBlock{background-color:#fff; padding-bottom:40px;}
+.testimonialsBlock .blockTitle h6{color:#6d6d6d;}
+.testimonialsBlock .slick-dots li{background:#f8931f; width: 46px; height:6px;} 
+.testimonialsBlock  .testimonialsImg{ margin-left: 10px;  margin-right: 10px;}
+
+.reviewsBlock{background-color:#fff; padding-bottom:40px;}
+.reviewsBlock .blockTitle{padding-bottom:10px;}
+.reviewsBlock .blockTitle h6{color:#000;}
+.reviewsBlock .slick-dots li{background:#f8931f; width: 46px; height:6px;} 
+.reviewsBlock  .reviewsCont{ margin-left: 10px;  margin-right: 10px;}
+.reviewsBlock img{border:solid 9px #ccc;}
+.reviewsBlock p{color:#fff; font-size:14px; margin:0px;}
+.reviewsBlock a{color:#fff; font-size:23px; text-align:right;display: block; line-height:12px;}
+.reviewsBlock a:hover{color:#fff; text-decoration:none;}
+.reviewsBlock .reviewsCont-org{background-color:#f8931f; padding:15px;padding-top:10px; margin-top:8px; }
+
+
+.campusesBlock .blockTitle h6{color:#000;}
+.campusesBlock{
+background: #d7d7d7; 
+background: -moz-linear-gradient(top,  #d7d7d7 0%, #d7d7d7 60%, #d7d7d7 60%, #ffffff 60%, #ffffff 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #d7d7d7 0%,#d7d7d7 60%,#d7d7d7 60%,#ffffff 60%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #d7d7d7 0%,#d7d7d7 60%,#d7d7d7 60%,#ffffff 60%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d7d7d7', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+    padding-bottom: 40px;}
+
+.campusesCont{margin-top: -74px; display: inline-block;}
+.campusesCont img{border:solid 2px #fff;}
+.campusesCont h4{color:#0d37a2; font-size: 21px; text-transform: uppercase; text-align: center; font-weight: 600; margin-top: 0px;}
+.campusesCont p{color:#000; font-size:14px;}
+.campusesContOrg{background-color:#f1730d; padding:0px 30px 30px 30px;     margin-top: 71px;}
+.campusesContInner{background-color:#d7d7d7; padding:15px; margin-top:12px;}
+.campusesContInner a{color:#fff; text-align:center; font-size:20px; display: block;}
+.campusesContInner a:hover{color:#f1730d;} 
+
+
+
+
+.timetableBlock{background-color:#e6e7e9;  padding-bottom:40px;}
+.timetableBlock .blockTitle h6{color:#000;}
+.timetableBlock h5{color:#000; font-size:18px; font-weight:600; text-align:center; border-bottom:solid 3px #fff; padding:8px 0px;}
+.timetableBlock ul{padding:0px; margin:0px; list-style:none;  margin-left: 39px;}
+.timetableBlock ul li{font-size: 17px; line-height: 27px; }
+.timetableCont{display:block; width:70%; margin:auto;}
+.timetableCont-ul{width:209px; float:left;}
+.timetableCont-ul2{width:209px; float:right;}
+
+
+
+.newsBlock{}
+.newsBlock .blockTitle h6{color:#000;}
+.newsCont{border:solid 2px #ccc;}
+.newsContInner{padding:10px;}
+.newsContInner h5{font-size: 18px; color:#666666; padding-bottom:30px;  padding-top:6px;}
+.newsContInner h4{font-size: 19px; color:#000;  font-weight:600; margin-bottom:20px;}
+.newsContInner h3{font-size: 18px; color:#666666; margin:16px 0px;}
+.newsContInner h3 img{display:inline-block; padding-right: 8px;}
+.newsContInner p{font-size: 15px; color:#333; padding-top:15px; padding-bottom:19px;}
+.newsContInner a{font-weight:600; font-size:18px; color:#2b3a8f; padding-bottom:10px; display: block;}
+
+.newsBlock .newsCont{ margin-left: 10px;  margin-right: 10px;}
+.newsBlock .slick-dots li{background:#f8931f; width: 46px; height:6px;} 
+
+
+
+.downloadBlock{background-color:#2b3991;  padding:20px 0px; margin:60px 0px;}
+.downloadBlock h3{color:#fff; text-transform:uppercase; font-size:25px; font-weight:600; float:left; margin:0px; padding-top: 4px;}
+.downloadBlock h3 span{font-size:35px;}
+.downloadBlock a{color:#fff; float:right; background-color:#272262; padding:10px 18px; text-transform:uppercase; font-size:16px;}
+
+.brandBlock{padding-bottom:40px;}
+.brandBlock .blockTitle{padding-top:0px;}
+.brandBlock .blockTitle h6{color:#000;}
+.brandBlock img{margin-bottom:25px;}
+
+.requestBlock{background-color:#e6e7e9;  padding-bottom:40px;}
+.requestBlock .blockTitle h3{text-transform: initial;}
+.requestBlock .blockTitle h6{color:#000; width:70%; text-align:center; margin: auto;}
+
+.requestBlock .form-control{background-color:transparent; border:solid 2px #333; height:65px; border-radius:0px; font-weight:600; 
+margin-bottom:40px;}
+.requestBlock textarea.form-control{height:180px;}
+.requestBlock label{color: #999;}
+.requestCont a{background-color: #f8931f; color: #fff; width: 100%; display: block; text-align: center; padding: 20px;
+font-size: 20px; text-transform: uppercase; margin-top: 72px;}
+.requestCont a:hover{background-color:#e9861a; text-decoration:none;}
+.requestCont h6{font-size:16px; font-weight:600; color:#000;}
+.requestCont .form-group label{font-size:16px; font-weight:400; color:#000;}
+
+.requestCont .form-group {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.requestCont .form-group input {
+  padding: 0;
+  height: initial;
+  width: initial;
+  margin-bottom: 0;
+  display: none;
+  cursor: pointer;
+}
+
+.requestCont .form-group label {
+  position: relative;
+  cursor: pointer;
+}
+
+.requestCont .form-group label:before {
+  content:'';
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 2px solid #000;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.requestCont .form-group input:checked + label:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 9px;
+  width: 6px;
+  height: 14px;
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+
+.footerLinksBlock {padding:60px 0px 40px 0px;  width: 100%; height: auto;}
+.footerLinksBlock h6{font-size:21px; font-weight:600; color:#2b3991; border-bottom:solid 2px #2b3991; margin-bottom:15px; display: inline;}
+.footerLinksBlock ul{list-style:none; padding:0px 10px 0px 0px; margin: 15px 0px 0px 0px; }
+.footerLinksBlock ul li{ font-size: 16px; line-height: 28px; font-weight:600;}
+.footerLinksBlock ul li a{color: #2b3998;}
+.footerLinksBlock ul li a:hover{color: #f8931f; text-decoration:none;}
+.footerLinks-width{width: 20.0%; float:left;}
+
+
+.footerBlock{padding:50px 0px 50px 0px;  background-color:#1b1464;}
+.footerBlock p{color:#fff; text-align:center;}
+.footerBlock h6{color:#f8931f; text-align:center; font-size:16px; padding-top:0px;}
+.followBlock{padding:4px 0px 0px 0px;}
+.followBlock h5{font-size:18px; color:#fff; text-align:center;}
+
+.footerBottomBlock{background-color:#f7941f; padding:15px 0px 15px 0px;}
+.footerBottomBlock p{color:#fff; font-size:15px; text-align:center; padding:0px; margin:0px;}
+
+.followBlock{padding-top:25px;}
+.followBlock ul{list-style:none;     text-align: center; padding:0px; margin:0px;}
+.followBlock ul li{padding:0px; margin:0px; display:inline;  margin:0px 3px;}
+.followBlock ul li a{ background-color: #020333; border-radius:4px; 
+    color: #fff;
+    width: 30px;
+    display: inline-block;
+    height: 30px;
+    text-align: center;
+    line-height: 34px;
+}
+.followBlock ul li .fa{color:#fff; font-size:20px;}
+.followBlock ul li a:hover{background-color:#f7941f;}
+
+
+.form-control {
+    height: 60px;
+    font-size: 16px;
+    border: none;
+    border-radius: 3px;
+    box-shadow: none;
+    text-align: center;
+}
+.banner_sec {
+    position: relative;
+}
+.banner_cnt h2 {
+    font-size: 30px;
+    margin: 33px;
+}
+.banner-bg {
+    background: rgba(46,49,146,.4);
+    width: 100%;
+    text-align: center;
+    color: #dfff;
+    position: absolute;
+    bottom: 0;
+}
+ol.carousel-indicators {
+    display: none;
+}
+.web-color{
+    color: #182981;
+}
+.ttl {
+    margin: 30px 0 60px 0;
+    font-weight: bold;
+}
+.body_cnt ul {
+    padding: 0;
+}
+.body_cnt h5 {
+    font-size: 20px;
+}
+.body_cnt p, .body_cnt ul {
+    font-size: 20px;
+    color: #000;
+}
+.body_cnt {
+    padding-bottom: 20px;
+}
+.ttl1 {
+    font-weight: bold;
+}
+section.sub_sec {
+    background: #e6e6e6;
+    padding: 50px;
+}
+.sub_div p {
+    font-size: 20px;
+}
+.input_bnt{
+    max-width: 500px;
+    margin: 0 auto;
+}
+.no_padding{
+    padding: 0;
+}
+button.cus-btn {
+    width: 100%;
+    height: 60px;
+    border: none;
+    background: #f8931f;
+    color: #fff;
+    font-size: 17px;
+}
+.body_cnt1.body_cnt h3, h2.ttl.web-color{
+    position: relative;
+}
+.body_cnt1.body_cnt h3::before, h2.ttl.web-color::before  {
+    position: absolute;
+    content: "";
+    background: #fe941e;
+    width: 6px;
+    left: -22px;
+}
+.body_cnt1.body_cnt h3::before {
+    height: 50px;
+    top: -18px;
+}
+h2.ttl.web-color::before {
+    height: 67px;
+    top: -30px;
+}
+.body_cnt1.body_cnt h4{
+    position: relative;
+}
+.body_cnt1.body_cnt h4::before {
+    position: absolute;
+    content: "";
+    background: #cccccc;
+    width: 15px;
+    height: 15px;
+    left: -24px;
+    border-radius: 50px;
+    top: 6px;
+}
+li.ttl_li {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+.sub_clr {
+    color: #22a5dd;
+}
+.bran-sec{
+    padding: 20px 0;
+}
+h2.history_ttl {
+    margin-bottom: 30px;
+}
+.history-cnt h3 {
+    font-size: 28px;
+}
+.o-clr {
+    color: #f7921e;
+    font-size: 18px;
+}
+.body_cnt1.body_cnt.history-cnt h4::before{
+    display: none;
+}
+p.hist_p {
+    margin-top: 20px;
+}
+.newsBlock.events_news {
+    padding-bottom: 40px;
+}
+.read_btn a {
+    display: block;
+    background: #f89321;
+    text-align: center;
+    color: #fff;
+    padding: 6px;
+    font-size: 17px;
+    max-width: 78px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+.body_cnt1.body_cnt h3 {
+    margin-bottom: 26px;
+}
+.tt4 {
+    font-size: 25px;
+}
+.carousel-control.left, .carousel-control.right{
+    display: none;
+}
+.menuLogin i:hover {
+    color: #ff931e;
+}
+
+
+
+
+@media (max-width:767px){
+    button.cus-btn{
+        width: 50%;
+    }
+    .no_padding{
+        padding: 0 15px;
+    }
+    section.sub_sec {
+
+        padding:20px 0px;
+    }
+}
+
+
+/*font:18px "Roboto Condensed",sans-serif;*/
+/*font:normal 17px/26px 'Open Sans', sans-serif;*/
+
+.header-wrapp{width:; position:relative; padding:10px 0px 10px 0px;}
+.logo-main{float:left; }
+/*.wsmenuexpandermain{position: relative; float:right; background-color:#CCC;}
+.overlapblackbg{ display:none;}*/
+.nav-main{ width:70%; float:right;}
+.wsmenu{color:#fff; width:auto;	padding:0px; margin:0px 0px 0px 0px;}
+.wsmenu ul{float:left;}
+	
+.wsmenu-list{text-align:left; margin:0 auto 0 auto;	width:100%;	display: table;	padding:0px;}	
+.wsmenu-list > li{text-align:center;display: table-cell; font:600 16px 'Open Sans', sans-serif;}	
+.wsmenu-list li:first-child a{-webkit-border-radius:4px 0px 0px 0px;-moz-border-radius:4px 0px 0px 0px;	border-radius:4px 0px 0px 0px;}	
+.wsmenu-list li:last-child a{-webkit-border-radius:0px 4px 0px 0px;	-moz-border-radius:0px 4px 0px 0px;	border-radius:0px 4px 0px 0px; border-right:0px solid;}	
+.wsmenu-list > li > a .fa{display: inline-block;font-size:14px;	line-height:inherit;margin-right:0px;}	
+.wsmenu-list li ul li a .fa.fa-angle-double-right{ font-size:12px; margin: 0 3px 0 -4px;}
+.wsmenu-list li a .arrow:after {border-left: 4px solid rgba(0, 0, 0, 0); border-right: 4px solid rgba(0, 0, 0, 0); border-top: 4px solid #b3b3b3;
+ content: ""; float: right;  height: 0;  margin: 0 0 0 5px; position: absolute; text-align: right; top: 22px; width: 0;}
+
+.wsmenu-list > li > a{text-transform:uppercase;  display:block;background-color:transparent;color:#182983;padding:3px 15px 3px 15px;
+ line-height:48px;text-decoration:none;	position:relative; font-size: 22px; font-weight:400;}
+.wsmenu-list li a:hover .arrow:after{ border-top-color:#b3b3b3}
+.wsmenu-list li a.active .arrow:after{ border-top-color:#b3b3b3}
+.wsmenu-list li:hover>a .arrow:after{ border-top-color:#b3b3b3}
+.megamenu iframe{width:100%; margin-top:10px; min-height:200px; }
+.megamenu video{ width:100%; margin-top:10px;  min-height:200px;}
+
+/*For megamenu desktop */
+.wsmenu-list li:hover .megamenu{opacity:1;}
+.megamenu{width:90%; right:0px; position:absolute; top:58px; color:#000; z-index:1000; margin:0px; text-align:left; padding:14px; border:solid 1px #ccc;
+border-bottom:solid 2px #ed7516; background-color:#fff;	opacity: 0;
+-o-transform-origin: 0% 0%;
+-ms-transform-origin: 0% 0%;
+-moz-transform-origin: 0% 0%;
+-webkit-transform-origin: 0% 0%;
+-o-transition: -o-transform 0.3s, opacity 0.3s;
+-ms-transition: -ms-transform 0.3s, opacity 0.3s;
+-moz-transition: -moz-transform 0.3s, opacity 0.3s;
+-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;	
+-webkit-box-shadow: 0px 0px 2px 0px rgba(69,69,69,0.5);
+-moz-box-shadow: 0px 0px 2px 0px rgba(69,69,69,0.5);
+box-shadow: 0px 0px 2px 0px rgba(69,69,69,0.5);
+	}
+
+.megamenu .title{font:600 16px 'Open Sans', sans-serif; padding:9px 5px 9px 0px; font-size:17px; color:#0466cb; margin-bottom:7px; text-align:left;
+height:39px;}	
+.link-list li{display:block; text-align:center;	white-space:nowrap;	text-align:left;}
+	
+.link-list li a{font:normal 14px 'Open Sans', sans-serif;	line-height:18px; border-right:none; text-align:left; padding:6px 0px; background:#fff !important;
+background-image:none !important;	color: #666666 !important;	border-right: 0 none !important; display:block;	border-right:1px solid #e7e7e7;
+background-color:#fff;	color:#424242;}
+	
+
+	
+.link-list .fa{font-size:11px;}
+
+.megacollink{width:23%; float:left; margin:0% 1%;}	
+.megacollink li{display:block; text-align:center; white-space:nowrap; text-align:left;}
+.megacollink li a{line-height:18px;	border-right:none;	text-align:left;
+	padding:8px 0px;
+	background:#fff !important;
+	background-image:none !important;
+	color: #666666 !important;
+	border-right: 0 none !important;
+	display:block;
+	border-right:1px solid #e7e7e7;
+	background-color:#fff;
+	color:#424242;}
+.megacollink .fa{font-size:11px;}
+
+.megacolimage{width:31.33%; float:left; margin:0% 1%;}	
+.typographydiv{width:100%; margin:0% 0%;}	
+.typographylinks{width:25%; float:left; margin:0% 0%;}	
+.mainmapdiv{ width:100%; display:block; margin:0% 0%; }
+
+.wsmenu-list .ad-style{width:28%; float:right;}
+.wsmenu-list .ad-style a{border:none !important; padding:0px !important; margin:0px !important; line-height:normal !important; background-image:none !important;}
+.mobile-sub .megamenu .ad-style a:hover{ background-color:transparent !important; }
+.wsmenu-list .megamenu  li:hover>a{background:transparent !important;}
+.wsmenu-list .megamenu  li a:hover{background:transparent !important; text-decoration:none; color:#f4700e  !important;}
+.wsmenu-list .megamenu li .fa {  margin-right:5px;    text-align: center;    width: 18px;}
+.mrgtop{ margin-top:15px; }
+.show-grid div{padding-bottom: 10px; padding-top: 10px; background-color:#dbdbdb; border: 1px solid #e7e7e7; color:#6a6a6a; margin:2px 0px;}
+
+/*Form for desktop */
+
+
+
+/*Animation*/
+.wsmenu-list li > .wsmenu-submenu{
+	transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform: rotateX(-75deg);
+	-o-transform: rotateX(-75deg);
+	-moz-transform: rotateX(-75deg);
+	-webkit-transform: rotateX(-75deg);
+	visibility:hidden;
+		}
+	
+.wsmenu-list li:hover > .wsmenu-submenu{
+	transform: rotateX(0deg);
+	-o-transform: rotateX(0deg);
+	-moz-transform: rotateX(0deg);
+	-webkit-transform: rotateX(0deg);
+    opacity: 1;
+	visibility:visible;
+	}
+
+.wsmenu-submenu li > .wsmenu-submenu-sub{
+	transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform: rotateX(-75deg);
+	-o-transform: rotateX(-75deg);
+	-moz-transform: rotateX(-75deg);
+	-webkit-transform: rotateX(-75deg);
+	visibility:hidden;
+	}
+	
+.wsmenu-submenu li:hover > .wsmenu-submenu-sub{
+	transform: rotateX(0deg);
+	-o-transform: rotateX(0deg);
+	-moz-transform: rotateX(0deg);
+	-webkit-transform: rotateX(0deg);
+    opacity: 1;
+	visibility:visible;
+	}
+
+.wsmenu-submenu-sub li > .wsmenu-submenu-sub-sub{
+	transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform: rotateX(-75deg);
+	-o-transform: rotateX(-75deg);
+	-moz-transform: rotateX(-75deg);
+	-webkit-transform: rotateX(-75deg);
+	visibility:hidden;
+	}
+	
+.wsmenu-submenu-sub li:hover > .wsmenu-submenu-sub-sub{
+	transform: rotateX(0deg);
+	-o-transform: rotateX(0deg);
+	-moz-transform: rotateX(0deg);
+	-webkit-transform: rotateX(0deg);
+    opacity: 1;
+	visibility:visible;
+	}
+
+
+.wsmenu-list li > .megamenu{
+	transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform: rotateX(-75deg);
+	-o-transform: rotateX(-75deg);
+	-moz-transform: rotateX(-75deg);
+	-webkit-transform: rotateX(-75deg);
+	visibility:hidden;
+	}
+	
+.wsmenu-list li:hover > .megamenu{
+	transform: rotateX(0deg);
+	-o-transform: rotateX(0deg);
+	-moz-transform: rotateX(0deg);
+	-webkit-transform: rotateX(0deg);
+    opacity: 1;
+	visibility:visible;
+	}
+
+	
+/* Submenu CSS */
+.wsmenu-submenu{
+	position:absolute;
+	top: 44px;
+	z-index:1000;
+	margin:0px;
+	padding:0px;
+	border:solid 0px #eeeeee;
+	background-color:transparent;
+	opacity: 0;
+	-o-transform-origin: 0% 0%;
+	-ms-transform-origin: 0% 0%;
+	-moz-transform-origin: 0% 0%;
+	-webkit-transform-origin: 0% 0%;
+	-o-transition: -o-transform 0.3s, opacity 0.3s;
+	-ms-transition: -ms-transform 0.3s, opacity 0.3s;
+	-moz-transition: -moz-transform 0.3s, opacity 0.3s;
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;}
+
+.wsmenu-submenu li a {font:normal 14px 'Open Sans', sans-serif;
+	background:#ff931e !important;
+	background-image:none !important;
+	color: #fff !important;
+	border: 0 none !important;
+	text-align:left;
+	display:block;
+	line-height:22px;
+	padding:8px 12px;
+	
+	text-transform:none; 	
+	letter-spacing:normal;     border-radius: 0px !important;
+
+   }
+	
+	.wsmenu-submenu li a:hover {color:#fff !important; }
+
+.wsmenu-submenu li{position:relative; margin:0px; padding:0px;}
+
+.wsmenuexpandermain{display:none;}
+
+.wsmenu-list li:hover .wsmenu-submenu{display:block;}
+
+.wsmenu-list .wsmenu-submenu .wsmenu-submenu-sub{min-width:150px; position:absolute; left:100%; top:0; margin:0px; padding:0px;
+	opacity: 0;
+	-o-transform-origin: 0% 0%;
+	-ms-transform-origin: 0% 0%;
+	-moz-transform-origin: 0% 0%;
+	-webkit-transform-origin: 0% 0%;
+	-o-transition: -o-transform 0.4s, opacity 0.4s;
+	-ms-transition: -ms-transform 0.4s, opacity 0.4s;
+	-moz-transition: -moz-transform 0.4s, opacity 0.4s;
+	-webkit-transition: -webkit-transform 0.4s, opacity 0.4s;}
+	
+.wsmenu-list .wsmenu-submenu li:hover .wsmenu-submenu-sub{opacity:1; list-style:none; padding:0px; margin:2px;
+ border:solid 0px #eeeeee; background-color: rgba(255,147,30,0.6) !important;}
+.wsmenu-list .wsmenu-submenu li:hover .wsmenu-submenu-sub{display:block;}
+.wsmenu-list .wsmenu-submenu .wsmenu-submenu-sub .wsmenu-submenu-sub-sub{
+	min-width:220px; position:absolute; left:100%; top:0; margin:0px; padding:0px;
+	opacity: 0;
+	-o-transform-origin: 0% 0%;
+	-ms-transform-origin: 0% 0%;
+	-moz-transform-origin: 0% 0%;
+	-webkit-transform-origin: 0% 0%;
+	-o-transition: -o-transform 0.4s, opacity 0.4s;
+	-ms-transition: -ms-transform 0.4s, opacity 0.4s;
+	-moz-transition: -moz-transform 0.4s, opacity 0.4s;
+	-webkit-transition: -webkit-transform 0.4s, opacity 0.4s;}
+	
+.wsmenu-list .wsmenu-submenu .wsmenu-submenu-sub li:hover .wsmenu-submenu-sub-sub{opacity:1; list-style:none; padding:2px; border:solid 1px #eeeeee; background-color:#fff;}
+.wsmenu-submenu li{position:relative; padding:0px; margin:0px; display:block;}
+.wsmenu-click{display:none;}
+
+
+/* Default Theme */ 
+.wsmenu-list li:hover>a{background-color:#ff931e !important;  color:#182983; text-decoration:none;}
+.wsmenu-list > li > a:hover {background-color:#ff931e !important; color:#182983;  text-decoration:none; }
+.wsmenu-list > li > a.active{background-color:#ff931e !important; color:#182983; text-decoration:none; }
+.wsmenu-submenu > li > a:hover {background-color:rgba(255,147,30,0.6) !important; color:#182983; border-radius:0px!important; text-decoration:none;  text-decoration:none;}
+.wsmenu-list .wsmenu-submenu li >a:hover {background-color: rgba(255,147,30,0.6) !important;}
+ 
+.typography-text { padding:0px 0px; font-size:15px;}
+.typography-text p{ text-align:justify; line-height:24px; color:#656565;}
+.typography-text ul li{ display:block; padding:2px 0px; line-height:22px;}
+.typography-text ul li a{color:#656565;}
+.hometext{display:none;}
+.wsmenu-submenu .fa{ margin-right:7px;}
+
+.services-menu .col-sm-6{min-height:300px;}
+
+@media only screen and (min-width:780px) and (max-width:1023px) {
+.wsmenu-list > li > a > .fa { display:none !important;}
+.hometext{ display:block !important;}
+.wsmenu{ font-size:13px !important;}
+.wsmenu-list li a { white-space:nowrap !important; padding-left:4px !important; padding-right:4px !important;}
+.megacollink {width:48%; margin:1% 1%;}
+.typographylinks{width:48%; margin:1% 1%;}
+}
+
+
+@media only screen and (min-width: 781px) and (max-width:1200px) {
+.wsmenu-list li a .arrow:after{ display:none !important; }
+
+}
+
+@media only screen and (min-width: 781px) {
+
+.wsmenu-list li:hover > .wsmenu-submenu{display:block !important; }
+.wsmenu-submenu li:hover > .wsmenu-submenu-sub{display:block !important;}
+.wsmenu-submenu-sub li:hover > .wsmenu-submenu-sub-sub{display:block !important;}
+.wsmenu-list li:hover > .megamenu{display:block !important;}
+
+}
+
+
+/*------------------------------------ Mobile CSS ---------------------------------------------*/
+@media only screen and (max-width: 767px) {
+
+.wsmenu-list > li:hover>a{background-color:rgba(0,0,0,0.08) !important; text-decoration:none;}
+.hometext{ display:inline-block !important; }
+.megacollink {width:96% !important; margin:0% 2% !important; }
+.megacolimage{width:90% !important; margin:0% 5% !important;}
+.typographylinks{width:98% !important; margin:0% 1% !important;}	
+.typographydiv{width:86% !important; margin:0% 7% !important;}	
+.mainmapdiv{width:90% !important; margin:0% 5% !important; }
+
+.overlapblackbg{
+	left:0;
+	z-index:100;
+	width:100%;
+	height:100%;
+	position:fixed;
+	top:0;
+	display:none;
+	background-color:rgba(0, 0, 0, 0.45);
+	cursor:pointer;}
+	
+.overlapblackbg.menuopen{display:block;}
+
+/* Default Theme */ 
+.wsmenu-submenu > li:hover>a{ background-color:#7b7b7b; color:#666666;}
+.wsmenu > .wsmenu-list > li > a.active{color: #666666; background-color:rgba(0,0,0,0.08);}
+.wsmenu > .wsmenu-list > li > a:hover{ color: #666666; background-color:rgba(0,0,0,0.08);}	
+
+.wsmenu-list li:hover .wsmenu-submenu{display:none ;}
+.wsmenu-list li:hover .wsmenu-submenu .wsmenu-submenu-sub{display:none; color:red;}
+.wsmenu-list .wsmenu-submenu .wsmenu-submenu-sub li:hover .wsmenu-submenu-sub-sub{display:none; list-style:none; padding:2px; border:solid 1px #eeeeee; background-color:#fff;}
+.wsmenu-list li:first-child a{-webkit-border-radius:0px 0px 0px 0px; -moz-border-radius:0px 0px 0px 0px; border-radius:0px 0px 0px 0px;}
+.wsmenu-list li:last-child a{-webkit-border-radius:0px 4px 0px 0px; -moz-border-radius:0px 0px 0px 0px; border-radius:0px 0px 0px 0px; border-right:0px solid;}
+
+.innerpnd{ padding:0px !important; }
+.typography-text { padding:10px 0px; }
+
+.wsmenucontainer{
+	overflow: hidden;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	min-height:800px;
+	-webkit-transition:all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;}
+	
+.wsmenuexpandermain{
+	display:block !important;
+	position:static;
+	top:0;
+	right:0;
+	left:0;
+	-webkit-transition:all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+	
+	}
+
+/* Mobile click to drop arrow */
+.wsmenu-click {
+	height:43px;
+	position:absolute;
+	top:0;
+	right:0;
+	display:block;
+	cursor:pointer;
+	width:100%;
+	}
+
+.wsmenu-click i{
+	display:block;
+	height:23px;
+	width:25px;
+	margin-top:11px;
+	margin-right:8px;
+	background-size:25px;
+	font-size:21px;
+	color:rgba(0,0,0,0.25);
+	float:right;
+	}
+
+.wsmenu-rotate{
+	-webkit-transform:rotate(180deg);
+	-moz-transform:rotate(180deg);
+	-ms-transform:rotate(180deg);
+	-o-transform:rotate(180deg);
+	transform:rotate(180deg);}
+
+/*2nd UL Style*/
+.wsmenu-submenu-sub{
+	width:100% !important;
+	position:static !important;
+	left:100% !important;
+	top:0 !important;
+	display:none;
+	margin:0px !important;
+	padding:0px !important;
+	border:solid 0px !important;
+	transform:none !important;
+	opacity:1 !important;
+	visibility:visible !important;
+	}
+	
+.wsmenu-submenu-sub li{
+	margin:0px 0px 0px 0px !important;
+	padding:0px;
+	position:relative;}
+	
+.wsmenu-submenu-sub a{
+	display:block;
+	padding:10px 25px 10px 25px;
+	border-bottom:solid 1px #ccc;
+	font-weight:normal;}
+	
+.wsmenu-submenu-sub li a.active{color:#000 !important;}
+
+.wsmenu-submenu-sub li:hover>a{ background-color:#333333 !important; color:#fff;}
+
+.wsmenu-list > li > a .fa{margin-right:6px;}
+
+.wsmenu-submenu-sub-sub{
+	width:100% !important;
+	position:static !important;
+	left:100% !important;
+	top:0 !important;
+	display:none;
+	margin:0px !important;
+	padding:0px !important;
+	border:solid 0px !important;
+	transform:none !important;
+	opacity:1 !important;
+	visibility:visible !important;
+	}
+	
+.wsmenu-submenu-sub-sub li{
+	margin:0px 0px 0px 0px !important;}
+	
+.wsmenu-submenu-sub-sub a{
+	display:block;
+	color:#000;
+	padding:10px 25px;
+	background:#000 !important;
+	border-bottom:solid 1px #ccc;
+	font-weight:normal;}
+	
+.wsmenu-submenu-sub-sub li a.active{ color:#000 !important;}
+.wsmenu-submenu-sub-sub li:hover>a{ background-color:#606060 !important; color:#fff;}
+.wsmenu{position: relative;}
+
+.wsmenu .wsmenu-list{
+	height:100%;
+	overflow-y:auto;
+	display:block !important;}
+	
+.wsmenu .wsmenu-list > li{
+	width:240px;
+	display:block;
+	float:none;
+	border-right:none;
+	background-color:transparent;
+	position:relative;
+	white-space:inherit;}
+	
+.wsmenu > .wsmenu-list > li > a{
+	padding:9px 32px 9px 17px;
+	font-size:14px;
+	text-align:left;
+	border-right:solid 0px;
+	background-color:transparent;
+	color:#666666;
+	line-height:25px;
+	border-bottom:1px solid;
+	border-bottom-color:rgba(0,0,0,0.13);
+	position:static;
+	}
+	
+.wsmenu > .wsmenu-list > li > a > .fa{font-size: 16px; color:#bfbfbf;}
+.wsmenu .wsmenu-list li a .arrow:after{ display:none !important; }
+.wsmenu .wsmenu-list li ul li a .fa.fa-caret-right{ font-size:12px !important; color:#8E8E8E; }
+
+.mobile-sub .wsmenu-submenu{
+	transform:none !important;
+	opacity:1 !important;
+	display:none;
+	position:relative !important;
+	top:0px;
+	background-color:#fff ;
+	border:solid 1px #ccc;
+	padding:0px;
+	visibility:visible !important;
+	width:100%;
+	}
+	
+.mobile-sub .wsmenu-submenu li a{
+	line-height:20px;
+	height:36x;
+	background-color:#e7e7e7 !important;
+	font-size:13px !important;
+	padding:8px 0px 8px 18px;
+	color:#8E8E8E;
+		}
+
+.mobile-sub .wsmenu-submenu li a:hover{ background-color:#e7e7e7  !important; color:#666666; text-decoration:underline; }
+.mobile-sub .wsmenu-submenu li:hover>a{ background-color:#e7e7e7 !important; color:#666666; }
+.mobile-sub .wsmenu-submenu li .wsmenu-submenu-sub li a{line-height:20px; height:36x; background-color:#e7e7e7 !important; border-bottom:none; padding-left:28px;}
+.mobile-sub .wsmenu-submenu li .wsmenu-submenu-sub li .wsmenu-submenu-sub-sub li a{line-height:20px; height:36x; background-color:#e7e7e7 !important; border-bottom:none !important; padding-left:38px; color:#8e8e8e;}
+
+.mrginleft{
+	margin-left: 240px;
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;}
+
+.wsmenu-list .megamenu{
+	background-color:#e7e7e7;
+	color:#666666;
+	display:none;
+	position:relative !important;
+	top:0px;
+	padding:0px;
+	border:solid 0px;
+	transform:none !important;
+	opacity:1 !important;
+	visibility:visible !important;
+	}
+	
+.wsmenu-list li:hover .megamenu{display:none; position:relative !important; top:0px; }
+.megamenu .title{ color:#666666; font-size:15px !important; padding:10px 8px 10px 0px;}
+.halfdiv .title{ padding-left:15px;}
+.megamenu > ul{
+	width:100% !important;
+	margin:0px;
+	padding:0px;
+	font-size:13px !important;}
+	
+.megamenu > ul > li > a{
+	padding:9px 14px !important;
+	line-height:normal !important;
+	font-size:13px !important;
+	background-color:#e7e7e7 !important;
+	color:#666666;
+}
+	
+.megamenu > ul > li > a:hover{background-color:#000000 !important;}
+
+.ad-style{ width:100% !important;}
+
+.megamenu ul li.title{
+	line-height:26px;
+	color:#666666;
+	margin:0px;
+	font-size:15px;
+	padding:7px 13px !important;
+	border-bottom:1px solid #ccc;
+	background-color:transparent !important;}
+
+.halfdiv{ width:100%; display:block;}
+
+.menu_form{ padding:10px 10px 63px 10px; background-color: #e7e7e7;}
+
+.menu_form input[type="button"]{ width:46%; }
+.menu_form input[type="submit"]{ width:46%; }	
+.menu_form textarea{min-height:100px;}
+
+.wsmenu {
+	width:0px;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	margin: 0;
+	background-color: #fff;
+	border-radius:0px;
+	z-index:100;
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+	border:none !important;
+	background-color:#fff !important;
+	}
+
+/*Nav Expanding Open Effect*/
+.wsmenu.menuopen {
+	width:240px;
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;}
+ 
+.wsmenu.menuclose{
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out; }
+	
+ 
+.wsmenucontent{z-index:1;}
+ 
+/* Navigation arrow Animation */
+.animated-arrow{
+	position:absolute;
+	left:0; top:0px; z-index:200;
+	-webkit-transition:all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+	}
+	
+.callusicon{
+	color: #c9c9c9;
+    font-size: 25px;
+    height: 25px;
+    position: fixed;
+    right: 15px;
+    top: 13px;
+    transition: all 0.4s ease-in-out 0s;
+    width: 25px;
+    z-index: 2;
+	-webkit-transition:all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+	}	
+	
+.callusicon:focus, callusicon:hover {
+    color: #fff !important;
+}
+
+.mrginleft .callusicon{ display:none !important; }
+
+.wsmenuexpandermain .menuopen{left:240px !important; margin-top:4px !important;}
+ 
+.smallogo{ width:100%; display:none; text-align:center; padding-top:0px;
+z-index:0; width:100%;	height:52px;	background-color:#fff;}
+
+.animated-arrow{cursor:pointer;	padding:13px 35px 16px 0px;	margin:10px 0 0 15px;}
+	
+.animated-arrow span, .animated-arrow span:before, .animated-arrow span:after {
+	cursor: pointer; height:3px;	width:23px;	background: #0466cb; position: absolute; display: block; content: '';}
+	
+.animated-arrow span:before{top: -7px;}
+	
+.animated-arrow span:after {bottom: -7px;}
+	
+.animated-arrow span, .animated-arrow span:before, .animated-arrow span:after{transition: all 500ms ease-in-out;}
+	
+.animated-arrow.menuopen span{background-color: transparent;}
+	
+.animated-arrow.menuopen span:before, .animated-arrow.active span:after{top:7px;}
+	
+.animated-arrow.menuopen span:before {
+	transform: rotate(45deg);
+	-moz-transform:  rotate(45deg);
+	-ms-transform:  rotate(45deg);
+	-o-transform:  rotate(45deg);
+	-webkit-transform:  rotate(45deg);
+	bottom:0px;}
+	
+.animated-arrow.menuopen span:after {
+	transform: rotate(-45deg);
+	-moz-transform:  rotate(-45deg);
+	-ms-transform:  rotate(-45deg);
+	-o-transform:  rotate(-45deg);
+	-webkit-transform:  rotate(-45deg);}
+
+
+/*Animation None */
+.wsmenu-list li > .wsmenu-submenu{
+	transform:none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform:none !important;
+	transform: none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform: none !important;
+	visibility:visible !important;
+	}
+	
+.wsmenu-list li:hover > .wsmenu-submenu{
+	transform:none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform:none !important;
+	transform: none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform: none !important;
+	visibility:visible !important;
+	}
+
+.wsmenu-submenu li > .wsmenu-submenu-sub{
+	transform:none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform:none !important;
+	transform: none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform: none !important;
+	visibility:visible !important;
+	}
+	
+.wsmenu-submenu li:hover > .wsmenu-submenu-sub{
+	transform:none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform:none !important;
+	transform: none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform: none !important;
+	visibility:visible !important;
+	opacity:1  !important;
+	}
+
+.wsmenu-submenu-sub li > .wsmenu-submenu-sub-sub{
+	transform:none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform:none !important;
+	transform: none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform: none !important;
+	visibility:visible !important;
+	opacity:1  !important;
+	}
+	
+.wsmenu-submenu-sub li:hover > .wsmenu-submenu-sub-sub{
+	transform:none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform:none !important;
+	transform: none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform: none !important;
+	visibility:visible !important;
+	opacity:1  !important;
+	}
+
+
+.wsmenu-list li > .megamenu{
+	transform:none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform:none !important;
+	transform: none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform: none !important;
+	visibility:visible !important;
+	opacity:1  !important;
+	}
+	
+.wsmenu-list li:hover > .megamenu{
+	transform:none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform:none !important;
+	transform: none !important;
+	-o-transform:none !important;
+	-moz-transform: none !important;
+	-webkit-transform: none !important;
+	visibility:visible !important;
+	opacity:1  !important;
+	width:100%;
+	}
+}
+img{
+    max-width: 100%;
+}
+.navbar-inverse {
+    background-color: transparent;
+    border-color: transparent;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: #fff;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    color: #fff;
+    background-color: transparent;
+}
+.navbar {
+    min-height: inherit;
+    margin-bottom: 0;
+}
+
+
+@media (max-width:1023px){
+	.headerTop ul li a{font-size: 15px}
+	.wsmenu-list > li > a {font-size: 17px;}
+}
+
+@media (max-width:767px){
+	.headerTop{
+		padding-top: 0;
+    }
+    .navbar-inverse .navbar-toggle {
+        border-color: transparent;
+    }
+    .bannerHeading h1 {
+        font-size: 21px;
+        font-weight: normal;
+        line-height: inherit;
+        margin-bottom: 16px;
+        margin-top: 4px;
+    }
+    .bannerHeading {
+        text-align: center;
+        padding: 10px;
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+    .bannerBottom h3, .bannerBottom h3{
+        background-color: rgba(0,0,0,0.2);
+    }
+    .bannerBottom {
+        margin-top: 0;
+    }
+    .bannerHeading .leaveMessage{
+        margin-top: 15px;
+    }
+    .straightBlock ul li {
+        border-bottom: solid 1px #f4c388;
+        border-right-color: transparent;
+        width: 100%;
+    }
+    .blockTitle h3 {
+        font-size: 25px;
+    }
+    .footerLinks-width {
+        width: 100%;
+        text-align: center;
+        float: none;
+        padding: 20px 0;
+        border-bottom: 1px solid #bdbdbd;
+    }
+    .downloadBlock h3 {
+        font-size: 23px;
+        font-weight: normal;
+        float: none;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    .navbar-collapse {
+        position: absolute;
+        background: #182983;
+        width: 100%;
+    }
+    .headerTop ul{
+        float:  none;
+    }
+    .bannerBottom-content p{
+        min-height: inherit;
+    }
+    .bannerBottom-content{
+        padding: 35px;
+    }
+    .campusesCont img {
+        display: block;
+        text-align: center;
+        margin: 45px auto 0;
+    }
+    .campusesContInner {
+        margin-top: 0;
+    }
+    .reviewsBlock img {
+        display: block;
+        margin: 0 auto;
+    }
+    .slick-slide img{
+        margin: 0 auto;
+    }
+    .newsContInner {
+        text-align: center;
+    }
+    .albumImag img {
+        display: block;
+        margin: 0 auto;
+    }
+    .albumBlock {
+        padding-bottom: 0;
+    }
+    .reviewsBlock .reviewsCont-org{
+        margin-top: 0;    
+    }
+    
+}
+
+
+/* Slider */
+.slick-slider
+{
+    position: relative;
+
+    display: block;
+    box-sizing: border-box;
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-touch-action: pan-y;
+        touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list
+{
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+
+    margin: 0;
+    padding: 0;
+}
+.slick-list:focus
+{
+    outline: none;
+}
+.slick-list.dragging
+{
+    cursor: pointer;
+    cursor: hand;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list
+{
+    -webkit-transform: translate3d(0, 0, 0);
+       -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+         -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+}
+
+.slick-track
+{
+    position: relative;
+    top: 0;
+    left: 0;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.slick-track:before,
+.slick-track:after
+{
+    display: table;
+
+    content: '';
+}
+.slick-track:after
+{
+    clear: both;
+}
+.slick-loading .slick-track
+{
+    visibility: hidden;
+}
+
+.slick-slide
+{
+    display: none;
+    float: left;
+
+    height: 100%;
+    min-height: 1px;
+}
+[dir='rtl'] .slick-slide
+{
+    float: right;
+}
+.slick-slide img
+{
+    display: block;
+}
+.slick-slide.slick-loading img
+{
+    display: none;
+}
+.slick-slide.dragging img
+{
+    pointer-events: none;
+}
+.slick-initialized .slick-slide
+{
+    display: block;
+}
+.slick-loading .slick-slide
+{
+    visibility: hidden;
+}
+.slick-vertical .slick-slide
+{
+    display: block;
+
+    height: auto;
+
+    border: 1px solid transparent;
+}
+.slick-arrow.slick-hidden {
+    display: none;
+}
+.splitting img { width: 100%; display: block; }
+
+@supports ( display: grid ) {
+  .splitting.cells {
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    visibility: hidden;
+  }
+
+  .splitting .cell-grid {
+    background: inherit;
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    display: grid;
+    grid-template: repeat( var(--row-total), 1fr ) / repeat( var(--col-total), 1fr );
+  }
+
+  .splitting .cell {
+    background: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .splitting .cell-inner {
+    background: inherit;
+    position: absolute;
+    visibility: visible;
+    /* Size to fit the whole container size */
+    width: calc(100% * var(--col-total));
+    height: calc(100% * var(--row-total));
+    /* Position properly */
+    left: calc(-100% * var(--col-index));
+    top: calc(-100% * var(--row-index));
+  }
+
+  /* Helper variables for advanced effects */
+  .splitting .cell {
+    --center-x: calc((var(--col-total) - 1) / 2);
+    --center-y: calc((var(--row-total) - 1) / 2);
+
+    /* Offset from center, positive  negative */
+    --offset-x: calc(var(--col-index) - var(--center-x));
+    --offset-y: calc(var(--row-index) - var(--center-y));
+
+    /* Absolute distance from center, only positive */
+    --distance-x: calc( (var(--offset-x) * var(--offset-x)) / var(--center-x) );
+
+    /* Absolute distance from center, only positive */
+    --distance-y: calc( (var(--offset-y) * var(--offset-y)) / var(--center-y) );
+  }
+}
+
+.tiler {
+			display: inline-block;
+			cursor: pointer;
+			visibility: hidden;
+			width: 33%;
+			margin: auto;
+		}
+
+		.tiler img {
+			display: block;
+			margin: auto;
+			max-width: 100%;
+			visibility: visible;
+		}
+
+		.tiler .cell-grid {
+			background-position: center center;
+			margin: auto;
+			position: fixed;
+			top: 1em;
+			bottom: 1em;
+			left: 1em;
+			right: 1em;
+			z-index: 10;
+			max-width: 100%;
+			max-height: 600px;
+			-webkit-perspective: 30px;
+			perspective: 30px;
+		}
+
+		.tiler .cell {
+			pointer-events: none;
+			opacity: 0;
+			-webkit-transform: translateZ(-15px);
+			transform: translateZ(-15px);
+			-webkit-transform-style: preserve-3d;
+			transform-style: preserve-3d;
+			-webkit-transition-property: opacity, -webkit-transform;
+			transition-property: opacity, -webkit-transform;
+			transition-property: transform, opacity;
+			transition-property: transform, opacity, -webkit-transform;
+			-webkit-transition-duration: 0.5s, 0.4s;
+			transition-duration: 0.5s, 0.4s;
+			-webkit-transition-timing-function: cubic-bezier(0.65, 0.01, 0.15, 1.33);
+			transition-timing-function: cubic-bezier(0.65, 0.01, 0.15, 1.33);
+			/* The center character index */
+			--center-x: calc((var(--col-total) - 1) / 2);
+			--center-y: calc((var(--row-total) - 1) / 2);
+			/* Offset from center, positive  negative */
+			--offset-x: calc(var(--col-index) - var(--center-x));
+			--offset-y: calc(var(--row-index) - var(--center-y));
+			/* Absolute distance from center, only positive */
+			--distance-x: calc((var(--offset-x) * var(--offset-x)) / var(--center-x));
+			/* Absolute distance from center, only positive */
+			--distance-y: calc((var(--offset-y) * var(--offset-y)) / var(--center-y));
+			-webkit-transition-delay: calc(0.1s * var(--distance-y) + 0.1s * var(--distance-x));
+			transition-delay: calc(0.1s * var(--distance-y) + 0.1s * var(--distance-x));
+		}
+
+		.tiler-overlay {
+			z-index: 2;
+		}
+
+		.tiler:hover .cell {
+			-webkit-transform: scale(1);
+			transform: scale(1);
+			opacity: 1;
+		}
+
+
+
+
+							
+							</style>
+							<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&#38;display=swap" rel="stylesheet"/>
+								<link href="https://fonts.googleapis.com/css?family=Montserrat&#38;display=swap" rel="stylesheet"/>
+							</head>
+							<body>
+
+							<div class="topnav">
+							  <a href="#about">POTENTIALALBUM</a>
+							  <a href="#contact">PROJECT</a>
+							  <a href="#news">ADMISSION</a>
+							  <a href="#home">CAREER</a>
+							  <a href="#home">CONTACT</a>
+							</div>
+
+							<div class="headerBlock">
+								<div class="container">
+									<img class="logoimg" src="/school_ems/static/img/Logo-01.png" alt="" />
+									<div class="logoBlockRight">
+								<img src="assets/images/needhelp-icon.png" alt=""/>
+								<div class="needhelp">
+								<h6>Need Help?call us free</h6>
+								<h5>+937 1111 6768</h5>
+							</div>
+						<div class="applynow-lang"><a class="applynow" href="">Apply Now</a> <a class="language"
+								href="">Language</a></div>
+					</div>
+				</div>
+			</div>
+			<div class="menuBlock">
+				<div class="container">
+					<div class="wsmenucontent overlapblackbg"></div>
+					<div class="wsmenuexpandermain slideRight">
+						<a id="navToggle" class="animated-arrow slideLeft"><span></span></a>
+						<a href="#" class="smallogo"><img src="assets/images/logo.png" alt="" /></a>
+					</div>
+
+					<!--Main Menu HTML Code-->
+					<div class="nav-main">
+						<nav class="wsmenu slideLeft ">
+							<ul class="mobile-sub wsmenu-list">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="about.html ">About</a>
+									<ul class="wsmenu-submenu">
+										<li><a href="why_meli.html">Why meli</a></li>
+										<li><a href="#">Who We Are</a></li>
+										<li><a href="Orgnization.html">Our Organization</a></li>
+										<li><a href="our-history.html">Our History</a></li>
+										<li><a href="#">Our Team</a>
+											<ul class="wsmenu-submenu-sub">
+												<li><a href="#">Our Officers</a></li>
+												<li><a href="#">Department </a></li>
+
+											</ul>
+										</li>
+										<li><a href="new-events.html">News  Events</a></li>
+										<li><a href="management.html">Management</a></li>
+									</ul>
+								</li>
+								<li><a href="#">Courses</a></li>
+								<li><a href="#">Campuses</a></li>
+								<li><a href="#">Student</a></li>
+								<li><a href="#">Lado</a></li>
+							</ul>
+						</nav>
+					</div>
+					<!--Menu HTML Code-->
+					<div class="menuLogin">
+						<i class="fa fa-search" aria-hidden="true"></i>
+						<a href="">LOG IN</a>
+					</div>
+
+				</div>
+			</div>
+			<div class="bannerBlock">
+			<div id="myCarousel" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1" class="active1"></li>
+					<li data-target="#myCarousel" data-slide-to="2" class="active2"></li>
+
+				</ol>
+				<div class="carousel-inner">
+					<div class="item active">
+						<img class="img-responsive" src="/school_ems/static/img/New 1.jpg" alt=""/></div>
+
+					<div class="item active1">
+						<img class="img-responsive" src="/school_ems/static/img/New4.jpg" alt="" /></div>
+
+					<div class="item active2">
+						<img class="img-responsive" src="/school_ems/static/img/New5.jpg" alt="" /></div>
+
+					
+				</div>
+			</div>
+		</div> 
+		<div class="bannerBottom">
+			<div class="container-fluid">
+
+				<div class="col-md-4">
+					<h3>Muslim  Lado</h3>
+					<div class="bannerBottom-content">
+						<p>Muslim English language Institute and LADO International Institute (based in the USA) have
+							signed a contract which is genuinely unique in the history of education in Afghanistan</p>
+						<a href="#">Read More</a>
+					</div>
+				</div>
+
+				<div class="col-md-4 bannerBottom-org">
+					<h3>Why Meli</h3>
+					<div class="bannerBottom-content">
+						<p>Muslim English language Institute and LADO International Institute (based in the USA) have
+							signed a contract which is genuinely unique in the history of education in Afghanistan</p>
+						<a href="">Meet Us</a>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<h3>Our Team</h3>
+					<div class="bannerBottom-content">
+						<p>Muslim English language institutes's 500-person team, composed of professional, experienced
+							and wise members
+							that work collaboratively, cooperatively and smartly in unison for transforming.</p>
+						<a href="">Check Our Team</a>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+		<div class="coursesBlock ">
+			<div class="container">
+				<div class="blockTitle">
+					<h3>Our Courses</h3>
+					<h6>Choose The Best Course !</h6>
+				</div>
+
+				<div class="courses-class">
+					<div class="">
+						<div class="coursesCont">
+							<img class="img-responsive" src="/school_ems/static/img/courses-img1.jpg" 	alt="" />
+							<p>One year diploma of english language in muslim institute was established in 2002.
+								it is for 17 years that succefully it is growing in afghanistan. More than 20k students
+								are
+								learning english in this center. </p>
+							<div class="coursesViewRating">
+								<div class="pull-left">
+									<img src="/school_ems/static/img/view-icon.png" /> <span>50</span>
+									<img src="/school_ems/static/img/chat-icon.png" /> <span>18</span>
+								</div>
+
+								<div class="coursesRating">
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+								</div>
+							</div>
+							<a href="">Read More</a>
+						</div>
+					</div>
+
+
+					<div class="">
+						<div class="coursesCont coursesCont2">
+							<img class="img-responsive" src="/school_ems/static/img/courses-img2.jpg" 	alt="" />
+							<p>One year diploma of english language in muslim institute was established in 2002.
+								it is for 17 years that succefully it is growing in afghanistan. More than 20k students
+								are
+								learning english in this center. </p>
+							<div class="coursesViewRating">
+								<div class="pull-left">
+									<img src="/school_ems/static/img/view-icon.png" /> <span>50</span>
+									<img src="/school_ems/static/img/chat-icon.png" /> <span>18</span>
+								</div>
+
+								<div class="coursesRating">
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+								</div>
+							</div>
+							<a href="">Read More</a>
+						</div>
+					</div>
+
+
+					<div class="">
+						<div class="coursesCont">
+							<img class="img-responsive" src="/school_ems/static/img/courses-img3.jpg" 	alt="" />
+							<p>One year diploma of english language in muslim institute was established in 2002.
+								it is for 17 years that succefully it is growing in afghanistan. More than 20k students
+								are
+								learning english in this center. </p>
+							<div class="coursesViewRating">
+								<div class="pull-left">
+									<img src="/school_ems/static/img/view-icon.png" /> <span>50</span>
+									<img src="/school_ems/static/img/chat-icon.png" /> <span>18</span>
+								</div>
+
+								<div class="coursesRating">
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+								</div>
+							</div>
+							<a href="">Read More</a>
+						</div>
+					</div>
+
+
+					<div class="">
+						<div class="coursesCont">
+							<img class="img-responsive" src="/school_ems/static/img/courses-img3.jpg" 	alt="" />
+							<p>One year diploma of english language in muslim institute was established in 2002.
+								it is for 17 years that succefully it is growing in afghanistan. More than 20k students
+								are
+								learning english in this center. </p>
+							<div class="coursesViewRating">
+								<div class="pull-left">
+									<img src="/school_ems/static/img/view-icon.png" /> <span>50</span>
+									<img src="/school_ems/static/img/chat-icon.png" /> <span>18</span>
+								</div>
+
+								<div class="coursesRating">
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+								</div>
+							</div>
+							<a href="">Read More</a>
+						</div>
+					</div>
+
+
+
+
+				</div><!-- courses-class -->
+			</div>
+			<!--container-->
+		</div>
+
+		<div class="specialStaff">
+			<div class="container">
+				<div class="blockTitle">
+					<h3>Special Staff</h3>
+					<h6>We believe that the most professionals of afghanistan are with us by means of colleagues.</h6>
+				</div>
+				<div class="staff-class">
+					<div class="">
+						<div class="staffCont">
+							<img src="/school_ems/static/img/staff1.jpg" alt="" class=" center-block img-responsive" />
+							<h3>Jhon Moan</h3>
+							<h6>president</h6>
+						</div>
+					</div>
+
+					<div class="">
+						<div class="staffCont">
+							<img src="/school_ems/static/img/staff1.jpg" alt="" class=" center-block img-responsive" />
+							<h3>Tina Mina</h3>
+							<h6>Principle</h6>
+						</div>
+					</div>
+
+					<div class="">
+						<div class="staffCont">
+							<img src="/school_ems/static/img/staff1.jpg" alt="" class=" center-block img-responsive" />
+							<h3>Tina Toug</h3>
+							<h6>Spanish Teacher </h6>
+						</div>
+					</div>
+
+					<div class="">
+						<div class="staffCont">
+							<img src="/school_ems/static/img/staff1.jpg" alt="" class=" center-block img-responsive" />
+							<h3>Doe Bravo</h3>
+							<h6>Mathematics Teacher </h6>
+						</div>
+					</div>
+
+					<div class="">
+						<div class="staffCont">
+							<img src="/school_ems/static/img/staff1.jpg" alt="" class=" center-block img-responsive" />
+							<h3>Doe Bravo</h3>
+							<h6>Mathematics Teacher </h6>
+						</div>
+					</div>
+
+
+				</div><!-- courses-class -->
+
+
+			</div>
+			<!--container-->
+		</div>
+		
+<div class="straightBlock">
+			<div class="container">
+				<div class="blockTitle">
+					<h3>Muslim Straight</h3>
+					<h6>Breakthrough improvements, expansion and MELI's popularity can be glanced over here. Unison in
+						service
+						providing and care for the customers with MELI's strong human resource are integrated under one
+						roof.</h6>
+				</div>
+
+				<ul>
+					<li><img src="/school_ems/static/img/straight1.jpg" class="center-block"/>
+						<h3>1</h3>
+						<h6>English Language Brand</h6>
+					</li>
+					<li><img src="/school_ems/static/img/straight2.jpg" class="center-block"/>
+						<h3>16</h3>
+						<h6>Years of Experience</h6>
+					</li>
+					<li><img src="/school_ems/static/img/straight3.jpg" class="center-block"/>
+						<h3>8k+</h3>
+						<h6>Alumni</h6>
+					</li>
+					<li><img src="/school_ems/static/img/straight4.jpg" class="center-block"/>
+						<h3>95%</h3>
+						<h6>Exam Result</h6>
+					</li>
+					<li><img src="/school_ems/static/img/straight5.jpg" class="cbrad-splitnter-block"/>
+						<h3>09</h3>
+						<h6>Campuses</h6>
+					</li>
+				</ul>
+
+
+
+				<ul>
+					<li><img src="/school_ems/static/img/straight6.jpg" class="center-block"/>
+						<h3>200</h3>
+						<h6>Lectures Rooms</h6>
+					</li>
+					<li><img src="/school_ems/static/img/straight7.jpg" class="center-block"/>
+						<h3>500+</h3>
+						<h6>Employees</h6>
+					</li>
+					<li><img src="/school_ems/static/img/straight8.jpg" class="center-block"/>
+						<h3>30k</h3>
+						<h6>Current Student</h6>
+					</li>
+					<li><img src="/school_ems/static/img/straight9.jpg" class="center-block"/>
+						<h3>250</h3>
+						<h6>New Classes Per week</h6>
+					</li>
+					<li><img src="/school_ems/static/img/straight10.jpg" class="center-block"/>
+						<h3>200k</h3>
+						<h6>Positive Review</h6>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="albumBlock">
+			<div class="container">
+				<div class="blockTitle">
+					<h3>Muslim Potential Album</h3>
+					<h6>To prove our claims, we are presenting MELI to you as an image.</h6>
+				</div>
+
+				<div class="albumBlock">
+					<div class="row">
+						<div class="col-sm-4 albumImag"><img src="/school_ems/static/img/potential1.jpg" class="img-responsive"/>
+						</div>
+						<div class="col-sm-4 albumImag"><img src="/school_ems/static/img/potential2.jpg" class="img-responsive"/>
+						</div>
+						<div class="col-sm-4 albumImag albumImag3"><img src="/school_ems/static/img/potential3.jpg" class="img-responsive"/></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4 albumImag"><img src="/school_ems/static/img/potential4.jpg" class="img-responsive"/>
+						</div>
+						<div class="col-sm-4 albumImag"><img src="/school_ems/static/img/potential5.jpg" class="img-responsive"/>
+						</div>
+						<div class="col-sm-4 albumImag albumImag3"><img src="/school_ems/static/img/potential6.jpg"	class="img-responsive"/></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="testimonialsBlock">
+			<div class="container">
+				<div class="blockTitle">
+					<h3>Our Testimonials</h3>
+					<h6>What our students say about MELI?</h6>
+				</div>
+
+				<div class="courses-class">
+					<div class="">
+						<div class="testimonialsImg"><img class="img-responsive" src="/school_ems/static/img/testimonails1.jpg" alt="" /></div>
+					</div>
+
+					<div class="">
+						<div class="testimonialsImg"><img class="img-responsive" src="/school_ems/static/img/testimonails2.jpg" alt="" />
+						</div>
+					</div>
+
+					<div class="">
+						<div class="testimonialsImg"><img class="img-responsive" src="/school_ems/static/img/testimonails1.jpg" alt="" />
+						</div>
+					</div>
+
+
+					<div class="">
+						<div class="testimonialsImg"><img class="img-responsive" src="/school_ems/static/img/testimonails2.jpg" alt="" />
+						</div>
+					</div>
+				</div><!-- courses-class -->
+			</div>
+		</div>
+		<div class="reviewsBlock">
+			<div class="container">
+				<div class="blockTitle">
+					<h3>Reviews</h3>
+					<h6>What our students think about MELI ?</h6>
+				</div>
+
+				<div class="reviews-class">
+					<div class="">
+						<div class="reviewsCont">
+							<img class="img-responsive" src="/school_ems/static/img/reviews.jpg"  alt="" />
+							<div class="reviewsCont-org">
+								<p>I love this organisations because this is the only place where I felt like
+									being in the place where I belong to....</p>
+								<a href=""> > </a>
+							</div>
+						</div>
+					</div>
+
+					<div class="">
+						<div class="reviewsCont">
+							<img class="img-responsive" src="/school_ems/static/img/reviews.jpg"  alt="" />
+							<div class="reviewsCont-org">
+								<p>I love this organisations because this is the only place where I felt like
+									being in the place where I belong to....</p>
+								<a href=""> > </a>
+							</div>
+						</div>
+					</div>
+
+					<div class="">
+						<div class="reviewsCont">
+							<img class="img-responsive" src="/school_ems/static/img/reviews.jpg"  alt="" />
+							<div class="reviewsCont-org">
+								<p>I love this organisations because this is the only place where I felt like
+									being in the place where I belong to....</p>
+								<a href=""> > </a>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="">
+						<div class="reviewsCont">
+							<img class="img-responsive" src="/school_ems/static/img/reviews.jpg"  alt="" />
+							<div class="reviewsCont-org">
+								<p>I love this organisations because this is the only place where I felt like
+									being in the place where I belong to....</p>
+								<a href=""> > </a>
+							</div>
+						</div>
+					</div>
+
+					<div class="">
+						<div class="reviewsCont">
+							<img class="img-responsive" src="/school_ems/static/img/reviews.jpg"  alt="" />
+							<div class="reviewsCont-org">
+								<p>I love this organisations because this is the only place where I felt like
+									being in the place where I belong to....</p>
+								<a href=""> > </a>
+							</div>
+						</div>
+					</div>
+
+				</div><!-- courses-class -->
+			</div>
+		</div>
+		<div class="campusesBlock">
+			<div class="container">
+				<div class="blockTitle">
+					<h3>Our Campuses</h3>
+					<h6>Modern campuses where it's easy to learn English</h6>
+				</div>
+				<div class="campusesContOrg">
+					<div class="campusesCont">
+						<div class="row">
+							<div class="col-sm-3">
+								<img class="img-responsive" src="/school_ems/static/img/campuses1.jpg" 
+									alt="" />
+								<div class="campusesContInner">
+									<h4>Kabul</h4>
+									<p>The Main Campus of Muslim was established sixteen (16) years ago in the third
+										district of Kabul
+										city. For the time being, Muslim has NINE campuses, six of which are in Kabul...
+									</p>
+									<a href=""><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+								<img class="img-responsive" src="/school_ems/static/img/campuses2.jpg" 	alt="" />
+								<div class="campusesContInner">
+									<h4>Herat</h4>
+									<p>The Main Campus of Muslim was established sixteen (16) years ago in the third
+										district of Kabul
+										city. For the time being, Muslim has NINE campuses, six of which are in Kabul...
+									</p>
+									<a href=""><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+								<img class="img-responsive" src="/school_ems/static/img/campuses3.jpg" 
+									alt="" />
+								<div class="campusesContInner">
+									<h4>Jalalabad</h4>
+									<p>The Main Campus of Muslim was established sixteen (16) years ago in the third
+										district of Kabul
+										city. For the time being, Muslim has NINE campuses, six of which are in Kabul...
+									</p>
+									<a href=""><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+								<img class="img-responsive" src="/school_ems/static/img/campuses4.jpg" 
+									alt="" />
+								<div class="campusesContInner">
+									<h4>Mazar</h4>
+									<p>The Main Campus of Muslim was established sixteen (16) years ago in the third
+										district of Kabul
+										city. For the time being, Muslim has NINE campuses, six of which are in Kabul...
+									</p>
+									<a href=""><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="timetableBlock">
+			<div class="container">
+				<div class="blockTitle">
+					<h3>Weekly Classes Timetable</h3>
+					<h6>Are you searching for newly started classes?</h6>
+				</div>
+
+				<div class="timetableCont">
+					<div class="timetableCont-ul">
+						<h5>Kabul Branches</h5>
+						<ul>
+							<li>Main Campus</li>
+							<li>Kart-e-new</li>
+							<li>Taimani</li>
+							<li>Dasht-e-barchi</li>
+							<li>Arzan Qimat</li>
+						</ul>
+					</div>
+
+
+
+					<div class="timetableCont-ul2">
+						<h5>Province Branches</h5>
+						<ul>
+							<li>Herat</li>
+							<li>Mazar</li>
+							<li>Jalalabad</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="newsBlock ">
+			<div class="container">
+				<div class="blockTitle">
+					<h3>Events  News</h3>
+					<h6>See Our Events  News</h6>
+				</div>
+
+				<div class="courses-class">
+					<div class="">
+						<div class="newsCont">
+							<img class="img-responsive" src="/school_ems/static/img/news1.jpg"  alt="" />
+							<div class="newsContInner">
+								<h5>October 15, 2019</h5>
+								<h4>Capacity building seminar</h4>
+								<h3><img src="/school_ems/static/img/time-icon.png"/>04:00PM-05:30AM</h3>
+								<h3><img src="/school_ems/static/img/graf-icon.png"/>Venue: Jalalabad</h3>
+								<p>The seminar was held on the Jalalabad campus for students. The topic
+									was "how to improve speaking skill". The purpose of the seminar was for the
+									capacity building of MELI students.</p>
+
+								<a href="">Read More ></a>
+							</div>
+						</div>
+					</div>
+
+					<div class="">
+						<div class="newsCont">
+							<img class="img-responsive" src="/school_ems/static/img/news2.jpg"  alt="" />
+							<div class="newsContInner">
+								<h5>October 15, 2019</h5>
+								<h4>Capacity building seminar</h4>
+								<h3><img src="/school_ems/static/img/time-icon.png"/>04:00PM-05:30AM</h3>
+								<h3><img src="/school_ems/static/img/graf-icon.png"/>Venue: Jalalabad</h3>
+								<p>The seminar was held on the Jalalabad campus for students. The topic
+									was "how to improve speaking skill". The purpose of the seminar was for the
+									capacity building of MELI students.</p>
+
+								<a href="">Read More ></a>
+							</div>
+						</div>
+					</div>
+
+					<div class="">
+						<div class="newsCont">
+							<img class="img-responsive" src="/school_ems/static/img/news3.jpg" alt="" />
+							<div class="newsContInner">
+								<h5>October 15, 2019</h5>
+								<h4>Capacity building seminar</h4>
+								<h3><img src="/school_ems/static/img/time-icon.png"/>04:00PM-05:30AM</h3>
+								<h3><img src="/school_ems/static/img/graf-icon.png"/>Venue: Jalalabad</h3>
+								<p>The seminar was held on the Jalalabad campus for students. The topic
+									was "how to improve speaking skill". The purpose of the seminar was for the
+									capacity building of MELI students.</p>
+
+								<a href="">Read More ></a>
+							</div>
+						</div>
+					</div>
+
+					<div class="">
+						<div class="newsCont">
+							<img class="img-responsive" src="/school_ems/static/img/news2.jpg"  alt="" />
+							<div class="newsContInner">
+								<h5>October 15, 2019</h5>
+								<h4>Capacity building seminar</h4>
+								<h3><img src="/school_ems/static/img/time-icon.png"/>04:00PM-05:30AM</h3>
+								<h3><img src="/school_ems/static/img/graf-icon.png"/>Venue: Jalalabad</h3>
+								<p>The seminar was held on the Jalalabad campus for students. The topic
+									was "how to improve speaking skill". The purpose of the seminar was for the
+									capacity building of MELI students.</p>
+
+								<a href="">Read More ></a>
+							</div>
+						</div>
+					</div>
+
+				</div><!-- courses-class -->
+			</div>
+			<!--container-->
+		</div>
+		<div class="brandBlock ">
+			<div class="container">
+				<div class="blockTitle">
+					<h3>Our Brand  Partner</h3>
+					<h6>Muslim's Brands Make Every Day Just A Little Better For Consumers Around The Globe.</h6>
+				</div>
+
+				<div class="brandCont">
+					<div class="col-sm-4"><img class="img-responsive center-block" src="/school_ems/static/img/brand1.jpg"/></div>
+					<div class="col-sm-4"><img class="img-responsive center-block" src="/school_ems/static/img/brand2.jpg"/></div>
+					<div class="col-sm-4"><img class="img-responsive center-block" src="/school_ems/static/img/brand3.jpg"/></div>
+					<div class="col-sm-4"><img class="img-responsive center-block" src="/school_ems/static/img/brand4.jpg"/></div>
+					<div class="col-sm-4"><img class="img-responsive center-block" src="/school_ems/static/img/brand5.jpg"/></div>
+					<div class="col-sm-4"><img class="img-responsive center-block" src="/school_ems/static/img/brand6.jpg"/></div>
+				</div>
+
+
+			</div>
+		</div>
+	
+		<div class="requestBlock">
+			<div class="container">
+				<div class="blockTitle">
+					<h3>Request a callback from our Recruitment Team</h3>
+					<h6>Please sign me up to receive updates, news and details of events from Muslim institute. Please
+						read our Privacy Policy.</h6>
+				</div>
+				
+			<form action="/customer/form/submit">
+				<div class="requestCont">
+					<div class="row">
+						<div class="col-sm-6"><input type="text" class="form-control" placeholder="First Name*" name="f_name"/></div>
+						<div class="col-sm-6"><input type="text" class="form-control" placeholder="Email*" name="email"/></div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<input type="text" class="form-control" placeholder="Phone Number*" name="p_number"/>
+							
+						</div>
+
+						<div class="col-sm-6">
+							<label for="exampleInputEmail1">I have a question about:</label>
+							<textarea class="form-control" name="about"></textarea>
+						</div>
+
+					</div>
+
+					<h6>More information</h6>
+					<div class="form-group">
+						<input type="checkbox" id="signme"/>
+						<label for="signme">Please sign me up to receive updates, news and details of events from Muslim
+							institute, Please read our
+							Privacy Policy. I want to receive updates </label>
+					</div>
+					 <button type="submit" class="btn btn-primary">Create</button>
+
+				</div>
+			</form>
+
+			</div>
+		</div>
+		
+		
+		<div class="footerLinksBlock" style=" background: url(assets/images/footerlinks-bg.jpg) no-repeat top center;">
+			<div class="container">
+				<div class="footerLinks-width">
+					<h6>Study  Courses</h6>
+					<ul>
+						<li><a href="">MUSLIM  LADO</a></li>
+						<li><a href="">Talk  Talk Program</a></li>
+						<li><a href="">Semi higher education</a></li>
+						<li><a href="">Research and study</a></li>
+						<li><a href="">seminars</a></li>
+						<li><a href="">Weekend Classes</a></li>
+						<li><a href="">IELTS</a></li>
+					</ul>
+				</div>
+
+				<div class="footerLinks-width">
+					<h6>Campuses</h6>
+					<ul>
+						<li><a href="">Kabul Head Campus</a></li>
+						<li><a href="">Herat Campus</a></li>
+						<li><a href="">Taimani Campus</a></li>
+						<li><a href="">Mazar Campus</a></li>
+						<li><a href="">Jalalabad</a></li>
+						<li><a href="">Kart-e-Now Campus</a></li>
+						<li><a href="">Barchi Campus</a></li>
+					</ul>
+				</div>
+
+				<div class="footerLinks-width">
+					<h6>About us</h6>
+					<ul>
+						<li><a href="">Our Institute</a></li>
+						<li><a href="">Public Information</a></li>
+						<li><a href="">Governance</a></li>
+						<li><a href="">News</a></li>
+						<li><a href="">Events</a></li>
+						<li><a href="">Our Vision</a></li>
+					</ul>
+				</div>
+
+				<div class="footerLinks-width">
+					<h6>Quick Link</h6>
+					<ul>
+						<li><a href="">Students</a></li>
+						<li><a href="">Courses</a></li>
+						<li><a href="">Admission</a></li>
+						<li><a href="">Events</a></li>
+						<li><a href="">Blog</a></li>
+						<li><a href="">Policy</a></li>
+						<li><a href="">Reach Us</a></li>
+						<li><a href="">Classes Timetable</a></li>
+					</ul>
+				</div>
+
+				<div class="footerLinks-width">
+					<h6>Location Map</h6>
+					<ul>
+						<li><a href="">Site Map</a></li>
+						<li><a href="">Location</a></li>
+						<li><a href="">Google Map</a></li>
+						<li><a href="">Campuses Map</a></li>
+						<li><a href="">View Locations</a></li>
+						<li><a href="">LADO</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footerBlock">
+			<div class="container">
+				<p>We are not an individual but a team and a connective organization. We have principles which make us
+					committed
+					to staying enthusiastically beside one another and be more industrious than ever in flourishing our
+					organization.
+					Our biggest achievement is mutual respect among all members of organization (Muslim Group), belief
+					in specialization
+					and global fame of Muslim on the basis of educational services to every particular individual of
+					Afghanistan.</p>
+
+				<h6>Contact Us: info@muslim.af  |  0093 (0) 711116768</h6>
+
+				<div class="followBlock">
+					<h5>Follow us on:</h5>
+					<ul>
+						<li><a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+						<li><a href=""><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+						<li><a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+						<li><a href=""><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+						<li><a href=""><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+						<li><a href=""><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footerBottomBlock">
+			<div class="container">
+				<p>2020 © Karimi infotech, All Rights Reserved.</p>
+
+
+			</div>
+		</div>
+
+
+
+	<script src="/school_ems/static/js/jquery.min.js"></script>
+	<script src="/school_ems/static/js/bootstrap.min.js"></script>
+	<script src="/school_ems/static/js/dropdown-menu.js"></script>
+	<script src="/school_ems/static/js/slick.min.js"></script>
+
+
+
+	<!--- Gallery css -->
+
+	<script src='https://unpkg.com/splitting@1.0.5/dist/splitting.js'></script>
+
+
+
+	<script>
+		console.clear();
+
+		Splitting({
+			target: '.tiler',
+			by: 'cells',
+			rows: 3,
+			columns: 3,
+			image: true
+		}); //Image('.tiler-overlay', { rows: 3, cols: 3 });
+
+	</script>
+
+	<!--- Gallery css -->
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('.courses-class').slick({
+				dots: false,
+				arrow: false,
+				autoplay: true,
+				//infinite: false,
+				speed: 600,
+				slidesToShow: 3,
+				slidesToScroll: 3,
+				responsive: [
+					{
+						breakpoint: 1024,
+						settings: {
+							slidesToShow: 3,
+							slidesToScroll: 3,
+							infinite: true,
+							dots: false
+						}
+					},
+					{
+						breakpoint: 641,
+						settings: {
+							slidesToShow: 1,
+							slidesToScroll: 1
+						}
+					},
+					{
+						breakpoint: 480,
+						settings: {
+							slidesToShow: 1,
+							slidesToScroll: 1
+						}
+					}
+				]
+			});
+
+
+			$('.staff-class').slick({
+				dots: false,
+				autoplay: true,
+				//infinite: false,
+				speed: 600,
+				slidesToShow: 4,
+				slidesToScroll: 4,
+				responsive: [
+					{
+						breakpoint: 1024,
+						settings: {
+							slidesToShow: 3,
+							slidesToScroll: 3,
+							infinite: true,
+							dots: false
+						}
+					},
+					{
+						breakpoint: 641,
+						settings: {
+							slidesToShow: 1,
+							slidesToScroll: 1
+						}
+					},
+					{
+						breakpoint: 480,
+						settings: {
+							slidesToShow: 1,
+							slidesToScroll: 1
+						}
+					}
+				]
+			});
+
+
+			$('.reviews-class').slick({
+				dots: false,
+				arrow: false,
+				autoplay: true,
+				//infinite: false,
+				speed: 600,
+				slidesToShow: 4,
+				slidesToScroll: 4,
+				responsive: [
+					{
+						breakpoint: 1024,
+						settings: {
+							slidesToShow: 3,
+							slidesToScroll: 3,
+							infinite: true,
+							dots: false
+						}
+					},
+					{
+						breakpoint: 641,
+						settings: {
+							slidesToShow: 1,
+							slidesToScroll: 1
+						}
+					},
+					{
+						breakpoint: 480,
+						settings: {
+							slidesToShow: 1,
+							slidesToScroll: 1
+						}
+					}
+				]
+			});
+
+
+
+		});
+	</script>
+		
+
+
+							</body>
+
+                        
+                            
+                       
+                    </div>
+                </div>
+              </div>
+          </t>
+      </t>
+    </template>
+</odoo>
+
+
+
+
+<!-- <odoo>
+
+	<data>
+		
+
+
+     <template id="detail_page222" name="Detail page" page="True">
+	   <t t-call="website.layout">
+	        <div class="oe_structure">
+	          <div class="container">
+	          	<center><h3>Student List</h3></center>
+	          	<p>
+             			
+              		<a t-attf-href="/example/campus" class="btn btn-info">Company details</a>
+            		</p>
+	       			
+		       		<form action="/api/save" method="post">    
+       # add the input fields here
+       <div class="form-group form-field o_website_form_required_custom">    
+           <label class="col-md-3 col-sm-4 control-label" for="name">Name</label>   
+             <div class="col-md-7 col-sm-8">       
+                 <input type="text" class="form-control o_website_form_input" name="name" required=""/>   
+             </div>
+        </div>   
+       <div class="form-group"> 
+            <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7"> 
+                <span id='submit' class="btn btn-primary btn-lg o_website_form_send">Submit</span> 
+                <span id="o_website_form_result"></span> 
+            </div> 
+       </div>
+</form> 
+		       	</div>
+		       </div>
+		       </t>
+		
+		</template>
+
+
+		<template id="campus_list" name="Campus Page" page="True">
+	   <t t-call="website.layout">
+	        <div class="oe_structure">
+	          <div class="container">
+	          	<center><h3>Campus List</h3></center>
+	          	<table border="1" class="table table-condesed table-bordered" >
+						<tr>
+							
+							<td class="text-center"><strong>Campus Name</strong></td>
+							<td class="text-center"><strong>Campus code</strong></td>
+							
+							
+						</tr>
+						
+						
+						
+						<t t-foreach="student" t-as="p">
+							<tr>
+								
+								<td class="text-center"><span t-esc="p.name"/></td>
+								<td class="text-center"><span t-esc="p.code"/></td>
+								
+							</tr>
+						</t>
+						
+
+					</table>
+	          </div>
+	      </div>
+	  </t>
+	</template>
+	</data>
+</odoo> -->

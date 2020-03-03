@@ -1,0 +1,257 @@
+<odoo>
+	<data>
+		<record id="action_plan_form" model="ir.ui.view">
+			<field name="name">Action Plan</field>
+			<field name="model">daily.action</field>
+			<field name="arch" type="xml">
+			    <form>
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="campus"/>
+							<field name="action_plan_date"/>
+							<field name="s_no" invisible="1"/>
+						</group>
+					</group>
+					<field name="action_lines">
+						<tree editable="bottom">
+							<field name="s_no"/>
+							<field name="name"/>
+							<field name="description"/>
+							<field name="responsible"/>
+							<field name="comments"/>
+						</tree>
+					</field>
+			    </form>
+			</field>
+		</record>
+
+		<record id="action_plan_tree" model="ir.ui.view">
+			<field name="name">Action Plan</field>
+			<field name="model">daily.action</field>
+			<field name="arch" type="xml">
+			    <tree>
+					<field name="name"/>
+					<field name="campus"/>
+					<field name="action_plan_date"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_plan_action" model="ir.actions.act_window">
+            <field name="name">Action Plan</field>
+            <field name="res_model">daily.action</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="action_plan_menu"
+            name="Daily Action Plan"
+            parent="project.menu_main_pm"
+            sequence="2"
+            action="action_plan_action"
+            />
+
+
+
+     	<record id="action_plan_weekly_form" model="ir.ui.view">
+			<field name="name">Action Plan</field>
+			<field name="model">weekly.action</field>
+			<field name="arch" type="xml">
+			    <form>
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="campus"/>
+							<field name="action_plan_from_date"/>
+							<field name="action_plan_to_date"/>
+							<field name="s_no" invisible="1"/>
+						</group>
+					</group>
+					<field name="action_lines">
+						<tree editable="bottom">
+							<field name="s_no"/>
+							<field name="name"/>
+							<field name="description"/>
+							<field name="responsible"/>
+							<field name="date_to_begain"/>
+							<field name="due_date"/>
+							<field name="comments"/>
+						</tree>
+					</field>
+			    </form>
+			</field>
+		</record>
+
+		<record id="action_plan_weekly_tree" model="ir.ui.view">
+			<field name="name">Action Plan</field>
+			<field name="model">weekly.action</field>
+			<field name="arch" type="xml">
+			    <tree>
+					<field name="name"/>
+					<field name="campus"/>
+					<field name="action_plan_from_date"/>
+					<field name="action_plan_to_date"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_plan_weekly_action" model="ir.actions.act_window">
+            <field name="name">Action Plan</field>
+            <field name="res_model">weekly.action</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="action_plan_weekly_menu"
+            name="Weekly Action Plan"
+            parent="project.menu_main_pm"
+            sequence="3"
+            action="action_plan_weekly_action"
+            />
+
+        <record id="action_plan_tracker_wizard" model="ir.ui.view">
+			<field name="name">Tracker</field>
+			<field name="model">action.tracker</field>
+			<field name="arch" type="xml">
+			    <form>
+			    	<group>
+			    		<group>
+			    			<field name = "tracker" widget="radio" options="{'horizontal': true}"/>
+			    		</group>
+			    	</group>
+			    	<group>
+			    		<group>
+				    		<field name = "name"/>
+				    		<field name = "campus"/>
+				    	</group>
+				    	<group>
+				    		<field name = "from_date"/>
+				    		<field name = "to_date"/>
+				    	</group>
+			    	</group>
+
+			    	<footer>
+	                    <button name="generated_report" string="Print" type="object" class="oe_highlight"/>
+	                    or
+	                    <button special="cancel" string="Cancel" class="oe_link"/>
+	                </footer>
+			    </form>
+			</field>
+		</record>
+
+		<record id="action_plan_tracker_action" model="ir.actions.act_window">
+            <field name="name">Action Plan</field>
+            <field name="res_model">action.tracker</field>
+            <field name="view_type">form</field>
+		    <field name="view_mode">form</field>
+		    <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.menu" id="project.menu_main_pm">
+			<field name="name">Action Plan</field>
+		</record>
+		<record model="ir.ui.menu" id="mail.mail_channel_menu_root_chat">
+			<field name="name">DashBoard</field>
+		</record>
+
+        <menuitem
+            id="action_plan_trcker_menu"
+            name="Action Plan Tracker"
+            parent="project.menu_main_pm"
+            sequence="4"
+            action="action_plan_tracker_action"
+            />
+
+        <report
+		    id="action_plan_report"
+		    model="action.tracker"
+		    string="Action Plan Report"
+		    report_type="qweb-html"
+		    name="hr_attachdoc.action_plan_tracker_report"
+		    file="hr_attachdoc.action_plan_tracker_report"
+		    menu="True"
+		/>
+
+		<template id="action_plan_tracker_report">
+		   	<t t-call="report.html_container">
+		       	<t t-call="report.external_layout">
+		       		<div class="page">
+		       			<!-- <t t-foreach="data" t-as="emp"> -->
+			       			<table border="1" class="table table-condesed table-bordered" >
+				       			<tr>
+				       				<td class="text-center"><strong>Name</strong></td>
+				       				<td class="text-center"><span t-esc="data[0]"/></td>
+									<td class="text-center"><strong>Campus</strong></td>
+									<td class="text-center"><span t-esc="data[1]"/></td>
+				       			</tr>
+				       			<tr>
+				       				<td class="text-center"><strong>Department</strong></td>
+				       				<td class="text-center"><span t-esc="data[2]"/></td>
+									<td class="text-center"><strong>Job Title</strong></td>
+									<td class="text-center"><span t-esc="data[3]"/></td>
+				       			</tr>
+				       			<tr>
+				       				<td class="text-center"><strong>From Date</strong></td>
+				       				<td class="text-center"><span t-esc="data[4]"/></td>
+									<td class="text-center"><strong>To Date</strong></td>
+									<td class="text-center"><span t-esc="data[5]"/></td>
+				       			</tr>
+				       		</table>
+
+
+
+			       			<t t-if="data[6] == 'daily'">
+			       				<h2><center><strong>Daily Action Plan Report</strong></center></h2>
+					       		<table border="1" class="table table-condesed table-bordered" >
+					       			<tr>
+					       				<td class="text-center"><strong>S.No</strong></td>
+										<td class="text-center"><strong>Task Name</strong></td>
+										<td class="text-center"><strong>Action Steps Description</strong></td>
+										<td class="text-center"><strong>Department Responsible</strong></td>
+										<td class="text-center"><strong>Comments</strong></td>
+					       			</tr>
+					       			<t t-foreach="action_data" t-as="o">
+					       				<tr>
+					       					<td class="text-center"><span t-esc="action_data[o][0]"/></td>
+					       					<td class="text-center"><span t-esc="action_data[o][1]"/></td>
+					       					<td class="text-center"><span t-esc="action_data[o][2]"/></td>
+					       					<td class="text-center"><span t-esc="action_data[o][3]"/></td>
+					       					<td class="text-center"><span t-esc="action_data[o][4]"/></td>
+					       				</tr>
+					       			</t>
+					       		</table>
+					       	</t>
+
+					       	<t t-if="data[6] == 'weekly'">
+					       		<h2><center><strong>Weekly Action Plan Report</strong></center></h2>
+					       		<table border="1" class="table table-condesed table-bordered" >
+					       			<tr>
+					       				<td class="text-center"><strong>S.No</strong></td>
+										<td class="text-center"><strong>Task Name</strong></td>
+										<td class="text-center"><strong>Action Steps Description</strong></td>
+										<td class="text-center"><strong>Department Responsible</strong></td>
+										<td class="text-center"><strong>Date To Begain</strong></td>
+										<td class="text-center"><strong>Due Date</strong></td>
+										<td class="text-center"><strong>Comments</strong></td>
+					       			</tr>
+					       			<t t-foreach="action_data" t-as="o">
+					       				<tr>
+					       					<td class="text-center"><span t-esc="action_data[o][0]"/></td>
+					       					<td class="text-center"><span t-esc="action_data[o][1]"/></td>
+					       					<td class="text-center"><span t-esc="action_data[o][2]"/></td>
+					       					<td class="text-center"><span t-esc="action_data[o][3]"/></td>
+					       					<td class="text-center"><span t-esc="action_data[o][4]"/></td>
+					       					<td class="text-center"><span t-esc="action_data[o][5]"/></td>
+					       					<td class="text-center"><span t-esc="action_data[o][6]"/></td>
+					       				</tr>
+					       			</t>
+					       		</table>
+					       	</t>
+					    <!-- </t> -->
+					</div>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

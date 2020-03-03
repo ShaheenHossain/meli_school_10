@@ -1,0 +1,718 @@
+<odoo>
+	<data>
+		<!-- For Maintanance of Campus -->
+		<record id="maintenance_tree_view" model="ir.ui.view">
+			<field name="name">Auditing of Maintanence</field>
+			<field name="model">audit.maintenance</field>
+			<field name="arch" type='xml'>
+				<tree>
+					<field name="name"/>
+					<field name="date_of_audit"/>
+					<field name="month_of_auditing"/>
+					<field name="total"/>
+					<field name="percentage"/>
+				</tree>
+			</field>
+		</record>
+		<record id="audit_tree_view" model="ir.ui.view">
+			<field name="name">Auditing of Maintanence </field>
+			<field name="model">audit.maintenance</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" required='1'/>
+								<field name="date_of_audit" required='1'/>
+							</group>
+							<group>
+								<field name="total"/>
+									  <label for="percenatge" string="Percentage"/>
+									 <div class="o_row">
+								<field name="percentage" class="oe_inline"/><span>%%</span>
+							</div>
+							<field name="month_of_auditing"/>
+							<field name="s_no" invisible='1'/>
+							</group>
+						</group>
+							<separator string="Maintenance of Campus"/>
+								<field name="maintance_id" >
+									<tree create='false' delete="false" editable="bottom">
+										<field name="maintenance"/>
+										<field name="excellent"/>
+										<field name="good"/>
+										<field name="poor"/>
+										<field name="unacceptable"/>
+										<field name="reason"/>
+									</tree>
+								</field>
+								<separator string="Findings"/>
+								<field name="maintenance_description_id" context="{'default_s_no':s_no}">
+									<tree editable='bottom'>
+										<field name="s_no" readonly="1"/>
+										<field name="des"/>
+										<field name="planned_date"/>
+										<field name="close_date"/>
+										<field name="reason"/>
+										<field name="state"/>
+										<button name="holding_process" type="object" string="Hold" attrs="{'invisible':[('state','in',('hold','close'))]}"/>
+										<button name="close_problem" type="object" string="Close" attrs="{'invisible':[('state','in',('close'))]}"/>
+									</tree>
+								</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- For Acedamy of Campus -->
+		<record id="acedamy_tree_view" model="ir.ui.view">
+			<field name="name">Auditing of Acedamy</field>
+			<field name="model">audit.academy</field>
+			<field name="arch" type='xml'>
+				<tree>
+					<field name="name"/>
+					<field name="date_of_audit"/>
+					<field name="month_of_auditing"/>
+					<field name="total"/>
+					<field name="percentage"/>
+				</tree>
+			</field>
+		</record>
+		<record id="academy_audit_tree_view" model="ir.ui.view">
+			<field name="name">Academy Audit Report</field>
+			<field name="model">audit.academy</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" required='1'/>
+								<field name="date_of_audit" required='1'/>
+							</group>
+							<group>
+								<field name="total"/>
+									  <label for="percenatge" string="Percentage"/>
+									 <div class="o_row">
+								<field name="percentage" class="oe_inline"/><span>%%</span>
+							</div>
+								<field name="month_of_auditing"/>
+								<field name="s_no" invisible='1'/>
+							</group>
+						</group>
+							<separator string="Assistant Academy Manager"/>
+								<field name="academy_id">
+									<tree create='false' delete="false" editable="bottom">
+										<field name="academy"/>
+										<field name="excellent"/>
+										<field name="good"/>
+										<field name="poor"/>
+										<field name="unacceptable"/>
+										<field name="reason"/>
+									</tree>
+
+
+								</field>
+							<separator string="Findings"/>
+
+								<field name="academy_description_id" context="{'default_s_no':s_no}">
+									<tree editable='bottom'>
+										<field name="s_no" readonly="1"/>
+										<field name="des"/>
+										<field name="planned_date"/>
+										<field name="close_date"/>
+										<field name="reason"/>
+										<field name="state"/>
+										<button name="holding_process" type="object" string="Hold" attrs="{'invisible':[('state','in',('hold','close'))]}"/>
+										<button name="close_problem" type="object" string="Close" attrs="{'invisible':[('state','in',('close'))]}"/>
+									</tree>
+								</field>
+
+								
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- For COunsiling of Campus -->
+		<record id="counsiling_tree_view" model="ir.ui.view">
+			<field name="name">Auditing of COunsiling</field>
+			<field name="model">audit.counsiling</field>
+			<field name="arch" type='xml'>
+				<tree>
+					<field name="name"/>
+					<field name="date_of_audit"/>
+					<field name="month_of_auditing"/>
+					<field name="total"/>
+					<field name="percentage"/>
+				</tree>
+			</field>
+		</record>
+		<record id="counsiling_audit_tree_view" model="ir.ui.view">
+			<field name="name">Counsiling Audit Report</field>
+			<field name="model">audit.counsiling</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" required='1' />
+								<field name="date_of_audit" required='1' />
+								
+							</group>
+							<group>
+								<field name="total"/>
+									 <label for="percenatge" string="Percentage"/>
+									 <div class="o_row">
+										<field name="percentage" class="oe_inline"/><span>%%</span>
+									</div>
+								<field name="month_of_auditing"/>
+								<field name="s_no" invisible='1'/>
+								
+							</group>
+						</group>
+							<separator string="Counseling Process"/>
+								<field name="academy_id">
+									<tree create='false' delete="false" editable="bottom">
+										<field name="counsiling"/>
+										<field name="excellent"/>
+										<field name="good"/>
+										<field name="poor"/>
+										<field name="unacceptable"/>
+										<field name="reason"/>
+									</tree>
+								</field>
+								<separator string="Findings"/>
+
+								<field name="counsiling_description_id" context="{'default_s_no':s_no}">
+									<tree editable='bottom'>
+										<field name="s_no" readonly="1"/>
+										<field name="des"/>
+										<field name="planned_date"/>
+										<field name="close_date"/>
+										<field name="reason"/>
+										<field name="state"/>
+										<button name="holding_process" type="object" string="Hold" attrs="{'invisible':[('state','in',('hold','close'))]}"/>
+										<button name="close_problem" type="object" string="Close" attrs="{'invisible':[('state','in',('close'))]}"/>
+									</tree>
+								</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- For Examination Auditing -->
+		<record id="examination_tree_view" model="ir.ui.view">
+			<field name="name">Auditing of Examination</field>
+			<field name="model">audit.examination</field>
+			<field name="arch" type='xml'>
+				<tree>
+					<field name="name"/>
+					<field name="date_of_audit"/>
+					<field name="month_of_auditing"/>
+					<field name="total"/>
+					<field name="percentage"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="examination_audit_tree_view" model="ir.ui.view">
+			<field name="name">Examination Audit Report</field>
+			<field name="model">audit.examination</field>
+			<field name="arch" type="xml">
+				<form>
+					
+					<sheet>
+						<group>
+							<group>
+								<field name="name" required='1' />
+								<field name="date_of_audit" required='1'/>
+								
+							</group>
+							<group>
+								<field name="total"/>
+									 <label for="percenatge" string="Percentage"/>
+									 <div class="o_row">
+										<field name="percentage" class="oe_inline"/><span>%%</span>
+									</div>
+								<field name="month_of_auditing"/>
+								<field name="s_no" invisible="1"/>
+							</group>
+						</group>
+							
+							<separator string="Examination Department"/>
+								<field name="academy_id">
+									<tree create='false' delete="false" editable="bottom">
+										<field name="examination"/>
+										<field name="excellent"/>
+										<field name="good"/>
+										<field name="poor"/>
+										<field name="unacceptable"/>
+										<field name="reason"/>
+									</tree>
+								</field>
+								<separator string="Findings"/>
+
+								<field name="examination_description_id" context="{'default_s_no':s_no}">
+									<tree editable='bottom'>
+										<field name="s_no" readonly="1"/>
+										<field name="des"/>
+										<field name="planned_date"/>
+										<field name="close_date"/>
+										<field name="reason"/>
+										<field name="state"/>
+										<button name="holding_process" type="object" string="Hold" attrs="{'invisible':[('state','in',('hold','close'))]}"/>
+										<button name="close_problem" type="object" string="Close" attrs="{'invisible':[('state','in',('close'))]}"/>
+									</tree>
+								</field>
+						
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- For FInance Auditing -->
+		<record id="finance_tree_view" model="ir.ui.view">
+			<field name="name">Auditing of Finance</field>
+			<field name="model">audit.finance</field>
+			<field name="arch" type='xml'>
+				<tree>
+					<field name="name"/>
+					<field name="date_of_audit"/>
+					<field name="month_of_auditing"/>
+					<field name="total"/>
+					<field name="percentage"/>
+				</tree>
+			</field>
+		</record>
+		<record id="finance_audit_tree_view" model="ir.ui.view">
+			<field name="name">Finance Audit Report</field>
+			<field name="model">audit.finance</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" required='1' />
+								<field name="date_of_audit" required='1' />
+								
+							</group>
+							<group>
+								<field name="total"/>
+									 <label for="percenatge" string="Percentage"/>
+									 <div class="o_row">
+										<field name="percentage" class="oe_inline"/><span>%%</span>
+									</div>
+								<field name="month_of_auditing"/>
+								<field name="s_no" invisible='1'/>
+							</group>
+						</group>
+							
+							
+							<separator string="Finance Executive"/>
+								<field name="academy_id">
+									<tree create='false' delete="false" editable="bottom">
+										<field name="finance"/>
+										<field name="excellent"/>
+										<field name="good"/>
+										<field name="poor"/>
+										<field name="unacceptable"/>
+										<field name="reason"/>
+									</tree>
+								</field>
+								<separator string="Findings"/>
+
+								<field name="finance_description_id" context="{'default_s_no':s_no}">
+									<tree editable='bottom'>
+										<field name="s_no" readonly="1"/>
+										<field name="des"/>
+										<field name="planned_date"/>
+										<field name="close_date"/>
+										<field name="reason"/>
+										<field name="state"/>
+										<button name="holding_process" type="object" string="Hold" attrs="{'invisible':[('state','in',('hold','close'))]}"/>
+										<button name="close_problem" type="object" string="Close" attrs="{'invisible':[('state','in',('close'))]}"/>
+									</tree>
+								</field>
+						
+								
+							
+								
+						
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- FOr Securiy Auditing -->
+		<record id="security_tree_view" model="ir.ui.view">
+			<field name="name">Auditing of Security</field>
+			<field name="model">audit.security</field>
+			<field name="arch" type='xml'>
+				<tree>
+					<field name="name"/>
+					<field name="date_of_audit"/>
+					<field name="month_of_auditing"/>
+					<field name="total"/>
+					<field name="percentage"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="security_audit_tree_view" model="ir.ui.view">
+			<field name="name">Security Audit Report</field>
+			<field name="model">audit.security</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" required='1' />
+								<field name="date_of_audit" required='1'/>
+							</group>
+							<group>
+								<field name="total"/>
+									 <label for="percenatge" string="Percentage"/>
+									 <div class="o_row">
+										<field name="percentage" class="oe_inline"/><span>%%</span>
+									</div>
+								<field name="month_of_auditing"/>
+								<field name="s_no" invisible="1"/>
+							</group>
+						</group>
+						<separator string="Security Guard"/>
+								<field name="academy_id">
+									<tree create='false' delete="false" editable="bottom">
+										<field name="security"/>
+										<field name="excellent"/>
+										<field name="good"/>
+										<field name="poor"/>
+										<field name="unacceptable"/>
+										<field name="reason"/>
+									</tree>
+								</field>
+								<separator string="Findings"/>
+
+								<field name="security_description_id" context="{'default_s_no':s_no}">
+									<tree editable='bottom'>
+										<field name="s_no" readonly="1"/>
+										<field name="des"/>
+										<field name="planned_date"/>
+										<field name="close_date"/>
+										<field name="reason"/>
+										<field name="state"/>
+										<button name="holding_process" type="object" string="Hold" attrs="{'invisible':[('state','in',('hold','close'))]}"/>
+										<button name="close_problem" type="object" string="Close" attrs="{'invisible':[('state','in',('close'))]}"/>
+									</tree>
+								</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- FOr Attendance Auditing -->
+		<record id="attendance_tree_view" model="ir.ui.view">
+			<field name="name">Auditing of Attendance</field>
+			<field name="model">audit.audit.attendance</field>
+			<field name="arch" type='xml'>
+				<tree>
+					<field name="name"/>
+					<field name="date_of_audit"/>
+					<field name="month_of_auditing"/>
+					<field name="total"/>
+					<field name="percentage"/>
+				</tree>
+			</field>
+		</record>
+		<record id="attendance_audit_tree_view" model="ir.ui.view">
+			<field name="name">Attendance Audit Report</field>
+			<field name="model">audit.audit.attendance</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" required='1'/>
+								<field name="date_of_audit" required='1'/>
+								
+							</group>
+							<group>
+								<field name="total"/>
+									 <label for="percenatge" string="Percentage"/>
+									 <div class="o_row">
+										<field name="percentage" class="oe_inline"/><span>%%</span>
+									</div>
+								<field name="month_of_auditing"/>
+								<field name="s_no" invisible="1"/>
+							</group>
+						</group>
+						<separator string="Attendance Process"/>
+								<field name="academy_id">
+									<tree create='false' delete="false" editable="bottom">
+										<field name="attendance"/>
+										<field name="excellent"/>
+										<field name="good"/>
+										<field name="poor"/>
+										<field name="unacceptable"/>
+										<field name="reason"/>
+									</tree>
+								</field>
+								<separator string="Findings"/>
+
+								<field name="attendance_description_id" context="{'default_s_no':s_no}">
+									<tree editable='bottom'>
+										<field name="s_no" readonly="1"/>
+										<field name="des"/>
+										<field name="planned_date"/>
+										<field name="close_date"/>
+										<field name="reason"/>
+										<field name="state"/>
+										<button name="holding_process" type="object" string="Hold" attrs="{'invisible':[('state','in',('hold','close'))]}"/>
+										<button name="close_problem" type="object" string="Close" attrs="{'invisible':[('state','in',('close'))]}"/>
+									</tree>
+								</field>
+						
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id='audit_audit_tree_view' model='ir.ui.view'>
+			<field name="name">Auditing</field>
+			<field name="model">audit.audit</field>
+			<field name="arch" type='xml'>
+				<form>
+					
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="date"/>
+							</group>
+							<group>
+								<field name="total" />
+								<label for="percenatge" string="Percentage"/>
+									 <div class="o_row">
+										<field name="percentage" class="oe_inline"/><span>%%</span>
+									</div>
+							</group>
+						</group>
+						<separator />
+						<field name="whole_audit_id">
+							<tree editable="bottom" create='false' delete='false' edit='false'>
+								<field name="description"/>
+								<field name="marks"/>
+								<field name="percentage"/>
+								<field name="closing_date"/>
+								<field name="status"/>
+							</tree>
+						</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="audit_form_action" model="ir.actions.act_window">
+			<field name="name">Maintenance Audit Report</field>
+			<field name="res_model">audit.maintenance</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'group_by':'date_of_audit'}</field>
+		</record>
+		<record id="academy_audit_form_action" model="ir.actions.act_window">
+			<field name="name">Academy Audit Report</field>
+			<field name="res_model">audit.academy</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'group_by':'date_of_audit'}</field>
+		</record>
+		<record id="counsiling_audit_form_action" model="ir.actions.act_window">
+			<field name="name">Counsiling Audit Report</field>
+			<field name="res_model">audit.counsiling</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'group_by':'date_of_audit'}</field>
+		</record>
+		<record id="examination_audit_form_action" model="ir.actions.act_window">
+			<field name="name">Examination Audit Report</field>
+			<field name="res_model">audit.examination</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'group_by':'date_of_audit'}</field>
+		</record>
+		<record id="finance_audit_form_action" model="ir.actions.act_window">
+			<field name="name">Finance Audit Report</field>
+			<field name="res_model">audit.finance</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'group_by':'date_of_audit'}</field>
+		</record>
+		<record id="security_audit_form_action" model="ir.actions.act_window">
+			<field name="name">Security Audit Report</field>
+			<field name="res_model">audit.security</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'group_by':'date_of_audit'}</field>
+		</record>
+		<record id="attendance_audit_form_action" model="ir.actions.act_window">
+			<field name="name">attendance Audit Report</field>
+			<field name="res_model">audit.audit.attendance</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'group_by':'date_of_audit'}</field>
+		</record>
+		<record id="audit_audit_action_view" model="ir.actions.act_window">
+			<field name="name">Auditing</field>
+			<field name="res_model">audit.audit</field>
+			<field name="view_mode">tree,form</field>
+
+		</record>
+<record id='survey_questions_tree1' model='ir.ui.view'>
+	<field name="name">Auditing Questions</field>
+	<field name="model">audit.configuration</field>
+	<field name='arch' type='xml'>
+		<tree>
+			<field name='question'/>
+		</tree>
+	</field>
+</record>
+
+	<record id="audit_configurations" model="ir.ui.view">
+		<field name="name">Audit Configuration</field>
+		<field name="model">audit.configuration</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+
+						<field name="name" string='Question Type'/>
+						<field name="question"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="audit_audit_configuration_action" model="ir.actions.act_window">
+			<field name="name">Auditing</field>
+			<field name="res_model">audit.configuration</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'group_by':'name'}</field>
+		</record>
+
+
+<record id='survey_questions_tree' model='ir.ui.view'>
+	<field name="name">Survey Questions</field>
+	<field name="model">survey.questions</field>
+	<field name='arch' type='xml'>
+		<tree>
+			<field name='student_queston'/>
+			<field name='employee_question'/>
+		</tree>
+	</field>
+</record>
+	<record id="survey_configurations" model="ir.ui.view">
+		<field name="name">Survey Questions</field>
+		<field name="model">survey.questions</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="name" string='Category'/>
+						
+						</group>
+						<group>
+							<field name="student_queston" attrs="{'invisible':[('name','!=','student')]}"/>
+							<field name="employee_question" attrs="{'invisible':[('name','!=','employee')]}"/>
+						</group>
+					</group>
+					<separator string="Questions"/>
+					<field name="survey_lines_id" >
+						<tree editable='bottom'>
+							<field name="question"/>
+							<!-- <field name="question_type"/> -->
+						</tree>
+					</field>
+
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="survey_questions_action" model="ir.actions.act_window">
+			<field name="name">Survey Questions</field>
+			<field name="res_model">survey.questions</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'group_by':'name'}</field>
+		</record>
+
+
+		<menuitem 
+			id="audit_menuitem"
+			name="Auditing"
+			parent="mne_department_main"
+			sequence="2"/>
+		<menuitem 
+			id="audit_menuitem1"
+			name="Maintenance of Campus"
+			parent="audit_menuitem"
+			action='audit_form_action'
+			sequence="1"/>
+		<menuitem 
+			id="audit_menuitem11"
+			name="Assistant Academy Manager"
+			parent="audit_menuitem"
+			action='academy_audit_form_action'
+			sequence="2"/>
+
+		<menuitem 
+			id="counsiling_auditing_menuitem"
+			name="Counseling Process"
+			parent="audit_menuitem"
+			action='counsiling_audit_form_action'
+			sequence="3"/>
+
+		<menuitem 
+			id="examination_audit_menuitem"
+			name="Examination Department"
+			parent="audit_menuitem"
+			action='examination_audit_form_action'
+			sequence="4"/>
+
+		<menuitem 
+			id="finance_audit_menuitem"
+			name="Finance Executive"
+			parent="audit_menuitem"
+			action='finance_audit_form_action'
+			sequence="5"/>
+
+		<menuitem 
+			id="security_audit_menuitem"
+			name="Security Guard"
+			parent="audit_menuitem"
+			action='security_audit_form_action'
+			sequence="6"/>
+
+		<menuitem 
+			id="attendance_audit_menuitem"
+			name="Attendance Process"
+			parent="audit_menuitem"
+			action='attendance_audit_form_action'
+			sequence="7"/>
+
+		<menuitem 
+			id="audit_audit_menuitem"
+			name="Whole Auditing"
+			parent="audit_menuitem"
+			action='audit_audit_action_view'
+			sequence="8"/>
+
+		<menuitem 
+			id="audit_menuitem11111"
+			name="Configurations"
+			parent="mne_department_main"
+			sequence="3"/>
+
+		<menuitem 
+			id="audit_menuitem111"
+			name="Auditing Questions"
+			parent="audit_menuitem11111"
+			action="audit_audit_configuration_action"
+			sequence="1"/>
+
+		<menuitem 
+			id="survey_menuitem_action"
+			name="Survey Questions"
+			parent="audit_menuitem11111"
+			action="survey_questions_action"
+			sequence="2"/>
+
+
+
+
+
+	</data>
+</odoo>

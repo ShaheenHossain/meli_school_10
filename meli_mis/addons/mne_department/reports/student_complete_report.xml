@@ -1,0 +1,382 @@
+<odoo>
+	<data>
+		<report
+		    id="complete_form_report"
+		    model="complete.survey"
+		    string="SurveyReport"
+		    report_type="qweb-pdf"
+		    name="mne_department.student_complete_form_report_view"
+		    file="mne_department.student_complete_form_report_view"
+		    menu="True"/>
+
+
+	<template id="student_complete_form_report_view">
+	   	<t t-call="report.html_container">
+	       		<t t-call="report.external_layout">
+	       			<div class="page">
+	       			<t t-foreach="docs" t-as="student">
+	       				<t t-if="student.name=='student'">
+	       				<h2 align='center'>Complete Survey Form</h2>
+	       			<table border="1" class="table table-condesed table-bordered" >
+		       			<tr>
+		       			<td class="text-center"><strong>Survey Type</strong>
+		       			</td>
+		       			<td class="text-center"><span t-esc="student.name"/></td>
+						<td class="text-center"><strong>Class</strong></td>
+						<td class="text-center"><span t-esc="student.class_id.standard"/></td>
+							
+					</tr>
+					<tr>
+						<td class="text-center"><strong>Campus</strong></td>
+						<td class="text-center"><span t-esc="student.campus.name"/></td>
+						<td class="text-center"><strong>Date</strong></td>
+						<td class="text-center"><span t-esc="student.date"/></td>
+					</tr>
+						<tr>
+						<td class="text-center"><strong>Course Level</strong></td>
+						<td class="text-center"><span t-esc="student.level_id.name"/></td>
+						<td class="text-center"><strong>Class Strength</strong></td>
+						<td class="text-center"><span t-esc="student.strength"/></td>
+						</tr>
+						<tr>
+						<td class="text-center"><strong>Shift</strong></td>
+						<td class="text-center"><span t-esc="student.shift_id.name"/></td>
+						<td class="text-center"><strong>Survey Students</strong></td>
+						<td class="text-center"><span t-esc="student.survey_student"/></td>
+		       			</tr>
+		       		</table>
+		       		<h2 align='center'>Course Survey</h2>
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							<td class="text-center"><strong>Serial No</strong></td>
+							<td class="text-center"><strong>Questions</strong></td>
+							<td class="text-center"><strong>Strongly Agree</strong></td>
+							<td class="text-center"><strong>Agree</strong></td>
+							<td class="text-center"><strong>Neutral</strong></td>
+							<td class="text-center"><strong>DisAgree</strong></td>
+							<td class="text-center"><strong>Strongly DisAgree</strong></td>
+							<td class="text-center"><strong>High Percentage</strong></td>
+							
+						</tr>
+		       			<t t-foreach="student.complete_lines" t-as='obj'>
+		       			<tr>
+		       				<td class="text-center"><span t-esc="obj.s_no"/></td>
+		       				<td class="text-center"><span t-esc="obj.question"/></td>
+		       				<td class="text-center"><span t-esc="obj.s_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.neutral"/></td>
+		       				<td class="text-center"><span t-esc="obj.disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.strongly_disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       		<h2 align='center'>Classes for the term</h2>
+
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							<td class="text-center"><strong>Serial No</strong></td>
+							<td class="text-center"><strong>Questions</strong></td>
+							<td class="text-center"><strong>Strongly Agree</strong></td>
+							<td class="text-center"><strong>Agree</strong></td>
+							<td class="text-center"><strong>Neutral</strong></td>
+							<td class="text-center"><strong>DisAgree</strong></td>
+							<td class="text-center"><strong>Strongly DisAgree</strong></td>
+							<td class="text-center"><strong>High Percentage</strong></td>
+							
+						</tr>
+		       			<t t-foreach="student.term_lines" t-as='obj'>
+		       			<tr>
+		       				<td class="text-center"><span t-esc="obj.s_no"/></td>
+		       				<td class="text-center"><span t-esc="obj.question"/></td>
+		       				<td class="text-center"><span t-esc="obj.s_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.neutral"/></td>
+		       				<td class="text-center"><span t-esc="obj.disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.strongly_disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       		<h2 align='center'>Materials</h2>
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							<td class="text-center"><strong>Serial No</strong></td>
+							<td class="text-center"><strong>Questions</strong></td>
+							<td class="text-center"><strong>Strongly Agree</strong></td>
+							<td class="text-center"><strong>Agree</strong></td>
+							<td class="text-center"><strong>Neutral</strong></td>
+							<td class="text-center"><strong>DisAgree</strong></td>
+							<td class="text-center"><strong>Strongly DisAgree</strong></td>
+							<td class="text-center"><strong>High Percentage</strong></td>
+							
+						</tr>
+		       			<t t-foreach="student.complete_material_lines" t-as='obj'>
+		       			<tr>
+		       				<td class="text-center"><span t-esc="obj.s_no"/></td>
+		       				<td class="text-center"><span t-esc="obj.question"/></td>
+		       				<td class="text-center"><span t-esc="obj.s_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.neutral"/></td>
+		       				<td class="text-center"><span t-esc="obj.disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.strongly_disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       		<h2 align='center'>Employee</h2>
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							<td class="text-center"><strong>Serial No</strong></td>
+							<td class="text-center"><strong>Questions</strong></td>
+							<td class="text-center"><strong>Strongly Agree</strong></td>
+							<td class="text-center"><strong>Agree</strong></td>
+							<td class="text-center"><strong>Neutral</strong></td>
+							<td class="text-center"><strong>DisAgree</strong></td>
+							<td class="text-center"><strong>Strongly DisAgree</strong></td>
+							<td class="text-center"><strong>High Percentage</strong></td>
+							
+						</tr>
+		       			<t t-foreach="student.complete_employee_lines" t-as='obj'>
+		       			<tr>
+		       				<td class="text-center"><span t-esc="obj.s_no"/></td>
+		       				<td class="text-center"><span t-esc="obj.question"/></td>
+		       				<td class="text-center"><span t-esc="obj.s_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.neutral"/></td>
+		       				<td class="text-center"><span t-esc="obj.disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.strongly_disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       		<h2 align='center'>Campus Environment</h2>
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							<td class="text-center"><strong>Serial No</strong></td>
+							<td class="text-center"><strong>Questions</strong></td>
+							<td class="text-center"><strong>Strongly Agree</strong></td>
+							<td class="text-center"><strong>Agree</strong></td>
+							<td class="text-center"><strong>Neutral</strong></td>
+							<td class="text-center"><strong>DisAgree</strong></td>
+							<td class="text-center"><strong>Strongly DisAgree</strong></td>
+							<td class="text-center"><strong>High Percentage</strong></td>
+							
+						</tr>
+		       			<t t-foreach="student.complete_environment_lines" t-as='obj'>
+		       			<tr>
+		       				<td class="text-center"><span t-esc="obj.s_no"/></td>
+		       				<td class="text-center"><span t-esc="obj.question"/></td>
+		       				<td class="text-center"><span t-esc="obj.s_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.neutral"/></td>
+		       				<td class="text-center"><span t-esc="obj.disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.strongly_disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       		<h2 align='center'>Trainers</h2>
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							<td class="text-center"><strong>Serial No</strong></td>
+							<td class="text-center"><strong>Questions</strong></td>
+							<td class="text-center"><strong>Strongly Agree</strong></td>
+							<td class="text-center"><strong>Agree</strong></td>
+							<td class="text-center"><strong>Neutral</strong></td>
+							<td class="text-center"><strong>DisAgree</strong></td>
+							<td class="text-center"><strong>Strongly DisAgree</strong></td>
+							<td class="text-center"><strong>High Percentage</strong></td>
+							
+						</tr>
+		       			<t t-foreach="student.complete_trainer_lines" t-as='obj'>
+		       			<tr>
+		       				<td class="text-center"><span t-esc="obj.s_no"/></td>
+		       				<td class="text-center"><span t-esc="obj.question"/></td>
+		       				<td class="text-center"><span t-esc="obj.s_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.neutral"/></td>
+		       				<td class="text-center"><span t-esc="obj.disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.strongly_disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       		 <p style="page-break-before:always;"> </p>
+		       	</t>
+		       	 <p style="page-break-before:always;"> </p>
+
+		       	<!-- For Employee -->
+		       	<t t-if="student.name=='employee'">
+		       		<h2 align='center'>Employeee Survy Report</h2>
+	       			<table border="1" class="table table-condesed table-bordered" >
+			       		<tr>
+			       			<td class="text-center"><strong>Survey Type</strong>
+			       			</td>
+			       			<td class="text-center"><span t-esc="student.name"/></td>
+							<td class="text-center"><strong>Date</strong></td>
+							<td class="text-center"><span t-esc="student.date"/></td>
+						</tr>
+						<tr>
+							<td class="text-center"><strong>Campus</strong></td>
+							<td class="text-center"><span t-esc="student.campus.name"/></td>
+							<td class="text-center"><strong>Employee Strength</strong></td>
+							<td class="text-center"><span t-esc="student.strength"/></td>
+						</tr>
+						<tr>
+							<td class="text-center"><strong>Survey Employees</strong></td>
+							<td class="text-center"><span t-esc="student.survey_employee"/></td>
+						</tr>
+					
+		       		</table>
+		       		<h2 align='center'>About Muslim English Language</h2>
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							<td class="text-center"><strong>Questions</strong></td>
+							<td class="text-center"><strong>Strongly Agree</strong></td>
+							<td class="text-center"><strong>Agree</strong></td>
+							<td class="text-center"><strong>Neutral</strong></td>
+							<td class="text-center"><strong>DisAgree</strong></td>
+							<td class="text-center"><strong>Strongly DisAgree</strong></td>
+							<td class="text-center"><strong>High Percentage</strong></td>
+							
+						</tr>
+		       			<t t-foreach="student.complete_employee_lines_id" t-as='obj'>
+		       			<tr>
+		       				<td class="text-center"><span t-esc="obj.term"/></td>
+		       				<td class="text-center"><span t-esc="obj.strong_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.neutral"/></td>
+		       				<td class="text-center"><span t-esc="obj.dis_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.strongly_disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       		<h2 align='center'>Manager</h2>
+
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							
+							<td class="text-center"><strong>Questions</strong></td>
+							<td class="text-center"><strong>Strongly Agree</strong></td>
+							<td class="text-center"><strong>Agree</strong></td>
+							<td class="text-center"><strong>Neutral</strong></td>
+							<td class="text-center"><strong>DisAgree</strong></td>
+							<td class="text-center"><strong>Strongly DisAgree</strong></td>
+							<td class="text-center"><strong>High Percentage</strong></td>
+							
+						</tr>
+		       			<t t-foreach="student.complete_manager_lines_id" t-as='obj'>
+		       			<tr>
+		       				
+		       				<td class="text-center"><span t-esc="obj.term"/></td>
+		       				<td class="text-center"><span t-esc="obj.strong_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.neutral"/></td>
+		       				<td class="text-center"><span t-esc="obj.dis_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.strongly_disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       		<h2 align='center'>Enablement</h2>
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							
+							<td class="text-center"><strong>Questions</strong></td>
+							<td class="text-center"><strong>Strongly Agree</strong></td>
+							<td class="text-center"><strong>Agree</strong></td>
+							<td class="text-center"><strong>Neutral</strong></td>
+							<td class="text-center"><strong>DisAgree</strong></td>
+							<td class="text-center"><strong>Strongly DisAgree</strong></td>
+							<td class="text-center"><strong>High Percentage</strong></td>
+							
+						</tr>
+		       			<t t-foreach="student.complete_enable_lines_id" t-as='obj'>
+		       			<tr>
+		       				
+		       				<td class="text-center"><span t-esc="obj.term"/></td>
+		       				<td class="text-center"><span t-esc="obj.strong_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.neutral"/></td>
+		       				<td class="text-center"><span t-esc="obj.dis_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.strongly_disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       		<h2 align='center'>Alignment</h2>
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							
+							<td class="text-center"><strong>Questions</strong></td>
+							<td class="text-center"><strong>Strongly Agree</strong></td>
+							<td class="text-center"><strong>Agree</strong></td>
+							<td class="text-center"><strong>Neutral</strong></td>
+							<td class="text-center"><strong>DisAgree</strong></td>
+							<td class="text-center"><strong>Strongly DisAgree</strong></td>
+							<td class="text-center"><strong>High Percentage</strong></td>
+							
+						</tr>
+		       			<t t-foreach="student.complete_alignment_lines_id" t-as='obj'>
+		       			<tr>
+		       				
+		       				<td class="text-center"><span t-esc="obj.term"/></td>
+		       				<td class="text-center"><span t-esc="obj.strong_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.neutral"/></td>
+		       				<td class="text-center"><span t-esc="obj.dis_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.strongly_disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       		<h2 align='center'>Development</h2>
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							
+							<td class="text-center"><strong>Questions</strong></td>
+							<td class="text-center"><strong>Strongly Agree</strong></td>
+							<td class="text-center"><strong>Agree</strong></td>
+							<td class="text-center"><strong>Neutral</strong></td>
+							<td class="text-center"><strong>DisAgree</strong></td>
+							<td class="text-center"><strong>Strongly DisAgree</strong></td>
+							<td class="text-center"><strong>High Percentage</strong></td>
+							
+						</tr>
+		       			<t t-foreach="student.complete_development_lines_id" t-as='obj'>
+		       			<tr>
+		       				
+		       				<td class="text-center"><span t-esc="obj.term"/></td>
+		       				<td class="text-center"><span t-esc="obj.strong_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.neutral"/></td>
+		       				<td class="text-center"><span t-esc="obj.dis_agree"/></td>
+		       				<td class="text-center"><span t-esc="obj.strongly_disagree"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       		 <p style="page-break-before:always;"> </p>
+
+		       	</t>
+
+		       	</t>
+		       	</div>
+		       </t>
+		   </t>
+		</template>
+	</data>
+</odoo>

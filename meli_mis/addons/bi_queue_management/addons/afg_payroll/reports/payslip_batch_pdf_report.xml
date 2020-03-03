@@ -1,0 +1,89 @@
+<odoo>
+    <data>
+        <report
+            id="payslip_batches_report"
+            model="hr.afg.payroll.batches"
+            string="PaySlip Batch"
+            report_type="qweb-pdf"
+            name="afg_payroll.payslip_report_for_batch" 
+            file="afg_payroll.payslip_report_for_batch"
+        />
+       
+    
+ <template id="afg_payroll.payslip_report_for_batch">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.external_layout">
+                <div class="page">
+                    <h2 align="center"> <span t-field="o.name"/></h2>
+                   
+
+                    <table class="table table-condensed table-bordered">
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td><strong>Designation</strong></td>
+                            <td><strong>Mobile</strong></td>
+                            <td><strong>Reference</strong></td>
+                            <td><strong>Base Salary</strong></td>
+                            <td><strong>LOP</strong></td>
+                            <td><strong>Tax</strong></td>
+                            <td><strong>Advance Salary</strong></td>
+                            <td><strong>Security</strong></td>
+                            <td><strong>Salary Payble</strong></td>
+                            <!-- <td><strong>Name</strong></td>
+                            <td><strong>Name</strong></td>
+                            <td><strong>Name</strong></td>
+                            <td><strong>Name</strong></td> -->
+                        </tr>
+                        <t t-set="basesalary" t-value="0"/>
+                        <t t-set="lop" t-value="0"/>
+                        <t t-set="tax" t-value="0"/>
+                        <t t-set="advance" t-value="0"/>
+                        <t t-set="security" t-value="0"/>
+                        <t t-set="salary" t-value="0"/>
+                        
+                        <t t-foreach="o.slip_ids" t-as="p">
+                            <tr>
+                                <td><span t-field="p.employee_id"/></td>
+                                <td><span t-field="p.designation"/></td>
+                                <td><span t-field="p.mobile"/></td>
+                                <td><span t-field="p.number"/></td>
+                                <td><span t-esc="'%.2f'%p.base_salary"/></td>
+                                <td><span t-esc="'%.2f'%p.lop"/></td>
+                                <td><span t-esc="'%.2f'%p.tax"/></td>
+                                <td><span t-esc="'%.2f'%p.advance_salary"/></td>
+                                <td><span t-esc="'%.2f'%p.security_deposite"/></td>
+                                <td><span t-esc="'%.2f'%p.salary_payable"/></td>
+
+                                <t t-set="basesalary" t-value="basesalary+p.base_salary"/>
+                                <t t-set="lop" t-value="lop+p.lop"/>
+                                <t t-set="tax" t-value="tax+p.tax"/>
+                                <t t-set="advance" t-value="advance+p.advance_salary"/>
+                                <t t-set="security" t-value="security+p.security_deposite"/>
+                                <t t-set="salary" t-value="salary+p.salary_payable"/>
+                                
+                            </tr>
+                        </t>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong><span t-esc="'%.2f'%basesalary"/></strong></td>
+                            <td><strong><span t-esc="'%.2f'%lop"/></strong></td>
+                            <td><strong><span t-esc="'%.2f'%tax"/></strong></td>
+                            <td><strong><span t-esc="'%.2f'%advance"/></strong></td>
+                            <td><strong><span t-esc="'%.2f'%security"/></strong></td>
+                            <td><strong><span t-esc="'%.2f'%salary"/></strong></td>
+
+                        </tr>
+                    
+                    </table>
+                    <p class="text-right"><strong>Authorized signature</strong></p>
+                </div>
+            </t>
+            </t>
+        </t>
+    </template>
+    </data>
+</odoo>

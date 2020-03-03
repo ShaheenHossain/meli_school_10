@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_afg_payroll_employee_access,afg_payroll.employee,model_hr_afg_payroll,group_afg_payroll_user,1,0,0,0
+access_afg_payroll_hr_access,afg_payroll.hr,model_hr_afg_payroll,group_afg_payroll_hr_user,1,1,1,1
+access_afg_payroll_finance_gm_access,afg_payroll.finance.gm,model_hr_afg_payroll,group_afg_payroll_manager_approve,1,0,0,0
+Access_afg_payroll_ceo_access,afg_payroll.ceo,model_hr_afg_payroll,group_afg_payroll_ceo_approve,1,1,1,1

@@ -1,0 +1,15 @@
+<odoo>
+	<data>
+		 <record id="rule_for_meeting_request" model="ir.rule">
+            <field name="name">Meeting Request</field>
+            <field name="model_id" ref="model_meeting_request_lines"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('employee.name','=',user.name)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+       
+
+       
+	</data>
+</odoo>

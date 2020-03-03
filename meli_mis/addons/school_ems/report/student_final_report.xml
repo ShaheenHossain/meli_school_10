@@ -1,0 +1,181 @@
+<odoo>
+		<report
+	    id="finalexam_report"
+	    model="student.finalreport"
+	    string="final Summary"
+	    report_type="qweb-pdf"
+	    name="school_ems.student_finalexam_report111"
+	    file="school_ems.student_finalexam_report111"
+	    menu="True"
+	/>
+		
+
+<template id="student_finalexam_report111">
+	   	<t t-call="report.html_container">
+
+	       		<t t-foreach="students" t-as="o">
+	       		<t t-call="report.external_layout">
+	       			<div class="page">
+	       			<h3 align="center"><strong>Subject : </strong><span t-esc="o"/></h3>
+	       						
+	       			<table border="1" class="table table-condesed table-bordered" >
+		       			
+	       				<!-- <tr>
+		       				<td class="text-center"><strong>Subject</strong></td>
+							<td class="text-center"><span t-esc="o"/></td>
+							
+		       			</tr> -->
+		       			<tr>
+		       				<td class="text-center"><strong>Campus</strong></td>
+							<td class="text-center"><span t-esc="docs[0]"/></td>
+							<td class="text-center"><strong>Program</strong></td>
+							<td class="text-center"><span t-esc="docs[1]"/></td>
+		       			</tr>
+		       			<tr>
+		       				<td class="text-center"><strong>Course Level</strong></td>
+							<td class="text-center"><span t-esc="docs[2]"/></td>
+							<td class="text-center"><strong>Class</strong></td>
+							<td class="text-center"><span t-esc="docs[3]"/></td>
+							
+		       			</tr>
+		       			<tr>
+		       				<td class="text-center"><strong>Class Strength</strong></td>
+							<td class="text-center"><span t-esc="docs[6]"/></td>
+		       			</tr>
+
+		       			
+		       		</table>
+		       		<t t-if="docs[5]== 'DEL'">
+	          	<div>
+	          		<h2 class="text-center"><strong>One Year Diploma</strong> </h2>
+	          	</div>
+	          		
+
+	          	<table border="1" class="table table-condesed table-bordered" >
+					<tr>
+						<td class="text-center"><strong>Student Name</strong></td>
+						<td class="text-center"><strong>Father Name</strong></td>
+						<td class="text-center"><strong>Written</strong></td>
+						<td class="text-center"><strong>Oral</strong></td>
+						<td class="text-center"><strong>Total</strong></td>
+						<td class="text-center"><strong>Percentage</strong></td>
+						<td class="text-center"><strong>Grade</strong></td>
+						<td class="text-center"><strong>Results</strong></td>
+					</tr>
+					
+						<t t-foreach="students[o]" t-as="p">
+						<tr>
+							<td class="text-center"><span t-esc="p[0]"/></td>
+							<td class="text-center"><span t-esc="p[1]"/></td>
+							<td class="text-center"><span t-esc="p[2]"/></td>
+							<td class="text-center"><span t-esc="p[3]"/></td>
+							<td class="text-center"><span t-esc="p[4]"/></td>
+							<td class="text-center"><span t-esc="p[5]"/></td>
+							<td class="text-center"><span t-esc="p[6]"/></td>
+							<td class="text-center"><span t-esc="p[7]"/></td>
+							
+						
+						</tr>
+					</t>
+
+				</table>
+			</t>
+		       		
+	          		
+		       		<t t-if="docs[5]== 'TYD'">
+	          	<div>
+	          		<h2 class="text-center"><strong>Two Year Diploma</strong> </h2>
+	          	</div>
+	          		
+
+	          	<table border="1" class="table table-condesed table-bordered" >
+					<tr>
+						<td class="text-center"><strong>Student Name</strong></td>
+						<td class="text-center"><strong>Father Name</strong></td>
+						<td class="text-center"><strong>Mid Term</strong></td>
+						<td class="text-center"><strong>Written</strong></td>
+						<td class="text-center"><strong>Oral</strong></td>
+						<td class="text-center"><strong>Practical</strong></td>
+						<td class="text-center"><strong>Class Participation</strong></td>
+						<td class="text-center"><strong>Makeup</strong></td>
+						<td class="text-center"><strong>Total</strong></td>
+						<td class="text-center"><strong>Percentage</strong></td>
+						<td class="text-center"><strong>Grade</strong></td>
+						<td class="text-center"><strong>Results</strong></td>
+					</tr>
+					
+						<t t-foreach="students[o]" t-as="p">
+						<tr>
+							<td class="text-center"><span t-esc="p[0]"/></td>
+							<td class="text-center"><span t-esc="p[1]"/></td>
+							<td class="text-center"><span t-esc="p[2]"/></td>
+							<td class="text-center"><span t-esc="p[3]"/></td>
+							<td class="text-center"><span t-esc="p[4]"/></td>
+							<td class="text-center"><span t-esc="p[5]"/></td>
+							<td class="text-center"><span t-esc="p[6]"/></td>
+							<td class="text-center"><span t-esc="p[7]"/></td>
+							<td class="text-center"><span t-esc="p[8]"/></td>
+							<td class="text-center"><span t-esc="p[9]"/></td>
+							<td class="text-center"><span t-esc="p[10]"/></td>
+						
+						</tr>
+					</t>
+
+				</table>
+			</t>
+			<t t-if="docs[5]== 'TT'">
+				<div>
+	          		<h2 class="text-center"><strong>Talk N Talk</strong> </h2>
+	          	</div>
+	          	<table border="1" class="table table-condesed table-bordered" >
+					<tr>
+						<td class="text-center"><strong>Student Name</strong></td>
+						<td class="text-center"><strong>Father Name</strong></td>
+						<td class="text-center"><strong>Written</strong></td>
+						<td class="text-center"><strong>Speaking</strong></td>
+						<td class="text-center"><strong>C-Written</strong></td>
+						<td class="text-center"><strong>C-Speaking</strong></td>
+						<td class="text-center"><strong>Total</strong></td>
+						
+						<td class="text-center"><strong>Percentage</strong></td>
+						<td class="text-center"><strong>Grade</strong></td>
+						<td class="text-center"><strong>Results</strong></td>
+					</tr>
+					
+						<t t-foreach="students[o]" t-as="p">
+						<tr>
+							<td class="text-center"><span t-esc="p[0]"/></td>
+							<td class="text-center"><span t-esc="p[1]"/></td>
+							<td class="text-center"><span t-esc="p[2]"/></td>
+							<td class="text-center"><span t-esc="p[3]"/></td>
+							<td class="text-center"><span t-esc="p[4]"/></td>
+							<td class="text-center"><span t-esc="p[5]"/></td>
+							<td class="text-center"><span t-esc="p[6]"/></td>
+							<td class="text-center"><span t-esc="p[7]"/></td>
+							<td class="text-center"><span t-esc="p[8]"/></td>
+						
+							
+						</tr>
+					</t>
+
+				</table>
+			</t>
+
+			
+
+			</div>
+			
+		       	</t>
+
+		       </t>
+		       <p style="page-break-before:always;"> </p>
+		   </t>
+
+		   </template>
+
+
+
+
+
+	
+</odoo>

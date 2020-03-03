@@ -1,0 +1,227 @@
+<odoo>
+	<data>
+		
+
+	<record id="student_survey_tree" model="ir.ui.view">
+			<field name="name">Student Survey</field>
+			<field name="model">student.survey</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="s_id"/>
+					<field name="course_level"/>
+				</tree>
+			</field>
+		</record>
+	<record id="student_survey_details_search" model="ir.ui.view">
+		<field name="name">Student Survey Search</field>
+		<field name="model">student.survey</field>
+		<field name="arch" type="xml">
+			<search string="Student Survey">
+				<group col="10" colspan="4">
+					<field name="name" />
+					<field name="s_id"/>
+					<field name="date" />
+					<field name="course_level"/>
+				</group>
+				<newline />
+				<group expand="0" string="Group By..." colspan="12" col="10">
+					<filter icon="terp-project" string="Name" help="By Name"
+						context="{'group_by':'name'}" />
+					<filter icon="terp-project" string="Campus" help="By Student Code"
+						context="{'group_by':'s_id'}" />
+					<filter icon="terp-project" string="Student Id" help="By Date"
+						context="{'group_by':'date'}" />
+					<filter icon="terp-project" string="Course Level" help="By Course Level"
+						context="{'group_by':'course_level'}" />
+					
+				</group>
+				
+			</search>
+		</field>
+	</record>
+
+	<record id="student_survey_forms11" model="ir.ui.view">
+
+		<field name="name">Student Survey From</field>
+		<field name="model">student.survey</field>
+		<field name="arch" type="xml">
+			<form>
+				<header>
+					<field name="state" widget='statusbar'/>
+				</header>
+				<sheet>
+				<group>
+					<group>
+						<field name="name" atts="{'readonly':[('state':'draft')]}"/>
+						<field name="s_id" atts="{'readonly':[('state':'draft')]}"/>
+						<field name="d_joining" atts="{'readonly':[('state':'draft')]}"/>
+						<field name="course_level" atts="{'readonly':[('state':'draft')]}"/>
+						
+					</group>
+					<group>
+						<field name="date" atts="{'readonly':[('state':'draft')]}"/>
+						<field name="total_marks"/>
+						<label for="percenatge" string="Percentage"/>
+									 <div class="o_row">
+										<field name="percentage" class="oe_inline"/><span>%%</span>
+									</div>
+						
+						
+					</group>
+				</group>
+				<separator/>
+				<center><separator string="Course Survey"/></center>
+				<field name="s_ids" string="Course Survey">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="c_survey1" />
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+						<field name="reason"/>
+					</tree>
+				</field>
+				<center><separator string="Classes for the term"/></center>
+				<field name="term_ids">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="term" />
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+					</tree>
+				</field>
+
+				<center><separator string="Materials"/></center>
+				<field name="material_ids">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="material" />
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+					</tree>
+				</field>
+				<center><separator string="Employee"/></center>
+				<field name="employee_ids">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="employee"/>
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+					</tree>
+				</field>
+				<center><separator string="Campus Environment"/></center>
+				<field name="environment_ids">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="environment" />
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+					</tree>
+				</field>
+				<center><separator string="Trainers"/></center>
+				<field name="trainer_ids">
+
+					<tree editable='bottom' create='false' delete='false'>
+						<field name="trainer" />
+						<field name="strong_agree"/>
+						<field name="agree"/>
+						<field name="neutral"/>
+						<field name="dis_agree"/>
+						<field name="strongly_disagree"/>
+					</tree>
+				</field>
+				<field name="recommands" placeholder="What could we do to increase your level of satisfaction? Do you recommend us to change Muslim series to international series" required="1"/>
+				<center>
+					<footer>
+						<button name="student_survey_confirmation" type="object" string="Submit"/>
+					</footer>
+				</center>
+
+			</sheet>
+
+			</form>
+
+		</field>
+
+	</record>
+	<record id="student_profile_action" model="ir.actions.act_window">
+			<field name="name">Student Profile Action</field>
+			<field name="res_model">student.student</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False"/>
+			<field name="domain">[('user_id','=',uid),]</field>
+
+			
+		</record>
+
+	<record id="student_survey_action111" model="ir.actions.act_window">
+		<field name="name">Student Survey Action</field>
+		<field name="res_model">student.survey</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'group_by':['name'],
+								}</field>
+	</record>
+
+	 <menuitem 
+	 	name="Student Survey Form" 
+	 	id="student_survey_menu_item" 
+	 	parent="satisfaction_menus" 
+	 	action="student_survey_action111" 
+	 	groups="school.group_school_administration,school.group_school_student" 
+	 	sequence="3"/>
+
+
+
+
+	
+
+		<!-- <menuitem 
+			id="student_feedback_setting"
+			action="student_feedback_action11"
+			name="Student Satisfaction Feedback"
+			parent="school.menu_students_parents"
+			groups="school.group_school_student,school.group_school_administration"/> -->
+		<!-- <menuitem 
+			id="student_profile"
+		    action="student_feedback_profile_action"
+		  	name="Feedback Details" 
+		  	parent="school.menu_students_parents"
+		  	groups="school.group_school_administration"
+
+		  	/> -->
+		
+		  	
+
+		 <!-- <menuitem
+		 	id="student_survey_action_menuitem"
+		 	action="student_survey_action"
+		 	name="Student Survey Form"
+		 	parent="school.menu_students_parents"/> -->
+
+		<menuitem 
+			id="student_feedback_profiles"
+		    action="student_profile_action"
+		  	name="Student Profile" 
+		  	parent="school.student_requests_process" 
+		  	groups="school.group_school_student"/>
+
+
+
+	</data>
+</odoo>

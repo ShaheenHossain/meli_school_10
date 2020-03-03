@@ -1,0 +1,257 @@
+<odoo>
+  <data>
+    <record id="employee_survey_tree" model="ir.ui.view">
+      <field name="name">Employee Survey</field>
+      <field name="model">employee.satisfation</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="emp_id"/>
+          <field name="designation"/>
+        </tree>
+      </field>
+    </record>
+        <record id="employee_survey_details_search" model="ir.ui.view">
+
+          <field name="name">Employee Survey </field>
+          <field name="model">employee.satisfation</field>
+          <field name="arch" type="xml">
+          <search string="Employee Survey">
+            <group col="10" colspan="4">
+              <field name="name" />
+              <field name="emp_id"/>
+              <field name="date" />
+            </group>
+          <newline />
+
+          <group expand="0" string="Group By..." colspan="12" col="10">
+            <filter icon="terp-project" string="Name" help="By Name"
+              context="{'group_by':'name'}" />
+            <filter icon="terp-project" string="Campus" help="By Employee Code"
+              context="{'group_by':'emp_id'}" />
+            <filter icon="terp-project" string="Student Id" help="By Date"
+            context="{'group_by':'date'}" />
+
+          </group>
+
+        </search>
+        </field>
+        </record>
+    <record id="employee_satisfaction_tree_view" model="ir.ui.view">
+      <field name="name">Employee Survey Form</field>
+      <field name="model">employee.satisfation</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="emp_id"/>
+          <field name="name"/>
+          <field name="designation"/>
+          <field name="date_of_joinning"/>
+        </tree>
+      </field>
+    </record>
+   
+   <record id="employee_satisfaction_form" model="ir.ui.view">
+    <field name="name">Employee Survey Form</field>
+    <field name="model">employee.satisfation</field>
+    <field name="arch" type='xml'>
+      <form>
+        <header>
+          <field name="state" widget='statusbar'/>
+        </header>
+        <sheet>
+          <group>
+            <group>
+              <field name="name" readonly="1" />
+              <field name="emp_id" readonly="1"/>
+              <field name="date_of_joinning" readonly="1"/>
+              <field name="campus" readonly="1"/>
+            </group>
+            <group>
+              <field name="designation" readonly="1"/>
+              <field name="date" />
+              <field name="total" />
+              <label for="percenatge" string="Percentage"/>
+                   <div class="o_row">
+                    <field name="percentage" class="oe_inline"/><span>%%</span>
+                  </div>
+            
+            </group>
+          </group>
+          <center><separator string="About Muslim English Language"/></center>
+          <field name="language_id">
+            <tree editable="bottom" create='false' delete='false'>
+              <field name="term" readonly="1"/>
+              <field name="strong_agree"/>
+              <field name="agree"/>
+              <field name="neutral"/>
+              <field name="dis_agree"/>
+              <field name="strongly_disagree"/>
+              <field name="reason"/>
+            </tree>
+          </field>
+          <center><separator string="Manager"/></center>
+          <field name="manager_id">
+            <tree editable="bottom" create='false' delete='false'>
+              <field name="manager" readonly="1"/>
+              <field name="strong_agree"/>
+              <field name="agree"/>
+              <field name="neutral"/>
+              <field name="dis_agree"/>
+              <field name="strongly_disagree"/>
+              <field name="reason"/>
+            </tree>
+          </field>
+          <center><separator string="Enablement"/></center>
+          <field name="enablement_id">
+            <tree editable="bottom" create='false' delete='false'>
+              <field name="enablement" readonly="1"/>
+              <field name="strong_agree"/>
+              <field name="agree"/>
+              <field name="neutral"/>
+              <field name="dis_agree"/>
+              <field name="strongly_disagree"/>
+              <field name="reason"/>
+            </tree>
+          </field>
+          <center><separator string="Alignment"/></center>
+          <field name="alignment_id">
+            <tree editable="bottom" create='false' delete='false'>
+              <field name="alignment" readonly="1"/>
+              <field name="strong_agree"/>
+              <field name="agree"/>
+              <field name="neutral"/>
+              <field name="dis_agree"/>
+              <field name="strongly_disagree"/>
+              <field name="reason"/>
+            </tree>
+          </field>
+          <center><separator string="Development"/></center>
+          <field name="developement_id">
+            <tree editable="bottom" create='false' delete='false'>
+              <field name="developement" readonly="1"/>
+              <field name="strong_agree"/>
+              <field name="agree"/>
+              <field name="neutral"/>
+              <field name="dis_agree"/>
+              <field name="strongly_disagree"/>
+              <field name="reason"/>
+            </tree>
+          </field>
+          <field name="suggetions1" placeholder="Suggestions/Problems if any"/>
+        </sheet>
+       <center> <footer>
+          <button name="employee_survey_submission" type="object" string="Submit" class="oe_highlight"/>
+        </footer></center>
+      </form>
+    </field>
+   </record>
+   <record id="employee_satisfaction_action" model="ir.actions.act_window">
+    <field name="name">Employee Survey Form</field>
+    <field name="res_model">employee.satisfation</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{
+                            'group_by':['date','name']}</field>
+
+   </record>
+
+   <record id="monetering_evaluation_department" model="ir.ui.view">
+    <field name='name'>Monetering And Evalution Department</field>
+    <field name="model">employee.moneter</field>
+    <field name="arch" type="xml">
+      <form>
+        
+        <sheet>
+          <group>
+            <group>
+              <field name="survey_type"/>
+              <field name="name"/>
+              <field name="program" attrs ="{'invisible':[('survey_type','!=','student')]}"/>
+              <field name="level_id" domain="[('standard_id','=',program)]" widget="selection" attrs ="{'invisible':[('survey_type','!=','student')]}"/>
+            </group>
+            <group>
+              <field name="shift_id" domain="[('program','=',program)]" widget="selection" attrs ="{'invisible':[('survey_type','!=','student')]}"/>
+              <field name="class_id" domain="[('standard_id','=',program),('semester_id','=',level_id),('school_id','=',name),('state','=','running')]" widget="selection" attrs ="{'invisible':[('survey_type','!=','student')]}"/>
+              <field name="date"/>
+            </group>
+          </group>
+          <center><footer>
+            <button name="employee_survey_confirmation" type="object" string="Get Data" class="oe_highlight"/>
+          </footer></center>
+          <separator/>
+          <field name="m_line_id" attrs ="{'invisible':[('survey_type','=','student')]}" >
+            <tree editable="bottom" create="false" delete='false' edit='false'>
+              <field name="emp_id" />
+              <field name="name"/>
+              <field name="date_of_joinning" />
+              <field name="designation" />
+             
+              
+              
+            </tree>
+          </field>
+          <field name="student_line_id" attrs ="{'invisible':[('survey_type','=','employee')]}" >
+            <tree editable="bottom" create="false" delete='false' edit='false'>
+              <field name="s_id" />
+              <field name="name"/>
+              <field name="d_joining" />
+              <field name="course_level" />
+             
+              
+              
+            </tree>
+          </field>
+        </sheet>
+      </form>
+    </field>
+
+   </record>
+
+   
+   <record id="mne_action_view" model="ir.actions.act_window">
+    <field name="name">MNE Department</field>
+    <field name="res_model">employee.moneter</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{
+                            'group_by':['date','name']}</field>
+   </record>
+
+  
+   
+
+    <!-- Top menu item -->
+    
+    <menuitem name="MNE" id="mne_department_main" groups="school.group_school_student,base.group_user,school.group_school_administration"/>
+    
+    <!-- menu categories -->
+    
+    <menuitem 
+      name="Satisfaction Forms"
+      id="satisfaction_menus"
+      parent="mne_department_main"
+      groups="school.group_school_administration,school.group_school_student,base.group_user"
+      sequence="1"/>
+   
+    
+    <!-- actions -->
+    
+   
+
+    <menuitem 
+        name="Survey Permission"
+        id="employee_survey_permission_menu_item"
+        parent="satisfaction_menus" 
+        action="mne_action_view" 
+        groups="school.group_school_administration"
+        sequence="1"/>
+    <menuitem
+        name="Employee Survey Form"
+        id="employee_survey_menu_item"
+        parent="satisfaction_menus"
+        action="employee_satisfaction_action"
+        groups="school.group_school_administration,base.group_user"
+        sequence="2"/>
+
+ 
+    
+  </data>
+</odoo>

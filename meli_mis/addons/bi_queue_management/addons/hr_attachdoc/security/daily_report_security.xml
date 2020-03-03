@@ -1,0 +1,9 @@
+<odoo>
+	<data>
+		<!-- <record id="group_student" model="res.groups">
+	        <field name="name">Student</field>
+	        <field name="category_id" ref="base.module_category_human_resources"/>
+	        <field name="comment">Restrict Employee Details</field>
+	    </record> -->
+	</data>
+</odoo>

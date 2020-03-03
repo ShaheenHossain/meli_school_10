@@ -1,0 +1,98 @@
+<odoo>
+	<data>
+		<record id="employee_request_tree" model='ir.ui.view'>
+			<field name="name">Manpower Request</field>
+			<field name="model">employee.request.form</field>
+			<field name="arch" type='xml'>
+				<tree>
+					<field name="name"/>
+					<field name="campus"/>
+					<field name="position"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="employee_request_form" model='ir.ui.view'>
+			<field name="name">Manpower Request Form</field>
+			<field name="model">employee.request.form</field>
+			<field name="arch" type='xml'>
+				<form>
+					<header>
+						<button name="aam_action" type="object" string="Confirm" class="oe_highlight" states="draft"/>
+
+						<button name="hr_action" type="object" string="Send to GM" class="oe_highlight" states="hr"/>
+
+						<button name="gm_action" type="object" string="Send to CEO" class="oe_highlight" states="gm"/>
+
+						<button name="ceo_action" type="object" string="Approve" class="oe_highlight" states="ceo"/>
+
+						<button name="reject_action" type="object" string="Reject" class="oe_highlight" states="hr,gm,ceo"/>
+
+						<field name="state" widget="statusbar" statusbar_visible=" draft, hr, gm, ceo, approve, reject"/>
+					</header>
+					<sheet>
+						<group string='Requester Information'>
+							<group >
+								<field name="name"/>
+							</group>
+							<group>
+								<field name="campus"/>
+							</group>
+						</group>
+						<group string="Vacancy Information">
+							<group>
+								<field name='position'/>
+								<field name='department'/>
+								<field name='no_of_positions'/>
+								<field name='expected_start_date'/>
+								<field name='reason_for_opening'/>
+							</group>
+							<group>
+								<field name='needs_position'/>
+								<field name='contract_type'/>
+								<field name='english_proficiency'/>
+								<field name="education_preference"/>
+								<field name='job_description'/>
+							</group>
+							<field name="teacher_analysis"/>
+						</group>
+						
+						<group string='For Office Use Only'>
+							<group >
+								<field name="received_date"/>
+								<field name="deadline"/>
+								<field name="prefered_sources"/>
+							</group>
+							<group>
+								<field name="appicants"/>
+								<field name="description"/>
+								<field name="training"/>
+							</group>
+						</group>
+
+						<group states='hr,gm,ceo,approve,reject'>
+							<field name="hr_remark"/>
+							<field name="gm_remark" states='gm,ceo,approve,reject'/>
+							<field name="ceo_remark" states='ceo,approve,reject'/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id='employee_request_from_action' model="ir.actions.act_window">
+			<field name="name">Employee Request Form</field>
+			<field name="res_model">employee.request.form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem
+			id="employee_request_menuitem"
+			name="Manpower Request Form"
+			action="employee_request_from_action"
+			parent="hr_recruitment.menu_hr_recruitment_root"
+			sequence='1'/>
+
+	</data>
+</odoo>

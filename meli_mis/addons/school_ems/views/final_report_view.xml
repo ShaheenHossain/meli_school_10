@@ -1,0 +1,55 @@
+
+
+<odoo>
+	<data>
+		<record id='all_classes_report' model='ir.ui.view'>
+			<field name='name'>All Classes Report</field>
+			<field name='model'>student.report</field>
+			<field name="arch" type='xml'>
+				<form>
+					<sheet>
+						
+					<group>
+						<group>
+						<field name='campus' widget="selection"/>
+						<field name='program'  widget="selection"/>
+						<field name="level_id" domain="[('standard_id','=',program)]" widget="selection" />
+					</group>
+					<group>
+						<field name='shift_type' widget='radio'/>
+						<field name='shift_id' attrs="{'invisible':[('shift_type','in',('all','multiple',False,))]}" domain="[('program','=',program)]"/>
+						<field name="m_shift" widget='many2many_tags' attrs="{'invisible':[('shift_type','in',('all','single',False,))]}" domain="[('program','=',program)]"/>
+					</group>
+					<group>
+						<field name='start_date'/>
+						<field name='end_date'/>
+					</group>
+				
+					<group>
+						<field name='report_type' widget='radio' />
+						<field name="multi_class_id" domain="[('standard_id','=',program),('semester_id','=',level_id),('school_id','=',campus),('state','=','close'),('medium_id','=',shift_id)]" widget="many2many_tags" attrs="{'invisible':[('report_type','in',('all','single',False,))]}"/>
+
+							<field name="class_id" domain="[('standard_id','=',program),('semester_id','=',level_id),('school_id','=',campus),('state','=','close'),('medium_id','=',shift_id)]" widget="selection"  attrs="{'invisible':[('report_type','in',('all','multiple',False))]}"/>
+							<field name='code' invisible='1'/>
+							</group>
+					</group>
+					<footer>
+						<button name="all_classes_final_report" type="object" string="Genarate Report" class="oe_highlight"/>
+						 <button special="cancel" string="Cancel" class="oe_highlight"/>
+					</footer>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+		<record id='all_classes_report_action' model='ir.actions.act_window'>
+			<field name='name'>All Classes Report Action</field>
+			<field name='res_model'>student.report</field>
+			<field name='view_mode'>form</field>
+			<field name="target">new</field>
+		</record>
+
+		
+
+	</data>
+</odoo>

@@ -1,0 +1,181 @@
+<odoo>
+	<data>
+		<record id="employee_complaint_tree" model="ir.ui.view">
+			<field name="name">Employee Complaint Tree</field>
+			<field name="model">hr.employee_complaint</field>
+			<!-- <field name="domain">[('status', '=', 'draft')]</field> -->
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="email"/>
+					<field name="phone"/>
+					<field name="state"/>
+					<field name="issue_date"/>
+					<field name="solved_date"/>
+				</tree>
+			</field>
+		</record>
+
+
+		<record id="empoyee_complaint_form" model="ir.ui.view">
+			<field name="name">Employee Complaint Form </field>
+			<field name="model">hr.employee_complaint</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="send_to_hr" type='object' string="Send To Hr"  attrs="{'invisible': ['|',('issue_of_dep', '!=', 'hr'),('state','in',('hr','in progress','solved','closed','draft'))]}"/>
+
+						<button name="send_to_it" type='object' string="Send To IT" attrs="{'invisible': ['|',('issue_of_dep', '!=', 'it'),('state','in',('in progress','it','solved','closed','draft'))]}"/>
+
+						<button name="send_to_gravience" type="object" string='Gravience' attrs="{'invisible': ['|',('issue_of_dep', '!=', 'gravience'),('state','in',('in progress','gravience','solved','closed','draft'))]}"/>
+
+						<button name="solved" type="object" string="Planned To Resolve"  attrs="{'invisible': ['|',('state', 'in', ('in progress','draft','solved','closed','confirm'))]}" groups='bi_hr.group_help_desk_employee_manager13,bi_hr.group_help_desk_employee_it_manager,bi_hr.group_help_desk_employee_ceo'/>
+
+						<button name="confirmation_complaint" type="object" string="confirm" attrs="{'invisible':['|',('state','in',('confirm','solved','in progress','cancel','closed','it','hr','gravience'))]}"/>
+
+						<button name="complaint_solution" type="object" string="Solve" attrs="{'invisible': ['|',('state', 'in',('hr','draft','it','solved','gravience','closed','confirm'))]}" groups='bi_hr.group_help_desk_employee_manager13,bi_hr.group_help_desk_employee_it_manager,bi_hr.group_help_desk_employee_ceo'/>
+
+						<button name="closed_complaints" type="object" string="Close" attrs="{'invisible':['|',('state','in',('confirm','hr','it','gravience','in progress','cancel','closed','draft'))]}" groups="bi_hr.group_help_desk_employee12"/>
+
+						<button name="cancel" string="Cancel" attrs="{'invisible':['|',('state','in',('hr','it','gravience','solved','closed','in progress'))]}"/>
+						<field name="state" widget="statusbar" statusbar_visible=" draft, confirm, it, hr, gravience, in progress, solved, cancel, closed"/>
+
+
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))]}" domain="[('state','=','draft')]"/>
+								<field name="email" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))]}"/>
+								<field name="phone" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))]}"/>
+								<field name="dep" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))]}"/>
+								<field name="issue_date"/>
+							</group>
+							
+							<group>
+								<field name="job_title" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))]}"/>
+								<field name="campus_name" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))]}"/>
+								<field name="issue_of_dep" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))]}"/>
+								<field name="work_from" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))]}"/>
+								<field name="solved_date" attrs="{'invisible':[('state','in',('draft','confirm'))]}"/>
+
+							</group>
+						</group>
+						<group string="To be filled by IT" attrs="{'invisible':[('state','in',('draft','hr','gravience'))]}">
+							<group>
+								<field name="assign_to" widget='selection' attrs="{'invisible':[('state','in',('draft','hr','gravience'))],'required':[('state','=','it')]}"/>
+								<field name="assign_on" attrs="{'invisible':[('state','in',('draft','hr','gravience'))]}"/>
+								<field name="estimated_time" attrs="{'invisible':[('state','in',('draft','hr','gravience'))]}"/>
+							</group>
+							<group>
+								<field name="status" attrs="{'invisible':[('state','in',('draft','hr','gravience'))]}"/>
+								<field name="issue_description" attrs="{'invisible':[('state','in',('draft','hr','gravience'))]}"/>
+								<field name="planned_date" attrs="{'invisible':[('state','in',('draft','hr','gravience'))]}"/>
+							</group>
+						</group>
+
+
+							<group string="COMPLAINT FILED AGAINST" attrs="{'invisible':[('issue_of_dep','in',('it',False))]}">
+								<group>
+									<field name="name1" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
+									<field name="dep1" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
+								</group>
+								<group>
+									
+									<field name="work_location" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
+								</group>
+							</group>
+							
+							<group>
+								<field name="previous_complaint" widget='radio' default='no'  attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
+
+								<field name="yes_action" attrs="{'invisible':[('previous_complaint','!=','yes')]}"/>
+								<field name="yes_action2" attrs="{'invisible':[('previous_complaint','!=','yes')]}"/>
+							
+								<field name="complaint_discuss" widget='radio'  attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
+						
+								<field name="discuss_action1" attrs="{'invisible':[('complaint_discuss','!=','yes')]}"/>
+
+								<group>
+									<field name="description" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+								</group>
+								<group>
+									<field name="remarks" attrs="{'invisible':[('state','in',('draft','confirm','hr','it','gravience'))],'readonly':[('state','in',('solved','closed'))],'required':[('state','in',('in progress'))]}"/>
+								</group>
+							</group>
+					</sheet>
+				</form>
+			</field>
+
+
+		</record>
+
+		<record id="employee_complaint_action" model="ir.actions.act_window">
+			<field name="name">Employee Complaint Action</field>
+			<field name="res_model">hr.employee_complaint</field>
+			<field name="domain">[('name.user_id','=',uid),]</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<record id="employee_complaint_action1" model="ir.actions.act_window">
+			<field name="name">Employee Complaint</field>
+			<field name="res_model">hr.employee_complaint</field>
+			<field name="domain">[('state','in',('hr','in progress,solved,closed'))]</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<record id="employee_complaint_action2" model="ir.actions.act_window">
+			<field name="name">Employee Complaint</field>
+			<field name="res_model">hr.employee_complaint</field>
+			<field name="domain">[('state','in',('it','in progress,solved,closed'))]</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<record id="employee_complaint_action3" model="ir.actions.act_window">
+			<field name="name">Employee Complaint</field>
+			<field name="res_model">hr.employee_complaint</field>
+			<field name="domain">[('state','in',('gravience','in progress,solved,closed'))]</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<menuitem
+            id="hr_employee_menu_main111"
+            name="Complaint Form"
+            parent="hr.menu_hr_root"
+
+            />
+            <!--  groups="bi_hr.group_help_desk_employee12,bi_hr.group_help_desk_employee_manager13,bi_hr.group_help_desk_employee_it_manager,bi_hr.group_help_desk_employee_ceo" -->
+
+
+		<menuitem
+            id="complaint_form_emp"
+            name="Employee Compliant Form"
+            parent="hr_employee_menu_main111"
+            action="employee_complaint_action"
+            sequence="1"
+            groups="bi_hr.group_help_desk_employee12"
+            />
+        <menuitem
+            id="complaint_form_emp_hr"
+            name="Hr Department"
+            parent="hr_employee_menu_main111"
+            action="employee_complaint_action1"
+            sequence="2"
+            groups="bi_hr.group_help_desk_employee_manager13"  
+            />
+          
+            
+            />
+            <menuitem
+            id="complaint_form_emp_gravience"
+            name="Gravience Department"
+            parent="hr_employee_menu_main111"
+            action="employee_complaint_action3"
+            sequence="4"
+            groups="bi_hr.group_help_desk_employee_ceo"
+            
+            />
+
+
+	</data>
+</odoo>

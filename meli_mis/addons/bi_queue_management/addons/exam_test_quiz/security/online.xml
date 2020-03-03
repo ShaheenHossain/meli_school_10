@@ -1,0 +1,30 @@
+<odoo>
+    <data>        
+        <record id="module_category_online_exam" model="ir.module.category">
+            <field name="name">Online Exams</field>
+            <field name="sequence">26</field>
+        </record>
+
+        <!-- <record id="group_appraisal_emp" model="res.groups">
+            <field name="name">Employee User</field>
+            <field name="category_id" ref="module_category_appraisal"/>
+        </record> -->
+
+        <record id="group_online_exam_student" model="res.groups">
+            <field name="name">Student Access</field>
+            <field name="category_id" ref="module_category_online_exam"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+       	<record id="group_online_exam_teacher" model="res.groups">
+            <field name="name">Teacher Access</field>
+            <field name="category_id" ref="module_category_online_exam"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <!-- <record id="group_help_desk_employee_ceo" model="res.groups">
+            <field name="name">Gravience User</field>
+            <field name="category_id" ref="module_category_helpdesk11"/>
+        </record> -->
+    </data>
+</odoo>

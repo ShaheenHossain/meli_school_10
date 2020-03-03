@@ -1,0 +1,193 @@
+<odoo>
+	<data>
+		<record id="student_exam_tree" model="ir.ui.view">
+		<field name="name">Student Exam Tree</field> 
+		<field name="model">student.manual.exam</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="campus_id"/>
+				<field name="program_id"/>
+				<field name="course_id"/>
+				<field name="room_no"/>
+
+
+			</tree>
+		</field>
+		</record>
+		<record id="student_exam_form4444" model="ir.ui.view">
+			<field name="name">Student Exam Form</field>
+			<field name="model">student.manual.exam</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="confirmation_button" type="object" string="Send To Students" states="draft"/>
+            
+            
+						<field name="state" widget="statusbar" readonly="1"/>
+					</header>
+					<sheet>
+					<group>
+						<group>
+							<field name="campus_id" widget="selection" attrs="{'readonly':[('state','=','confirm')]}"/>
+							<field name="program_id" widget="selection" attrs="{'readonly':[('state','=','confirm')]}"/>
+							<field name="course_id" domain="[('standard_id','=',program_id)]" attrs="{'invisible':[('program_id','=',False)],'readonly':[('state','=','confirm')]}" widget="selection"/>
+							<field name="shift_id" domain="[('program','=',program_id)]" widget="selection" attrs="{'invisible':[('course_id','=',False)],'readonly':[('state','=','confirm')]}"/>
+
+						</group>
+						<group>
+							<field name="class_id" domain="[('state','=','exam')]" widget="selection" attrs="{'readonly':[('state','=','confirm')]}"/>
+							<field name="room_no" attrs="{'readonly':[('state','=','confirm')]}"/>
+							
+							<field name="exam_end_date" attrs="{'readonly':[('state','=','confirm')]}"/>
+							<field name="s_no" invisible="1"/>
+
+							
+							
+						</group>
+					</group>
+					 <separator string="Student Exam"/>
+                   <field name="exam_id"  context="{'default_s_no': s_no}">
+                        <tree  editable="bottom">
+                          <field name="s_no"/>
+                          <field name="name" domain="[('school_id','=',parent.campus_id),('program_id','=',parent.program_id),('semester_id','=',parent.course_id),('medium_id','=',parent.shift_id)]" widget="selection"/>
+                          <field name="f_name"/>
+                          <field name="exam_type" widget="radio"    options="{'horizontal': true}" class="oe_inline" />
+                          <field name="written"/>
+                          <field name="course_level" />
+
+                          <field name="viva_voice"/>
+                          <field name="total"/>
+                          <field name="grade"/>
+                          <field name="remarks"/>
+                            
+                        </tree>
+                    </field>
+                </sheet>
+				</form>
+			</field>
+		</record>
+		<record id="student_exam_action11" model="ir.actions.act_window">
+			<field name="name">Student Exam Action</field>
+			<field name="res_model">student.manual.exam</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+
+		<record id="student_feedback_excel_report_form_view555" model="ir.ui.view">
+        <field name="name">Student Results Information</field>
+        <field name="model">student.result.excel</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+           <form string="Export Student Information List">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="classes_id"  widget="selection" />
+                           
+                        </group>
+                        
+                        </group>
+                  
+                    <footer>
+                        <button name="generated_excel_report4444" string="Continue" type="object" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_student_results_excel_report" model="ir.actions.act_window">
+        <field name="name">Results Information List </field>
+        <field name="res_model">student.result.excel</field>
+       
+        <field name="view_mode">form</field>
+        <field name="view_type">form</field>
+        <field name="target">new</field>
+    </record>
+
+    
+
+
+		 <record id="wizard_student_info_excel_report_form_view1" model="ir.ui.view">
+        	<field name="name">wizard.student.results</field>
+        	<field name="model">wizard.student.details.results</field>
+        	<field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" invisible="1"/>
+                        <h1>
+                            <field name="report" filename="name"/>
+                        </h1>
+                    </group>
+                    <footer>
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="program_inherited" model="ir.ui.view">
+      <field name="name">Program Inherited</field>
+      <field name="model">standard.standard</field>
+      <field name="inherit_id" ref="school.view_standard_standard_form"/>
+      <field name="arch" type="xml">
+          <field name="sequence" position="replace" >
+          <field name="number"/>
+          
+      </field>
+    </field>
+    </record>
+
+     <record id="program_inherited11" model="ir.ui.view">
+      <field name="name">Program Inherited11</field>
+      <field name="model">standard.standard</field>
+      <field name="inherit_id" ref="school.view_standard_standard_tree"/>
+      <field name="arch" type="xml">
+          <field name="sequence" position="replace" >
+          <field name="number"/>
+      </field>
+    </field>
+    </record>
+
+     <record id="seq_student_standard" model="ir.sequence">
+            <field name="name">Standard</field>
+            <field name="code">student.program</field>
+             <field name="prefix">PR</field>
+            <field name="padding">2</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+		<!-- <menuitem 
+      id="student_exam_menu_item11" 
+      name="Student Exam Information"
+      parent="school.menu_ems"
+      groups="school.group_school_administration,school.group_school_student,school.group_school_teacher"
+      />
+ -->
+
+     <!--  <menuitem 
+      id="student_exam_menu1" 
+      name="Generate Exam Resullts"
+      parent="student_exam_menu_item1"
+      action="student_exam_action11"
+      sequence="4"
+      groups="school.group_school_administration"
+      /> -->
+      <!-- <menuitem 
+			id="results_in_excel_report"
+	    action="action_student_results_excel_report"
+	  	name="Student Results In Excel" 
+	  	parent="student_exam_menu_item1"
+      sequence="5"
+      groups="school.group_school_administration"
+	  	/> -->
+     
+
+	</data>
+</odoo>

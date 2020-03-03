@@ -1,0 +1,22 @@
+<odoo>
+	<data>
+		<!-- <template id="example_page11" name="Example page" page="True">
+	      <t t-call="website.layout">
+	        <div class="oe_structure">
+	          <div class="container">
+	            <center><h3>Title images</h3></center>
+	            <p>
+	              You can add all your content here.<br/>
+	              <a t-attf-href="/example/detail" class="btn btn-info">Company detail page</a>
+	              <a t-attf-href="/example/detail" class="btn btn-info">Company </a>
+	            </p>
+
+	          </div>
+	        </div>
+	      </t>
+    </template> -->
+
+
+   
+	</data>
+</odoo>

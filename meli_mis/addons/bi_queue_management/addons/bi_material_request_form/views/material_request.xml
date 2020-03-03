@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo> 
+    <data>  
+
+        <record id="view_material_request_tree" model="ir.ui.view">
+            <field name="name">material.request.tree</field>
+            <field name="model">material.request</field>
+            <field name="arch" type="xml">
+                <tree string="Material Request">
+                    <field name="requester"/>
+                    <field name="name"/>
+                    <field name="department"/>
+                    <field name="school_id"/>
+                    <field name="transfer_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_material_request_form" model="ir.ui.view">
+            <field name="name">material.request.form</field>
+            <field name="model">material.request</field>
+            <field name="arch" type="xml">
+                <form string="Material Request Form">
+                   <header>
+                       <button name="do_confirm" type="object" string="Confirm" class="oe_highlight" states="draft"/>
+
+                       <button name="hod_approve_action" type="object" string="Approve" class="oe_highlight" states="hod_manager"/>
+
+                       <button name="technical_team_approve_action" type="object" string="Approve" class="oe_highlight" states="it,procurement"/>
+
+                       <button name="done_transfer" type="object" string="Issue to Requester" class="oe_highlight" states="inventory"/>
+
+                       <button name="inventory_forward_action" type="object" string="Forward to GM" class="oe_highlight" states="inventory"/>
+
+
+                       <button name="reject_action" type="object" string="Reject" class="oe_highlight" states="hod_manager,it,procurement"/>
+
+                       <button name="pending_action" type="object" string="Pending" class="oe_highlight" states="hod_manager,it,procurement,inventory"/>
+
+                       <field name="state" widget="statusbar" statusbar_visible=" draft, cancel, hod_manager, it, procurement, inventory, received, pending, reject, done"/>
+                   </header>
+
+                    <sheet>
+                    <h1 class="hidden-xs">
+                        <field name="name" attrs="{'invisible': [('name','=','/')]}" readonly="1"/>
+                    </h1>
+                    <group> 
+                    <group>
+                        <field name="requester" domain="[('state','=','draft')]"/>
+                        <field name="department"/>
+                        <field name="school_id"/> 
+                        <field name="designation"/>
+                        <field name="technical_team" widget='radio' class="oe_inline" attrs="{'invisible':[('state','=','draft')]}"/> 
+                        <field name="location_id"/>
+                        <field name="location_dest_id"/>
+                        <field name="transfer_reference"/>
+                    </group>
+                    <group>
+                        <field name="transfer_date"/>
+                        <field name="issued_by" readonly="1" widget="selection"/>
+                        <field name="note" attrs="{'readonly':[('state','!=','draft')]}"/>
+
+                        <field name="line_manager_remark" attrs="{'readonly':[('state','!=','hod_manager')]}"/>
+                        
+                        <field name="tech_remark" attrs="{'readonly':[('state','!=','it'),('state','!=','procurement')]}"/>
+                        
+                        <field name="inventory_remark" attrs="{'readonly':[('state','!=','inventory')]}"/>
+
+                        <field name="condition" widget="radio"/>
+                    </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Material Request Line">
+                        <field name="material_line_ids">
+                            <tree string="Updated Quantity" editable="bottom">
+                                <field name="product_id" domain="[('type', '=','product')]" required="1"/>
+                                <field name="quantity" required="1"/>
+                                <field name="unit_of_measure" required="1"/>
+                                <field name="product_cost" invisible="1"/>
+                                <field name="product_unit_price" invisible="1"/>
+                                <field name="state" invisible="1"/>
+                                <field name="asset_id" attrs="{'invisible':[('state', '=', 'draft')]}" domain="[('product_id','=',product_id),('state','=','open'),('active','=',True)]"/>
+
+                            </tree>
+                        </field>
+                        </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record> 
+    
+
+        <record id="bi_material_request_action" model="ir.actions.act_window">
+            <field name="name">Material Request</field>
+            <field name="res_model">material.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                
+              </p>
+              <p>
+                Material Request Form
+              </p>
+            </field>
+        </record>
+
+        <record id="bi_material_request_purchase_action" model="ir.actions.act_window">
+            <field name="name">Material Request</field>
+            <field name="res_model">material.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                
+              </p>
+              <p>
+                Material Request Form
+              </p>
+            </field>
+        </record>
+             <record id="bi_material_request_action_request" model="ir.actions.act_window">
+                <field name="name">Material Request</field>
+                <field name="res_model">material.request</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>
+                <field name="context">{}</field>
+                <field name="view_id" eval="False"/>
+                <field name="help" type="html">
+                  <p class="oe_view_nocontent_create">
+                    
+                  </p>
+                  <p>
+                    Material Request Form
+                  </p>
+                </field>
+        </record>
+
+        <menuitem
+            id="bi_menu_stock_material_request"
+            name="Material Request"
+            action = "bi_material_request_action"
+            parent="stock.menu_stock_inventory_control"
+            sequence="11"
+                />
+
+        <menuitem
+            id="bi_menu_purchase_material_request"
+            name="Material Request"
+            action = "bi_material_request_purchase_action"
+            parent="purchase.menu_procurement_management"
+            sequence="-2"
+                />
+        <menuitem
+            id="bi_material_request_menu"
+            name="Material Request"
+            action = "bi_material_request_action_request"
+            parent="bi_hr.hr_requests_menu_main"
+            sequence="10"
+            />
+
+        <menuitem
+            id="purchase_requisition.menu_purchase_requisition_pro_mgt"
+            sequence="-1"
+            name="Purchase Requisition"
+            parent="purchase.menu_procurement_management"
+            action="purchase_requisition.action_purchase_requisition"/>
+
+        <record id="material_request_mail" model="mail.template">
+            <field name="name">Material Request Mail</field>
+            <field name="model_id" ref="bi_material_request_form.model_material_request"></field>
+            <field name="email_from"><![CDATA[${object.requester.name} <${object.requester.work_email}>]]></field>
+            <field name="email_to">${object.requester.line_manager_id.work_email|safe}</field>
+            <field name="subject">Material Request Submitted</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="built_in" eval="True"/>
+            <field name="body_html"><![CDATA[
+                    <p>Dear ${object.requester.line_manager_id.name},</p>
+                    <p>${object.requester.name} have submitted material request.</p>
+                    <hr/>
+                ]]>
+            </field>
+        </record>
+
+        <record id="purchase_order_form_add_selection" model='ir.ui.view'>
+            <field name="name">Purchase Order</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <field name="state" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible=" draft, sent, purchase, create, gm, top_management, done, cancel" readonly="1"/> 
+                </field>
+
+                <field name="partner_ref" position="after">
+                    <field name="topm_remark" attrs="{'readonly':[('state','!=','top_management')]}" states="draft,sent,purchase,top_management,done,cancel"/>
+                </field>
+
+                <xpath expr="//form/header" position="inside">
+                    <button name="sendtogm_action" string="Send to GM" type="object" states="create" class="oe_highlight"/>
+
+                    <button name="gm_approve_action" string="Approve" type="object" states="gm" class="oe_highlight"/>
+
+                    <button name="gm_cancel_action" string="Reject" type="object" states="gm" class="oe_highlight"/>
+                
+                    <button name="top_management_approve_action" string="Approve" type="object"  states="top_management" class="oe_highlight"/>
+
+                    <button name="top_management_reject_action" string="Reject" type="object"  states="top_management" class="oe_highlight"/>
+
+                    <button name="top_management_pending_action" string="Pending" type="object"  states="top_management" class="oe_highlight"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_form_add_employee" model='ir.ui.view'>
+            <field name="name">Stock Picking</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="employee_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="inventory_report_form" model="ir.ui.view">
+            <field name='name'>Inventory Report View</field>
+            <field name="model">inventory.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="get_print" string="Get Print" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="report_type" widget='radio' string="Report Type" options="{'horizontal': true}"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="campus" attrs="{'invisible':[('report_type','!=','campus_wise')]}"/>
+                                <field name="item" attrs="{'invisible':[('report_type','!=','item_wise')]}"/>
+                                <field name="name" attrs="{'invisible':[('report_type','!=','employee_base')]}"/>
+                                <field name="start_date" attrs="{'invisible':[('report_type','!=','date_base')]}"/>
+                                <field name="end_date" attrs="{'invisible':[('report_type','!=','date_base')]}"/>
+                                <field name="on_hand" invisible="1"/>
+                                <field name="on_issue" invisible="1"/>
+                            </group>
+                        </group>
+                        <footer attrs="{'invisible':[('report_type','=','employee_base')]}">
+                            <center>
+                                <button name="Getting_Onhand_Quantity" type="object" string="OnHand" class="oe_highlight" attrs="{'invisible':[('report_type','=','date_base')]}"/>
+
+                                <button name="Getting_Onhand_Quantity" type="object" string="Purchase" class="oe_highlight" attrs="{'invisible':[('report_type','!=','date_base')]}"/>
+                                 or  
+                                <button name="Getting_Issue_Of_Products" type="object" string="Issue Product" class="oe_highlight"/> 
+                                or 
+                                <button name="get_product_total" type="object" string="Total" class="oe_highlight"/>
+                            </center>
+                        </footer>
+
+                        <footer attrs="{'invisible':[('report_type','!=','employee_base')]}">
+                            <center>
+                                <button name="Getting_Issue_Of_Products" type="object" string="Get Product Data" class="oe_highlight"/>
+                            </center>
+                        </footer>
+
+                        <separator string="On Hand Quantity" attrs="{'invisible':['|',('on_hand','!=',True),('report_type','=','date_base')]}"/>
+
+                        <separator string="Purchase Product" attrs="{'invisible':['|',('on_hand','!=',True),('report_type','!=','date_base')]}"/>
+
+                        <field name="inventory_onhand_id" attrs="{'invisible':[('on_hand','!=',True)]}">
+                            <tree editable="bottom" create='false' delete='false' edit='false'>
+                                <field name="product"/>
+                                <field name="location"/>
+                                <field name="incomig_date"/>
+                                <field name="inventory_value"/>
+                                <field name="quantity"/>
+                            </tree>
+                        </field>
+                        
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="on_hand_total" widget="monetary" attrs="{'invisible':[('on_hand','!=',True)]}"/>
+                        </group>
+
+                        <separator string="Inventory Issued Product" attrs="{'invisible':[('on_issue','!=',True)]}"/>
+                        <field name="inventory_issue_id" attrs="{'invisible':[('on_issue','!=',True)]}">
+                            <tree editable="bottom" create='false' delete='false' edit='false'>
+                                <field name="employee"/>
+                                <field name="sequence"/>
+                                <field name="department"/>
+                                <field name="campus"/>
+                                <field name="s_date"/>
+                                <field name="qty"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="issue_product_total" widget="monetary" attrs="{'invisible':[('on_issue','!=',True)]}"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="inventory_report_menu_action" model="ir.actions.act_window">
+            <field name="name">Inventory Report Menu Action</field>
+            <field name="res_model">inventory.report</field>
+            <field name="view_mode">form</field>
+            <field name='target'>inline</field>
+        </record>
+
+        <menuitem 
+            id="inventory_report_menu"
+            name="Inventory Reports" 
+            parent="stock.menu_stock_root"
+            action="inventory_report_menu_action"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.cron" id="employee_data_reminder">
+            <field name="name">Advance Salary Activate</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'hr.employee'"/>
+            <field name="function" eval="'advance_salary_access_activate'"/>
+            <field name="args" eval="'()'" />
+        </record>
+    </data>
+</odoo>

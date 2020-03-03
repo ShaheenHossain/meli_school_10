@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<report 
+     id="action_student_timesheet_report"
+     model="student.timesheet.regular"
+     string="Student timesheet"
+     report_type="qweb-pdf"
+     name="ss_customization.report_student_timetable"
+     file="ss_customization.report_student_timetable" 
+/>
+<report 
+     id="report_daily_class_reporting"
+     model="class.reporting"
+     string="Class Reporting Report"
+     report_type="qweb-pdf"
+     name="ss_customization.daily_class_reporting"
+     file="ss_customization.daily_class_reporting" 
+/>
+</odoo>

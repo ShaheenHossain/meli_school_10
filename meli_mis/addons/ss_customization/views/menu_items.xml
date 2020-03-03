@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+
+
+
+<menuitem id="school.menu_student_warning" name="Warning Message" parent="school.menu_ems" sequence="15" action="school.action_student_warning_form" groups="school.group_school_administration,school.group_school_aam"/>
+
+
+
+
+                    
+                    <record id="class_extend_request_tree" model="ir.ui.view">
+                <field name="name">class.extend.request.tree</field>
+                <field name="model">school.class.extend</field>
+                <field name="arch" type="xml">
+						<tree create="0" edit="0" delete="0">
+							<field name="name"/>
+							<field name="standard_id"/>
+							<field name="user_id"/>
+							<field name="date_to"/>
+							<field name="date_from"/>
+							<field name="reason"/>
+							<field name="state"/>
+							<button name="approve" string="Approve"  type="object" attrs="{'invisible':[('state','!=','draft')]}"/>
+							<button name="reject" string="Reject"  type="object" attrs="{'invisible':[('state','!=','draft')]}"/>
+						</tree>
+
+                    </field>
+                    </record>
+            
+
+<record id="student_timetable_regular" model="ir.ui.view">
+                <field name="name">student.timetable.regular</field>
+                <field name="model">student.timetable.regular</field>
+                <field name="arch" type="xml">
+                    <form string="Timetable">
+                    <group >
+                    <group>
+                    	<field name="start_date"></field>
+                    	<field name="end_date"></field>
+                    </group>
+                    <group>
+                    	<field name="campus"/>
+                    	<field name="program_id"/>
+                    </group>
+                    	</group>
+                    	<footer>
+                    		<button name="print_report" string="Show Timetable in PDF" class="oe_highlight" type="object"/>
+                    		Or
+                    		<button name="print_report_excel" string="Show Timetable in Excel" class="oe_highlight" type="object"/>
+                    		Or
+                    		<button string="Cancel" special="cancel" class="oe_link"/>
+                    	</footer>
+                    </form>
+                    </field>
+                    </record>
+                    
+                    
+              <record id="view_export_timetable_form" model="ir.ui.view">
+        <field name="name">view.export.timetable.form</field>
+        <field name="model">timetable.export</field>
+        <field name="arch" type="xml">
+            <form string="Export TimeTable Information ">
+            <field name="name" invisible="1"/>
+                       <div>
+                     <h2>Report Generated</h2>
+                     <p>Here is the Excel Report: <field name="data" readonly="1" filename="name"/></p>
+                 </div>
+            
+                <footer>
+            <button string="Cancel" special="cancel" class="oe_link"/>
+            </footer>
+            </form>
+        </field>
+    </record>
+    
+    
+                  <record id="view_export_reporting_form" model="ir.ui.view">
+        <field name="name">view.export.reporting.form</field>
+        <field name="model">reporting.export</field>
+        <field name="arch" type="xml">
+            <form string="Export Report Information ">
+            <field name="name" invisible="1"/>
+                       <div>
+                     <h2>Report Generated</h2>
+                     <p>Here is the Excel Report: <field name="data" readonly="1" filename="name"/></p>
+                 </div>
+            
+                <footer>
+            <button string="Cancel" special="cancel" class="oe_link"/>
+            </footer>
+            </form>
+        </field>
+    </record>
+
+
+<record id="action_timetable_wizard" model="ir.actions.act_window">
+<field name="name">Timetable</field>
+                <field name="res_model">student.timetable.regular</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">form</field>
+                <field name="target">new</field>
+</record>
+
+
+<record id="class_reporting_form" model="ir.ui.view">
+                <field name="name">class.reporting.form</field>
+                <field name="model">class.reporting</field>
+                <field name="arch" type="xml">
+                    <form string="Class Reporting">
+                    <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                    <group>
+                    	<field name="date" />
+                    	<field name="teacher_id"/>
+                    	<field name="reason"/>
+                    	</group>
+                    	<group>
+                    		<field name="class_id"/>
+                    		<field name="enter_time" widget="timepicker2"/>
+                    		<field name="exit_time" widget="timepicker2"/>
+                    		
+                    	</group>
+                    	</group>
+                    </sheet>
+                    </form>
+                    </field>
+                    </record>
+
+
+
+ <record id="class_reporting_tree" model="ir.ui.view">
+                <field name="name">class.reporting.tree</field>
+                <field name="model">class.reporting</field>
+                <field name="arch" type="xml">
+                    <tree string="Class Reporting">
+                    <field name="date"/>
+                    <field name="teacher_id"/>
+                    </tree>
+                    </field>
+                    </record>
+                    
+ 
+ 
+ 
+ 
+ <record id="book_request_view_form" model="ir.ui.view">
+                <field name="name">book.request.view.form</field>
+                <field name="model">book.request</field>
+                <field name="arch" type="xml">
+                    <form string="Book Request">
+                    <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent_fin_manager,sent_ceo,approved"/>
+                    <button name="send_req_manager" string="Request to Manager" type="object" class="oe_highlight" states="draft"/>
+                    <button name="send_req_ceo" string="Request to CEO" type="object" class="oe_highlight" states="sent_fin_manager"/>
+                    <button name="approve_ceo" string="Approve" type="object" class="oe_highlight" states="sent_ceo"/>
+<!--                     <button name="action_view_purchase_order" string="Purchase Order" type="object"  states="approved"/> -->
+                    
+                    </header>
+                    <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    <button type="object"
+                        name="action_view_purchase_order" states="approved"
+                        class="oe_stat_button" icon="fa-truck" >
+                        <field name="po_count"  string="Purchase Order" widget="statinfo"/>
+                    </button>
+                </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                    <group>
+                    	<field name="date" />
+                    	<field name="book_id"/>
+                    	<field name="qty"/>
+                    	</group>
+                    	<group>
+                    		<field name="user_id"/>
+                    		<field name="school_id"/>
+                    	</group>
+                    	</group>
+                    </sheet>
+                    </form>
+                    </field>
+                    </record>
+ 
+                    
+ <record id="book_request_view_tree" model="ir.ui.view">
+                <field name="name">book.request.view.tree</field>
+                <field name="model">book.request</field>
+                <field name="arch" type="xml">
+                    <tree string="Book Request">
+                    <field name="name"/>
+                    <field name="book_id"/>
+                    <field name="qty"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                    </tree>
+                    </field>
+                    </record>
+
+
+
+
+<record id="action_class_reporting" model="ir.actions.act_window">
+<field name="name">Class Reporting</field>
+                <field name="res_model">class.reporting</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+</record>
+
+<record id="action_class_extend_request" model="ir.actions.act_window">
+		<field name="name">Class Extend</field>
+                <field name="res_model">school.class.extend</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree</field>
+</record>
+
+<record id="action_book_request" model="ir.actions.act_window">
+<field name="name">Book Request</field>
+                <field name="res_model">book.request</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+</record>
+
+
+<menuitem id="menu_book_request" name="Book Request" parent="school.menu_ems" action='action_book_request' sequence="9"/>
+<!-- <menuitem id="student_feedback_setting" action="student_feedback_action" name="Feedback setting" parent="school.menu_students_parents"/> -->
+<!-- <menuitem id="menu_timetable_regular_wizard" name="Timetable" parent="timetable.menu_timetable_1" action="action_timetable_wizard"/> -->
+<menuitem id="menu_class_reportings" name="Class Reporting" parent="school.menu_ems" action="action_class_reporting"/>
+<!-- <menuitem id="menu_class_extend_request" name="Class Extend" parent="school.menu_teachers" action="action_class_extend_request"/> -->
+</odoo>

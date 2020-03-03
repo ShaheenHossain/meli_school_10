@@ -1,0 +1,815 @@
+<odoo>
+	<data>
+		<!-- Mid Exam Tree View -->
+		<record id="student_midexam_tree" model="ir.ui.view">
+		<field name="name">Student MidExam Tree</field> 
+		<field name="model">student.midexam</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="program"/>
+				<field name="semester_subjects"/>
+				<field name="level_id"/>
+				<field name="class_id"/>
+				<field name="campus"/>
+				<field name="name"/>
+			</tree>
+		</field>
+		</record>
+
+		<!-- Mid Exam Form View -->
+		<record id="student_Midexam_form4444" model="ir.ui.view">
+			<field name="name">Student MidExam Form</field>
+			<field name="model">student.midexam</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+					<group>
+						<group>
+							<field name="campus"/>
+							<field name="program"/>
+							<field name="level_id" domain="[('standard_id','=',program)]" widget="selection"/>
+						</group>
+						<group>
+							<field name="class_id" domain="[('standard_id','=',program),('semester_id','=',level_id),('school_id','=',campus),('state','=','running')]" widget="selection" attrs ="{'invisible':[('class_ids','!=',False)]}"/>
+							<field name="class_ids" attrs ="{'invisible':[('class_id','==',False)]}"/>
+							<field name="semester_subjects" domain="[('semester_id','=',level_id)]" widget="selection"/>
+							<field name="name"/>
+						</group>
+					</group>
+					<separator string="Student Mid Exam" />
+                    <field name="subject_id">
+                        <tree  editable="bottom" delete='false' create="false">
+	                        <field name="students" domain="[('program_id','=',parent.program),('semester_id','=',parent.level_id),('school_id','=',parent.campus)]" widget="selection"/>
+	                        <field name="f_name"/>
+	                        <field name="written"/>
+	                        <field name="oral"/>
+	                        <field name="practical"/>
+
+	                        <field name="total"/>
+	                        <field name="views"/>
+                        </tree>
+                    </field>
+                </sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- Search view for MID Term Results -->
+
+		<record id="midterm_exam_search" model="ir.ui.view">
+            <field name="name">MID Term Exam Results Search</field>
+            <field name="model">student.midexam</field>
+            <field name="arch" type="xml">
+                <search string="Mid Term Results">
+                    <group colspan="6" col="4">
+                        
+                        <field name="class_id"/>
+                        
+                        <field name="semester_subjects"/>
+                        <field name="level_id"/>
+                       
+                    </group>
+                    <separator orientation="vertical"/>
+                    <newline />
+                    <group expand="0" string="Group By..." colspan="6" col="4">
+
+                        <filter string="Class" icon="terp-stock_symbol-selection" name="class_id" context="{'group_by':'class_id'}"/>
+
+                        <filter string="Subject" icon="terp-personal" name="semester_subjects" context="{'group_by':'semester_subjects'}"/>
+
+                        <filter string="Course level" icon="terp-personal" name="level_id" context="{'group_by':'level_id'}"/>
+                       
+                    </group>
+                </search>
+            </field>
+        </record>
+
+		
+		<!-- Final Exam Tree View -->
+
+		<record id="student_finalexam_tree" model="ir.ui.view">
+		<field name="name">Student FinalExam Tree</field> 
+		<field name="model">final.results</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="program"/>
+				<field name="level_id"/>
+				<field name="semester_subjects"/>
+				<field name="class_id"/>
+				<field name="campus"/>
+			</tree>
+		</field>
+		</record>
+
+		<!-- Final Exam Form View -->
+
+		<record id="student_finalexam_form4444" model="ir.ui.view">
+			<field name="name">Student FianlExam Form</field>
+			<field name="model">final.results</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="final_confirmation" string="Confirm" type="object" class="oe_highlight" states='draft' groups="school.group_school_data_entry_officer"/>
+
+						<field name="state" widget="statusbar"/>
+					</header>
+					<sheet>
+					<group>
+						<group>
+						<field name="campus"/>
+						<field name="program"/>
+						<field name="level_id" domain="[('standard_id','=',program)]" widget="selection" attrs="{'invisible':[('program','=',True)]}"/>
+						<field name="pro" invisible="1"/>
+					</group>
+					<group>
+						<field name="shift_id" domain="[('program','=',program)]" widget="selection"/>
+						<field name="class_id" domain="[('standard_id','=',program),('semester_id','=',level_id),('school_id','=',campus),('state','=','close')]" widget="selection" attrs="{'invisible':[('state','=','confirm')]}"/>
+						<field name="class_ids" attrs="{'invisible':[('state','=','draft')],'readonly':[('state','=','confirm')]}"/>
+						<field name="semester_subjects" domain="[('semester_id','=',level_id)]" attrs="{'invisible':[('pro','=','DEL')],'required':[('pro','in',('TYD','TT'))]}"/>
+						<field name="teacher_name"/>
+
+					</group>
+					</group>
+					<separator string="One Year Diploma" attrs="{'invisible':[('pro','!=','DEL')]}"/>
+       				<field name="talk_ids" attrs="{'invisible':[('pro','!=','DEL')]}">
+                        	<tree  editable="bottom" delete="false"  >
+                       
+								<field name="name" domain="[('program_id','=',parent.program),('semester_id','=',parent.level_id),('school_id','=',parent.campus)]" widget="selection"/>
+								<field name="f_name"/>
+								<field name="written"/>
+								<field name="oral"/>
+								<field name="total"/>
+								<field name="percentage"/>
+								<field name="grade"/>
+								<field name="result"/>
+								<field name="average" invisible='1'/>
+								<field name="level_id" invisible="1"/>
+								<field name="semester_subjects" invisible="1" />
+								<field name="shift_id" invisible="1" />
+								<field name="campus" invisible="1" />
+                        	</tree>
+                    </field>
+					<separator string="Two Year Diploma" attrs="{'invisible':[('pro','!=','TYD')]}"/>
+       				<field name="subject_id"  attrs="{'invisible':[('pro','!=','TYD')]}" >
+                        	<tree  editable="bottom" delete="false"  >
+                       
+								<field name="name" domain="[('program_id','=',parent.program),('semester_id','=',parent.level_id),('school_id','=',parent.campus)]" widget="selection"/>
+								<field name="f_name"/>
+								<field name="midterm" />
+								<field name="written"/>
+								<field name="oral"/>
+								<field name="practical"/>
+								<field name="evaluation"/>
+								<field name="makeup" readonly="1"/>
+								<field name="total"/>
+								<field name="percentage"/>
+								<field name="grade"/>
+								<field name="result"/>
+								<field name="review" invisible="1"/>
+								<field name="level_id" invisible="1"/>
+								<field name="semester_subjects" invisible="1"/>
+								<field name="program" invisible="1"/>
+								<field name="campus" invisible="1"/>
+								<field name="shift" invisible="1"/>
+		                          
+                        </tree>
+                    </field>
+                    <separator string="Talk N Talk" attrs="{'invisible':[('pro','!=','TT')]}"/>
+                    <field name="s_ids" attrs="{'invisible':[('pro','!=','TT')]}">
+                    	<tree  editable="bottom" delete="false" >
+                    	<field name="name"/>
+						<field name="f_name"/>
+						<field name="written"/>
+						<field name="speaking"/>
+						<field name="p_written" readonly='1'/>
+						<field name="p_speaking" readonly="1"/>
+						<field name="total"/>
+						<field name="percentage"/>
+						<field name="grade"/>
+						<field name="campus" invisible="1"/>
+						<field name="program" invisible="1"/>
+						<field name="class_id" invisible="1"/>
+						<field name="shift_id" invisible="1"/>
+						<field name="result" style="background-color:red;"/>
+						<field name="semester_subjects" invisible="1"/>
+					</tree>
+                    </field>
+                </sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- final exam search view -->
+
+		 <record id="student_final_exam_search" model="ir.ui.view">
+            <field name="name">Student Final Exam Search</field>
+            <field name="model">final.results</field>
+            <field name="arch" type="xml">
+                <search string="Student Final Exam Results">
+                    <group colspan="6" col="4">
+                        <field name="class_id"/>
+                        <field name="campus"/>
+                        <field name="program"/>
+                        <field name="level_id"/>
+                        <field name="semester_subjects"/>
+                    </group>
+                    <separator orientation="vertical"/>
+                    <newline />
+                    <group expand="0" string="Group By..." colspan="6" col="4">
+                        <filter string="Class" icon="terp-stock_symbol-selection" name="class_id" context="{'group_by':'class_id'}"/>
+                        <filter string="Campus" icon="terp-personal" name="campus" context="{'group_by':'campus'}"/>
+                        <filter string="Program" icon="terp-personal" name="program" context="{'group_by':'program'}"/>
+                        <filter string="Semester" icon="terp-personal" name="semester_subjects" context="{'group_by':'semester_subjects'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- menu for student results tree view in student profile -->
+        <record id="student_oyd_results" model="ir.ui.view">
+       	<field name="name">Student Results</field>
+       	<field name="model">oyd.exam</field>
+       	<!-- <field name="context">{"search_default_level_id":1}</field> -->
+       	<field name="arch" type="xml">
+       	
+       		<tree>
+       			<field name="semester_subjects"/>
+       			<field name="written"/>
+       			<field name="oral"/>
+       			<field name="total" />
+       			<field name="percentage"/>
+       			<field name="grade"/>
+       			<field name="result"/>
+
+           		 <field name="average"/>
+       		</tree>
+       		
+             
+       			
+       	</field>
+       </record>
+
+       <record id="student_midexam_results777" model="ir.ui.view">
+       	<field name="name">Student MidExam</field>
+       	<field name="model">student.finalexam</field>
+       	<field name="context">{"search_default_level_id":1}</field>
+       	<field name="arch" type="xml">
+       	
+       		<tree>
+       			<field name="semester_subjects"/>
+       			<field name="midterm" />
+       			<field name="written"/>
+       			<field name="oral"/>
+       			<field name="practical"/>
+       			<field name="evaluation"/>
+       			<field name='makeup'/>
+       			<field name="total"/>
+       			<field name="percentage"/>
+       			<field name="grade"/>
+       			<field name="result"/>
+       		</tree>
+       	</field>
+       </record>
+
+
+       <record id="view_student_final_examination_search" model="ir.ui.view">
+            <field name="name">Final Exam Search</field>
+            <field name="model">student.finalexam</field>
+
+            <field name="arch" type="xml">
+                <search string="Final Exam">
+                    <group col="10" colspan="4">
+                        <separator orientation="vertical"/>
+                        <field name="level_id"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="12" col="10">
+                        <filter string="Course Level" icon="terp-personal" name="level_id" context="{'group_by':'level_id'}"/>
+                        
+                    </group>
+                </search>
+            </field>
+        </record>
+       
+
+
+		<!-- final exam report wizard -->
+
+		<record id="student_final_exam_report_wizard" model="ir.ui.view">
+			<field name="name">Student Final Exam Report</field>
+			<field name="model">student.finalreport</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+					<group>
+						<group>
+							<field name="campus"/>
+							<field name="program"/>
+							<field name="level_id" domain="[('standard_id','=',program)]" widget="selection"/>
+							<field name="class_id" domain="[('standard_id','=',program),('semester_id','=',level_id),('school_id','=',campus),('state','=','close')]" widget="selection" />
+							<field name="code" invisible='1'/>
+						</group>
+					</group>
+
+					<footer>
+						<button name="student_final_report" type="object" string="Genarate Report" class="oe_highlight"/>
+						 <button special="cancel" string="Cancel" class="oe_link"/>
+					</footer>
+					 
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+<!-- Student makeup Exam Tree View -->
+
+		<record id="student_makeup_exam_tree1" model="ir.ui.view">
+			<field name="name">Student Makeup Exam</field>
+			<field name="model">student.makeup</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="program"/>
+					<field name="level_id"/>
+					<!-- <field name="class_id"/> -->
+					<field name="campus"/>
+
+				</tree>
+			</field>
+		</record>
+
+<!-- Student MakeUp Exam Form View -->
+
+		<record id="student_makeup_exam_form" model="ir.ui.view">
+			<field name="name">Student Makeup Exam Form</field>
+			<field name="model">student.makeup</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="update_student_results" type="object" string="Update Marks"
+						 states='draft' class="oe_highlight" groups="school.group_school_data_entry_officer"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="campus"/>
+									<field name="program"/>
+									<field name="level_id" domain="[('standard_id','=',program)]" widget="selection"/>
+							</group>
+							<group>
+								<field name="shift_id" domain="[('program','=',program)]" widget="selection"/>
+								<field name="subjects" domain="[('semester_id','=',level_id)]" widget="selection"/>
+								<field name='pro' invisible='1'/>
+							</group>
+						</group>
+						 <separator string="One Year Diploma Makeup Exam" attrs="{'invisible':[('pro','!=','DEL')]}" />
+		       				<field name="del_info" attrs="{'invisible':[('pro','!=','DEL')]}">
+		       					<tree editable='bottom' create='false' delete='false'>
+		       					<field name="name"/>
+								<field name="f_name"/>
+								<field name="written" />
+								<field name="speaking" />
+								<!-- attrs="{'readonly':[('speaking','&gt;',20)]}" -->
+								<field name="total"/>
+								<field name="percentage"/>
+								<field name="grade"/>
+								<field name="result"/>
+								<field name="semester_subjects" invisible="1"/>
+							</tree>
+		       				</field>
+						<separator string="Student Makeup Exam" attrs="{'invisible':[('pro','!=','TYD')]}" />
+		       				<field name="info" attrs="{'invisible':[('pro','!=','TYD')]}">
+		                        	<tree  editable="bottom" delete="false" create="false">
+				                          <field name="name" domain="[('program_id','=',parent.program),('semester_id','=',parent.level_id),('school_id','=',parent.campus)]" widget="selection"/>
+				                          <field name="f_name"/>
+				                          <field name="midterm"/>
+				                          <field name="final"/>
+				                          <field name="evaluation"/>
+				                          <field name="written"/>
+				                          <field name="oral"/>
+				                          <field name="practical"/>
+				                          <field name="total"/>
+				                          <field name="percentage"/>
+				                          <field name="grade"/>
+				                          <field name="result"/>
+				                          <field name="semester_subjects" invisible="1"/>
+				                   
+		                        </tree>
+		                    </field>
+		                    <separator string="Talk N Talk Makeup Exam" attrs="{'invisible':[('pro','!=','TT')]}" />
+		       				<field name="info1" attrs="{'invisible':[('pro','!=','TT')]}">
+		       					<tree editable='bottom' create='false' delete='false'>
+		       					<field name="name"/>
+								<field name="f_name"/>
+								<field name="written" />
+								<field name="speaking" />
+								<!-- attrs="{'readonly':[('speaking','&gt;',20)]}" -->
+								<field name="total"/>
+								<field name="percentage"/>
+								<field name="grade"/>
+								<field name="result"/>
+								<field name="semester_subjects" invisible="1"/>
+							</tree>
+		       				</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+<!--  For Student Profile Talk N Talk Tree View -->
+
+		<record id="student_midexam_results7777" model="ir.ui.view">
+		       	<field name="name">Talk n talk</field>
+		       	<field name="model">talk.talk</field>
+		       	<field name="context">{"search_default_level_id":1}</field>
+		       	<field name="arch" type="xml">
+		       		<tree>
+		       			<field name="semester_subjects"/>
+		       			<field name="p_written"/>
+		       			<field name='p_speaking'/>
+		       			<field name="written"/>
+		       			<field name="speaking"/>
+		       			<field name="total"/>
+		       			<field name="percentage"/>
+		       			<field name="grade"/>
+		       			<field name="result"/>
+		       		</tree>
+		       	</field>
+		       </record>
+<!-- For Getting Failed Students in Talk N Talk Program -->
+
+		<record id="student_midexam_results_failed" model="ir.ui.view">
+		       	<field name="name">Talk n talk</field>
+		       	<field name="model">talk.talk</field>
+		       	<field name="context">{"search_default_level_id":1}</field>
+		       	<field name="arch" type="xml">
+		       		<tree>
+		       			<field name="name"/>
+		       			<field name="campus"/>
+		       			<field name='program'/>
+		       			<field name="class_id"/>
+		       			<field name="shift_id"/>
+		       			<button name="makeup_scheduling" type='object' string="Makeup Schdule" class='oe_highlight'/>
+		       		</tree>
+		       	</field>
+		</record>
+
+<!-- For Schduling the Talk N Talk Failed Students -->
+
+       <record id='makeup_exam_schedling' model='ir.ui.view'>
+       	<field name='name'>MakeUp</field>
+       	<field name='model'>makeup.schdule</field>
+       	<field name='arch' type='xml'>
+       		<form>
+       			<sheet>
+       			<group>
+       				<group>
+	       				<field name='program' widget='selection'/>
+	       				<field name="s_campus" widget='many2many_tags'/>
+       				</group>
+       				<group>
+       					<field name="s_date"/>
+       					<field name="s_time" widget="timepicker2"/>
+       					<field name="venue" widget='selection'/>
+       				</group>
+       			</group>
+       			<separator />
+       			<field name='s_exam'>
+       				<tree editable='bottom' create='false' delete='false'>
+       					<field name="s_name" readonly='1'/>
+       					<field name="campus" readonly="1"/>
+       					<field name="s_date" readonly='1'/>
+       					<field name="s_time" widget="timepicker2" readonly='1'/>
+       					<field name="venue" widget='selection' readonly='1'/>
+       				</tree>
+       			</field>
+       			</sheet>
+       		</form>
+       	</field>
+       </record>
+
+<!-- For Getting Two Year Diploma Failed Students -->
+
+       <record id='tyd_makeup_exam_schedling' model='ir.ui.view'>
+       	<field name='name'>TYD MakeUp</field>
+       	<field name='model'>tyd.makeup.schdule</field>
+       	<field name='arch' type='xml'>
+       		<form>
+       			<sheet>
+       			<group>
+       				<group>
+	       				<field name="s_campus" widget='selection'/>
+	       				<field name='program' widget='selection'/>
+	       				<field name='course_level' widget='selection' domain="[('standard_id','=',program)]"/>
+	       				<field name='code' invisible='1'/>
+       				</group>
+       				<group>
+       					<field name="subjects" domain="[('semester_id','=',course_level)]" widget='many2many_tags' attrs="{'invisible':[('code','=','DEL')]}"/>
+       					<field name="shift_id" domain="[('program','=',program)]"/>
+       					<field name="s_date"/>
+       					<field name="s_time" widget="timepicker2"/>
+       					
+       				</group>
+       			</group>
+       			<separator />
+       			<field name='s_exam'>
+       				<tree editable='bottom' create='false' delete='false'>
+       					<field name="s_name" readonly='1'/>
+       					<field name="campus" readonly="1"/>
+       					<field name="s_date" invisible='1'/>
+       					<field name="s_time" invisible='1'/>
+       					
+       				</tree>
+       			</field>
+       			</sheet>
+       		</form>
+       	</field>
+       </record>
+
+     
+<!-- For Schduling the Two Year Diploma Failed Students(MakeUp Exam Schduling For TYD) -->
+
+       <record id="student_makeup_scheduling_tree" model='ir.ui.view'>
+       	<field name='name'>Student Makeup Tree</field>
+       	<field name='model'>schdule.makeup</field>
+       	<field name='arch' type='xml'>
+       		<tree>
+       		<field name='s_date'/>
+       		<field name='s_time'/>
+       		<field name='venue'/>
+       		<field name='campus'/>
+       	</tree>
+       	</field>
+       </record>
+
+<!-- Extra Tree View for Two Year Diploma Makeup Exam Scheduling -->
+
+       <record id="tyd_makeup_scheduling_tree" model='ir.ui.view'>
+       	<field name='name'>TYD Student Makeup Tree</field>
+       	<field name='model'>tyd.schdule</field>
+       	<field name='arch' type='xml'>
+       		<tree>
+	       		<field name='s_date'/>
+	       		<field name='s_time'/>
+       		
+       		</tree>
+       	</field>
+       </record>
+<!-- SuccessFull Message -->
+
+<record id="custom_pop_message_wizard_view_form" model="ir.ui.view">
+            <field name="name">custom.pop.message.form</field>
+            <field name="model">custom.pop.message</field>
+            <field name="arch" type="xml">
+                <form string="Custom POP Message">
+
+                    <field name="name" readonly="1"/>   
+
+                    <footer>
+                       <button string="Ok" class="btn-default" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+
+<!-- Form View for Talk N Talk Failed Students -->
+
+ <record id='talk_form' model='ir.ui.view'>
+     		<field name="name">Talk Form</field>
+     		<field name='model'>talk.exam.details</field>
+     		<field name='arch' type='xml'>
+     			<form>
+     				<header>
+     					<button name='makeup_scheduling' type="object" string='Makeup Exam Schdule' class ='oe_highlight' groups='school.group_school_exam_invigilator,school.group_school_exam_officer'/>
+     				</header>
+     				<sheet>
+     					<field name='ta_ids'>
+     						<tree create='false' delete='false'>
+
+			     				<field name='name'/>
+			     				<field name='program'/>
+			     				<field name='shift_id'/>
+			     				<field name='class_id'/>
+			     				<field name='campus'/>
+			     				<field name='exam_type'/>
+			     				<field name='p_code' invisible='1'/>
+     						</tree>
+     					</field>
+     				</sheet>
+     			</form>
+     			
+     		</field>
+
+     	</record>
+
+       
+       
+<!-- Action menus for Whole Exam Process -->
+<!-- <field name="domain">[('name.user_id','=',uid)]</field> -->
+
+
+<!-- action for mid exam results -->
+	<record id="student_Midexam_action111" model="ir.actions.act_window">
+		<field name="name">Student Mid Exam Action</field>
+		<field name="res_model">student.midexam</field>
+		<field name="domain">[]</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+<!-- action view final results -->
+
+	<record id="student_finalexam_action11" model="ir.actions.act_window">
+		<field name="name">Student Final Exam Action</field>
+		<field name="res_model">final.results</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+<!-- Student Makeup Exam action -->
+
+	<record id="student_makeup_action" model="ir.actions.act_window">
+		<field name="name">Student Makeup Action</field>
+		<field name="res_model">student.makeup</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	
+<!-- action for final exam report wizard -->
+	<record id="student_final_exam_report_action" model="ir.actions.act_window">
+		<field name="name">Student Final Report Action</field>
+		<field name="res_model">student.finalreport</field>
+		<field name="view_mode">form</field>
+		<field name="view_type">form</field>
+		<field name="target">new</field>
+	</record>
+
+<!-- student results tree view in student profile -->
+<record id="student_oyd_exam_results" model="ir.actions.act_window">
+		<field name="name">Student Results</field>
+		<field name="res_model">oyd.exam</field>
+		<field name="view_mode">tree</field>
+		<field name="context">{'tree_view_ref':'student_oyd_results'}</field>
+		<field name="view_id" ref="school_ems.student_oyd_results"/>
+		<field name="domain">[]</field>
+	</record>
+
+	<record id="student_mid_exam_treeview" model="ir.actions.act_window">
+		<field name="name">Student Mid Exam TreeView</field>
+		<field name="res_model">student.finalexam</field>
+		<field name="view_mode">tree</field>
+		<field name="context">{'tree_view_ref':'student_midexam_results777'}</field>
+		<field name="view_id" ref="student_midexam_results777"/>
+		<field name="domain">[]</field>
+	</record>
+
+<!-- Serveraction for TNT failed Students -->
+
+	<record id="failed_students_server_action" model="ir.actions.server">
+        <field name="name">Failed Students</field>
+        <field name="model_id" ref="model_talk_talk"/>
+        <field name="code">action = model.failed_student_list()</field>
+    </record>
+
+    <record id="failed_del_students_server_action" model="ir.actions.server">
+        <field name="name">Failed Students</field>
+        <field name="model_id" ref="model_oyd_exam"/>
+        <field name="code">action = model.del_failed_student_list()</field>
+    </record>
+
+<!-- ServerAction for TYD failed Students -->
+
+    <record id="failed_tyd_server_action" model="ir.actions.server">
+        <field name="name">Tyd Failed Students</field>
+        <field name="model_id" ref="model_student_finalexam"/>
+        <field name="code">action = model.tyd_failed_student_list()</field>
+    </record>
+
+    
+
+
+   
+
+	<!-- ALL MENU'S FOR EXAM PROCESS -->
+	<menuitem 
+	id="exam_reports"
+ 	name="Exam Shduling and Reports" 
+ 	parent="school.menu_students_parents" 
+ 	
+ 	sequence="8"/>
+<menuitem 
+    id="going_to_finished_classes" 
+    name="Going-To-Finished_Classes"
+    parent="exam_reports"
+    action="action_student_going_to_finished_classes"
+    groups='school.group_school_exam_officer,school.group_school_exam_invigilator' 
+    sequence="1" 
+     />
+<menuitem 
+	id="student_exam_schduling_menu111"
+    action="student_exam_action_window"
+  	name="Exam Schduling" 
+  	parent="exam_reports"
+  	groups="school.group_school_exam_officer,school.group_school_exam_invigilator"
+  	sequence="2"/>
+  	/>
+
+<menuitem 
+	id="final_exam_report111" 
+	name="Final Exam Report" 
+	parent="exam_reports"
+	action="student_final_exam_report_action"
+	groups="school.group_school_administration,school.group_school_exam_officer,school.group_school_exam_invigilator"
+	sequence="3"/>
+
+<menuitem 
+	id='all_classes_menu_item'
+	name='All Classes Report'
+	parent="exam_reports"
+	action='all_classes_report_action'
+	groups="school.group_school_administration,school.group_school_exam_officer,school.group_school_exam_invigilator"
+	sequence='4'/>
+
+
+	<menuitem 
+	id="manual_exam_configuration"
+ 	name="Exam Results" 
+ 	parent="school.menu_students_parents" 
+ 	groups="school.group_school_exam_officer,school.group_school_data_entry_officer,school.group_school_exam_invigilator"
+ 	sequence="9"/>
+ 	<menuitem 
+	id="student_exam_menu17711" 
+	name="Mid Exam Results"
+	parent="manual_exam_configuration"
+	action="student_Midexam_action111"
+	groups="school.group_school_exam_officer,school.group_school_data_entry_officer"
+	sequence="1"
+	/>
+	<menuitem 
+	id="student_finalexam_menu11" 
+	name="Final Exam Results"
+	parent="manual_exam_configuration"
+	action="student_finalexam_action11"
+	groups="school.group_school_exam_officer,school.group_school_data_entry_officer"
+	sequence="2"/>
+	<menuitem 
+	id="student_makeup_exam111" 
+	name="Makeup Exam Results"
+	parent="manual_exam_configuration"
+	action="student_makeup_action"
+	groups="school.group_school_exam_officer,school.group_school_data_entry_officer"
+	sequence="3"/>
+
+
+	<menuitem 
+	id="failed_students"
+ 	name="All Fail Students" 
+ 	parent="school.menu_students_parents" 
+ 	sequence="10"/>
+
+ 	<menuitem 
+	id='del_failed_student_menu_item111'
+	name='Failed Student List (DEL)'
+	parent='failed_students'
+	action='failed_del_students_server_action'
+	groups="school.group_school_administration,school.group_school_exam_officer,school.group_school_exam_invigilator"
+	sequence='1'/>
+
+<menuitem 
+	id='tyd_failed_student_menu_item11'
+	name='Failed Student List (TYD)'
+	parent='failed_students'
+	action='failed_tyd_server_action'
+	groups="school.group_school_administration,school.group_school_exam_officer,school.group_school_exam_invigilator"
+	sequence='2'/>
+
+<menuitem 
+	id='failed_student_menu_item1'
+	name='Failed Student List (TNT)'
+	parent='failed_students'
+	action='failed_students_server_action'
+	groups="school.group_school_administration,school.group_school_exam_officer,school.group_school_exam_invigilator"
+	sequence='3'/>
+
+
+
+ 
+
+
+     	
+
+
+     	
+
+
+ 
+
+
+      	
+
+
+
+
+
+
+
+
+	</data>
+</odoo>

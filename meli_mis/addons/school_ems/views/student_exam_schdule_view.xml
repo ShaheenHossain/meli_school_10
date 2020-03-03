@@ -1,0 +1,228 @@
+<odoo>
+	<data>
+		<record id="student_exam_schdule_tree" model="ir.ui.view">
+			<field name="name">Student Exam Tree</field>
+			<field name="model">student.schdule</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="program"/>
+					<field name="semester"/>
+					<field name="campus_id"/>
+					<field name='schdule_date'/>
+					<field name='exam_type'/>
+					<field name='d_class_id'/>
+					<!-- <field name='class_id' attrs="{'invisible':[('mid_class_id','=',True)]}"/>
+					<field name='mid_class_id' attrs="{'invisible':[('class_id','=',True)]}"/> -->
+				</tree>
+			</field>
+		</record>
+
+		<record id="student_exam_form" model="ir.ui.view">
+			<field name="name">Student Exam Form</field>
+			<field name="model">student.schdule</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name='exam_confirmation' type='object' string='Confirm' states='draft' class='oe_highlight'/>
+						<field name='state' widget='statusbar' statusbar_visible=" draft, confirm" />
+					</header>
+					
+					<sheet>
+					<group>
+						<group>
+							<field name="campus_id" widget="selection"/>
+							<field name="program" widget="selection"/>
+							<field name="semester" domain="[('standard_id','=',program)]" attrs="{'invisible':[('program','=',False)]}" widget="selection"/>
+						</group>
+						<group>
+							<field name="shift_id" domain="[('program','=',program)]"/>
+							<field name='exam_type'/>
+
+							<field name='mid_class_id' domain="[('school_id','=',campus_id),('semester_id','=',semester),('state','=','running')]" attrs="{'invisible':['|',('exam_type','=','final_exam'),('state','=','confirm')]}"/>
+
+							<field name='class_id' domain="[('school_id','=',campus_id),('semester_id','=',semester),('state','=','finish')]" attrs="{'invisible':['|',('exam_type','=','mid_exam'),('state','=','confirm')]}"/>
+
+							<field name="d_class_id" attrs="{'invisible':[('state','=','draft')]}"/>
+						
+							
+
+							<!-- <field name='s_date'/>
+							<field name='e_date' /> -->
+							<field name='schdule_date' invisible ='1'/>
+							
+							<field name='subjects' invisible='1'/>
+						</group>
+					</group>
+				<separator string="Student Exam Schedule"/>
+                   <field name="suchdule_id">
+                        <tree editable="bottom" create='false' delete='false'>
+                          
+                          <field name="name" readonly='1'/>
+                          <!-- <field name="start_date"/>
+                          <field name="end_date"/> -->
+                          <field name="time" widget="timepicker2"/>
+                          <field name="exam_schdule_date"/>
+                          <field name='course_level' invisible='1'/>
+                          <field name='class_id' invisible='1'/>
+                          <field name="exam_type" invisible='1'/>
+                          <!-- <field name="confirm_exam"/> -->
+
+                          
+                        </tree>
+                    </field>
+                    <!-- <group>
+                    	<button name="confirm_exam_schedule" type="object"  string="Validate" class="oe_right oe_highlight"/>
+                    </group> -->
+                </sheet>
+				
+				</form>
+			</field>
+		</record>
+
+		<record id='student_exam_timetable_treeview11' model='ir.ui.view'>
+			<field name="name">Student Exam Timetable</field>
+			<field name="model">student.exam.schdule</field>
+			<field name="arch" type='xml'>
+				<tree>
+				<field name="course_level" invisible="1"/>
+				<field name="exam_type"/>
+				<field name="name"/>
+				<field name="exam_schdule_date"/>
+				<field name="time"/>
+			</tree>
+			</field>
+		</record>
+
+		<record id="student_exam_dates_tree" model="ir.ui.view">
+			<field name="name">Student Exam Dated Tree</field>
+			<field name="model">student.exam.schdule</field>
+			<field name="arch" type="xml">
+				<tree>
+					
+					<field name="exam_schdule_date"/>
+					<field name="time"/>
+				</tree>
+			</field>
+		</record>
+		<record  id="student_exam_dates_action" model="ir.actions.act_window">
+			<field name="name">Student Exam Dates Action</field>
+			<field name="res_model">student.exam.schdule</field>
+			<field name="view_mode">tree</field>
+			<field name="domain">[]</field>
+		</record>
+
+
+		<record id="student_exam_action_window" model="ir.actions.act_window">
+			<field name="name">Student Exam Action</field>
+			<field name="res_model">student.schdule</field>
+			<field name='context'>{'group_by':['schdule_date']}</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+
+		<record id="student_classes_inherited" model="ir.ui.view">
+			<field name="name">Student Classes Inherited</field>
+			<field name="model">school.standard</field>
+			<field name="inherit_id" ref="school.view_school_standard_form"></field>
+			<!-- <field name="domain">[('state','=','exam')]</field> -->
+			<field name="arch" type="xml">
+				<field name="total_students" position="after">
+					<field name="exam_date" attrs="{'invisible':[('state','!=','exam')]}"/>
+					<field name="exam_time" attrs="{'invisible':[('state','!=','exam')]}"/>
+				</field>
+			</field>
+		</record>
+		<record id="student_exam_inherited_tree" model="ir.ui.view">
+			<field name="name">Student Exam Inherited Tree</field>
+			<field name="model">school.standard</field>
+			<field name="arch" type="xml">
+				<tree  create="false" delete="false">
+					<field name="school_id"/>
+                    <field name="semester_id"/>
+                    <field name="medium_id"/>
+                    <field name="division_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="remaining_seats" type="char"/>
+                    <field name="standard"/>
+                    <field name="exam_date"/>
+                    <field name="exam_time"/>
+                    <field name="state"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="student_classes_inherited_tree" model="ir.ui.view">
+			<field name="name">Student Classes Inherited Tree</field>
+			<field name="model">school.standard</field>
+			<field name="inherit_id" ref="school.view_school_standard_tree"></field>
+			
+			<field name="arch" type="xml">
+				<field name="school_id" position="after">
+					<field name="exam_date" invisible="1"/>
+					<field name="exam_time" invisible="1"/>
+				</field>
+			</field>
+		</record>
+		<record id="pre_exam_schedule" model="ir.actions.act_window">
+			<field name="name">Pre Exam Schedule Classes</field>
+			<field name="res_model">school.standard</field>
+			<field name="view_mode">tree</field>
+			<field name="context">{ 'tree_view_ref':'student_exam_inherited_tree'}</field>
+			<field name="view_id" ref="student_exam_inherited_tree"/>
+			<field name="domain">[('state','=','exam')]</field>
+		</record>
+		<record id="pre_exam_schedule1" model="ir.actions.act_window">
+			<field name="name">Pre Exam Schedule Classes1</field>
+			<field name="res_model">school.standard</field>
+			<field name="view_mode">tree</field>
+			<field name="context">{ 'tree_view_ref':'student_exam_inherited_tree'}</field>
+			<field name="view_id" ref="student_exam_inherited_tree"/>
+			<field name="domain">[('state','=','finish')]</field>
+		</record>
+
+		<record id="student_program_inherited" model="ir.ui.view">
+			<field name="name">Student Program Inherited</field>
+			<field name="model">student.student</field>
+			<field name="inherit_id" ref="school.view_student_student_form_1"></field>
+			<field name="arch" type="xml">
+				<field name="program_id" position="attributes">
+					<attribute name="readonly">1</attribute>
+				</field>
+				<field name="semester_id" position="attributes">
+					<attribute name="readonly">1</attribute>
+				</field>
+			</field>
+		</record>
+		
+
+		
+		<!-- <menuitem 
+			id="student_exam_date_action"
+		    action="student_exam_dates_action"
+		  	name="Student Exam Dates" 
+		  	parent="student_exam_menu_item1"
+		  	groups="school.group_school_student"
+		  	sequence="3"
+		  	/>
+		 <menuitem 
+			id="pre_examination_scheduling"
+		    action="pre_exam_schedule"
+		  	name="Pre Exam Schedule" 
+		  	parent="student_exam_menu_item1"
+		  	sequence="2"
+		  	
+		  	/>
+		 <menuitem 
+			id="pre_examination_scheduling1"
+		    action="pre_exam_schedule1"
+		  	name="Closed Classes" 
+		  	parent="student_exam_menu_item1"
+		  	sequence="6"
+		  	
+		  	/> -->
+
+	</data>
+</odoo>

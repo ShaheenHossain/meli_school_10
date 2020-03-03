@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+
+        <record id="extend_class_form_view" model="ir.ui.view">
+            <field name="name">extend_class_form_view</field>
+            <field name="model">extend.class</field>
+            <field name="arch" type="xml">
+                <form string="Class Extend">
+						<group>
+							<field name="date"/>
+							<field name="reason"/>
+						</group>
+				<footer>
+					<button name="extend" class="oe_highlight" string="Extend" type="object"/>
+					Or
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+
+                </form>
+            </field>
+        </record>
+
+<record id="action_extend_class" model="ir.actions.act_window">
+            <field name="name">Extend Class</field>
+            <field name="res_model">extend.class</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+ 
+        <record id="view_school_school_form_inherit_add_email" model="ir.ui.view">
+            <field name="name">view.school.school.form.inherit.add.email</field>
+            <field name="model">school.school</field>
+            <field name="inherit_id" ref="school.view_school_school_form"/>
+            <field name="arch" type="xml">
+                <data>
+                <field name="name" position="after">
+                	<field name="email_to"/>
+                	<field name="email_from"/>
+                </field>
+                </data>
+            </field>
+        </record>
+
+
+        <record id="view_school_standard_form_inherit_extends_history_functionality" model="ir.ui.view">
+            <field name="name">view.school.standard.form.inherit.extends.history.functionality</field>
+            <field name="model">school.standard</field>
+            <field name="inherit_id" ref="school.view_school_standard_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <header position="inside">
+                        <button name="%(action_extend_class)d" type="action" string="Extend Class" class="oe_highlight"/>
+                    </header>
+                    <field name="total_students" position='after'>
+                        <field name="code" invisible="1"/>
+                    </field>
+			<notebook position="inside">
+				<page string="Class Extend History">
+					<field name="extend_class_history">
+						<tree>
+							<field name="user_id"/>
+							<field name="date_from"/>
+							<field name="date_to"/>
+							<field name="reason"/>
+							<field name="state"/>
+						</tree>
+					</field>
+				</page>
+                <page string="Exam History">
+                    <field name="oyd_history" attrs="{'invisible':[('code','!=','DEL')]}">
+                        <tree>
+                        <field name="name"/>
+                        <field name="f_name"/>
+                        <field name="written"/>
+                        <field name="oral"/>
+                        <field name="total"/>
+                        <field name="percentage"/>
+                        <field name="grade"/>
+                        <field name="result"/>
+                        
+                    </tree>
+                        
+                    </field>
+                    <field name="exam_history" attrs="{'invisible':[('code','!=','TYD')]}">
+                        <tree>
+                        <field name="s_name"/>
+                        <field name="subject"/>
+                        <field name="m_term"/>
+                        <field name="written"/>
+                        <field name="oral"/>
+                        <field name="practical"/>
+                        <field name="evalution"/>
+                        <field name="makeup"/>
+                        <field name="total"/>
+                        <field name="percentage"/>
+                        <field name="grade"/>
+                        <field name="result"/>
+                    </tree>
+                        
+                    </field>
+                    <field name="talk_history" attrs="{'invisible':[('code','!=','TT')]}">
+                        <tree>
+                        <field name="s_name"/>
+                        <field name="subject"/>
+                        <field name="p_written"/>
+                        <field name="p_speaking"/>
+                        <field name="written"/>
+                        <field name="speaking"/>
+                        <field name="total"/>
+                        <field name="percentage"/>
+                        <field name="grade"/>
+                        <field name="result"/>
+                    </tree>
+
+                    </field>
+
+                </page>
+			</notebook>
+                </data>
+            </field>
+        </record>
+        </odoo>
+        

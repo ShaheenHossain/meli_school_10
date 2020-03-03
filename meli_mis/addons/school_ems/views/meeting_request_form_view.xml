@@ -1,0 +1,94 @@
+<odoo>
+	<data>
+		<record id="meeting_request_form_tree" model="ir.ui.view">
+			<field name="name">Meeting Request</field>
+			<field name="model">meeting.request</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="requested_by"/>
+					<field name="department"/>
+					<field name="date"/>
+					<field name="purpose_meeting"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+		<record id="meeting_requesting_form" model="ir.ui.view">
+			<field name="name">Meeting Request</field>
+			<field name="model">meeting.request</field>
+			<field name="arch" type="xml">
+				<form >
+					<header>
+						<button name="GMConfirmation" type="object" string="Send To GM" class="oe_highlight" states="draft"/>
+						<button name="SendToEmployee" type="object" string="Send To Employee" class="oe_highlight" states="gm"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="subject" attrs="{'readonly':[('state','=','schdule')]}"/>
+							<field name="requested_by" attrs="{'readonly':[('state','=','schdule')]}"/>
+							<field name="designation" attrs="{'readonly':[('state','=','schdule')]}"/>
+							<field name="department" attrs="{'readonly':[('state','=','schdule')]}"/>
+
+						</group>
+						<group>
+							<field name="meeting_with" widget='many2many_tags' attrs="{'readonly':[('state','=','schdule')]}"/>
+							
+							<field name="purpose_meeting" attrs="{'readonly':[('state','=','schdule')]}"/>
+							<field name="venue" attrs="{'readonly':[('state','=','schdule')]}"/>
+							
+							
+						</group>
+						<group>
+							 <label for="date" string="Date And Time"/>
+							<div>
+							<field name="date" attrs="{'readonly':[('state','=','schdule')]}" class="oe_inline"/>
+							<field name="time" attrs="{'readonly':[('state','=','schdule')]}" class="oe_inline" widget="timepicker"/>
+							</div>
+						</group>
+					</group>
+					<separator />
+					<field name="employee_id">
+						<tree create="false" delete='false' edit='false' decoration-success="status=='accept'" decoration-danger="status=='reject'">
+							<field name="employee" readonly="1" />
+							<field name="contact" readonly="1"/>
+							<field name="department" readonly="1"/>
+							<field name="state" invisible="1"/>
+							<field name="status" attrs="{'invisible':['|',('state','!=','schdule')]}"/>
+
+							<button name="Confirm" type="object" string="Confirm" attrs="{'invisible':['|',('state','!=','schdule'),('status','in',('accept','reject'))]}"/>
+							<button name="Reject" type="object" string="Reject" attrs="{'invisible':['|',('state','!=','schdule'),('status','in',('accept','reject'))]}" domain="{'employee.id','=',self.env.user.id}"/>
+
+						</tree>
+					</field>
+				<separator string="Meeting Agenda"/>
+				<field name="m_ids" attrs="{'readonly':[('state','=','schdule')]}"/>
+				
+
+				</sheet> 
+				</form>
+			</field>
+		</record>
+
+		<record id="meeting_request_form_action" model="ir.actions.act_window">
+			<field name="name">Meeting Request</field>
+			<field name="res_model">meeting.request</field>
+			<field name="domain">[]</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem 
+			id="meeting_from_menuitem"
+			name="Meeting Request"
+			action="meeting_request_form_action"
+			parent="bi_hr.hr_requests_menu_main"
+			groups="school.group_school_gm,school.group_school_aam,base.group_user"
+			sequence="1"/>
+
+
+
+
+
+
+	</data>
+</odoo>

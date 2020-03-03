@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>	
+	<data>
+		<!-- <report id="exam_report_new_11" 
+    	    string="Exam Report"
+        	model="etq.result" 
+    	    report_type="qweb-pdf" 
+        	file="exam_test_quiz.exam_report_certificate_1" 
+       		name="exam_test_quiz.exam_report_certificate_1"/> -->
+
+       		<report
+		id="exam_report_new_11"
+		string="Student Result Card"
+		model="etq.result"
+		report_type="qweb-pdf"
+		name="exam_test_quiz.print_student_badge_new1"
+		file="exam_test_quiz.print_student_badge_new1"
+		groups="school.group_school_administration"/>
+
+	<template id="exam_test_quiz.print_student_badge_new1">
+		<t t-call="report.html_container">
+			<div class="page">
+				<t t-foreach="docs" t-as="student">
+					<t t-foreach="request.env['student.student'].search([('name', '=', student.name.name)])" t-as="obj">
+					<div class="col-sm-6">
+
+
+					 <table style="width:1000pt; height:1200pt; border: 1pt solid black; border-collapse:separate; border-radius:1pt; margin:10pt">
+						<div class="col-sm-6">
+
+					
+							
+							<td  style="width:10%;" align="center" t-attf-style="background-image:url('/exam_test_quiz/static/src/img/New A4.jpg');opacity:1;background-size:1000pt 1150pt;">
+								
+								
+							
+							<table>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+									
+										<tr><td><div align="center" style="font-size:18pt;margin-bottom:2pt;"><nobr><br/><br/><br/>It is certified that Mr./Miss.<b><t t-esc="student.name.name"/></b> D/O Mr.<b><t t-esc="obj.parent_id"/></b>  bearing Reg.<p></p><b><t t-esc="obj.student_code"/></b><p></p> has completed the following English Level:<p></p><b><t t-esc="obj.semester_id.name"/></b><p></p> at Muslim English Language Institute.<p></p>She secured average <b><t t-esc="student.percentage"/> % </b> marks and has been placed in<b> Grade <t t-esc="student.class_id"/></b>.<p></p>As an evidence of completion, this Achievement Card has been <p></p>issued to<p></p>
+										him / her on <b><t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></b>
+										</nobr></div></td></tr>
+	
+							
+							</table>                                     
+										
+						</td>
+							
+
+					</div>
+				</table>
+			</div>
+		</t>
+		<p style="page-break-after:always;"/>
+	</t>
+	</div>
+		</t>
+</template>
+
+
+
+    </data>
+</odoo>    

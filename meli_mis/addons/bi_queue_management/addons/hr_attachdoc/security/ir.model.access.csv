@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+,,,,,,,
+,,,,,,,
+,,,,,,,
+access_hr_employee_attach_doc,hr.employee.dailyreport_employee,model_hr_dailyreport,base.group_user,1,1,1,1
+access_hr_employee_attach_doc1,hr.employee.dailyreport_manager,model_hr_dailyreport,hr.group_hr_manager,1,1,1,1
+access_hr_employee_attach_doc2,hr.employee.dailyreport_user,model_hr_dailyreport,hr.group_hr_user,1,1,1,0
+,,,,,,,
+access_hr_attachdoc_hr_attachdoc11,hr.employee.dailytask_employee,model_hr_dailytask,base.group_user,1,1,1,1
+access_hr_attachdoc_hr_attachdoc12,hr.employee.dailytask_employee,model_hr_dailytask,hr.group_hr_manager,1,1,1,1
+access_hr_attachdoc_hr_attachdoc13,hr.employee.dailytask_employee,model_hr_dailytask,hr.group_hr_user,1,1,1,1

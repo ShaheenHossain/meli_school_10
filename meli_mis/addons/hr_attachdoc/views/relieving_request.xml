@@ -1,0 +1,96 @@
+<odoo>
+	<data>
+		<record id="relieving_request_view_tree" model="ir.ui.view">
+			<field name="name"> Relieving Request</field>
+			<field name="model">hr.relieving.request</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="relieving_type"/>
+					<field name="reporting_manager"/>
+					<field name="relieving_date"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="relieving_request_view_form" model="ir.ui.view">
+			<field name="name"> Relieving Request</field>
+			<field name="model">hr.relieving.request</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="confirm_action" string="Confirm" type="object" class="oe_highlight" states="new"/>
+
+						<button name="send_to_ceo" string="Send To Ceo" type="object" class="oe_highlight" attrs="{'invisible':['|',('clearance_condi','=',False),('state','!=','inprogress')]}"/>
+
+						<button name="done_action" string="Approve" type="object" class="oe_highlight" states="ceo"/>
+
+						<button name="reject_action" string="Reject" type="object" class="oe_highlight" states="inprogress"/>
+
+						<button name="send_to_clearance_action" string="Send Clearance Form"  type="object" class="oe_highlight"  attrs="{'invisible':['|',('clearance_condi','!=',False),('state','!=','inprogress')]}"/>
+
+						<field name="state" statusbar_visible=" new, inprogress, completed, rejected" widget="statusbar"/>
+					</header>
+					<sheet>
+						<group string="Relieving">
+							<group>
+								<field name="name" domain="[('state','!=','draft')]" options="{'no_quick_create': True, 'no_create_edit' : True,'no_create': True, 'no_open': True}"/>
+								<field name="relieving_type"/>
+								<field name="reporting_manager" options="{'no_quick_create': True, 'no_create_edit' : True,'no_create': True, 'no_open': True}"/>
+								<field name="relieving_date"/>
+							</group>
+							<group>
+								<field name="relieving_request" options="{'no_quick_create': True, 'no_create_edit' : True,'no_create': True, 'no_open': True, 'no_search':True}"/>
+								<field name="relieving_created_date"/>
+								<field name="campus"/>
+								<field name="department"/>
+							</group>
+						</group>
+						<notebook>
+						    <page string="Resignation">
+						    	<group>
+						    		<group>
+					    				<field name="informed_rm_hr"/>
+					    				<field name="exit_policy_verification"/>
+					    				<field name="notice_period_approved"/>
+					    				<field name="exit_clearance_form_provided" attrs="{'invisible':[('clearance_condi','=',False)]}"/>
+					    				<field name="admin_clearance" attrs="{'invisible':[('clearance_condi','=',False)]}"/>
+					    				<field name="clearance_condi" invisible="1"/>
+					    			</group>
+					    			<group>
+					    				<field name="finance_clearance" attrs="{'invisible':[('clearance_condi','=',False)]}"/>
+					    				<field name="it_clearance" attrs="{'invisible':[('clearance_condi','=',False)]}"/>
+					    				<field name="exit_clearance_form_received" attrs="{'invisible':[('clearance_condi','=',False)]}"/>
+					    				<field name="provide_relieving_document" attrs="{'invisible':[('clearance_condi','=',False)]}"/>
+					    				<field name="email_received" attrs="{'invisible':[('clearance_condi','=',False)]}"/>
+						    		</group>
+						    	</group>
+						    	<field name="remark" placeholder="Remark"/>
+						    	<!-- <group>
+						    		<group>
+						    			<button name="reject_action" string="Reject" type="object" class="oe_right oe_highlight"/>
+						    		</group>
+						    	</group> -->
+						    </page>
+						</notebook>
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="relieving_request_view_action" model="ir.actions.act_window">
+            <field name="name"> Relieving Request</field>
+            <field name="res_model">hr.relieving.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="relieving_request_view_menu"
+            name="Relieving Request"
+            parent="bi_hr.hr_requests_menu_main"
+            sequence="3"
+            action="relieving_request_view_action"
+            />
+	</data>
+</odoo>

@@ -1,0 +1,49 @@
+<odoo>
+	<data noupdate="1">
+		<report
+		id="student_admissions_target_sales"
+		string="Target Sales"
+		model="daily.sales.report"
+		report_type="qweb-pdf"
+        groups="school.group_school_administration"
+		name="bi_queue_management.target_tracker"
+		file="bi_queue_management.target_tracker"/>
+
+
+		<template id="target_tracker">
+	        <t t-call="report.html_container">     
+	            <t t-call="report.external_layout">
+	                <div class="page">
+	                	<table border="1" class="table table-condesed table-bordered" >
+	                			
+                                    <tr style="background-color:blue;" >
+                                        <td class="text-center"><strong><font size='30' color='white'>Campus</font></strong></td>
+                                        <td class="text-center"><strong><font size='30' color='white'>Campus- Daily Sales Targets Assignments</font></strong></td>
+                                        <td class="text-center"><strong><font size='30' color='white'>Targets Achieved</font></strong></td>
+                                        <td class="text-center"><strong><font size='30' color='white'>Remaining Targets</font></strong></td>
+                                        <td class="text-center"><strong><font size='30' color='white'>Percentage</font></strong></td>
+                                        <td class="text-center"><strong><font size='30' color='white'>Feedback</font></strong></td>
+                                    </tr>
+                                    
+
+                                     <t t-foreach="targets" t-as="value">
+                                        <t t-foreach="targets[value]" t-as="datas">
+                                        	<tr>
+                                        		<td class="text-center"><span t-esc="datas['campus'][1]"/></td>
+                                                <td class="text-center"><span t-esc="datas['campus_actual_targets']"/></td>
+                                                <td class="text-center"><span t-esc="datas['target_achived']"/></td>
+                                                <td class="text-center"><span t-esc="datas['remaining']"/></td>
+                                                <td class="text-center"><span t-esc="datas['percentage']"/></td>
+                                                <td class="text-center"><span t-esc="datas['feedback']"/></td>
+                                        	</tr>
+                                        </t>
+                                    </t>
+                                 </table>
+                             </div>
+                         </t>
+                     </t>
+                 </template>
+	                        	
+	              
+	</data>
+</odoo>

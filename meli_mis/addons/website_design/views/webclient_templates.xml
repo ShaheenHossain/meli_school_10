@@ -1,0 +1,1017 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+   	 <template id="assets_login" inherit_id="web.assets_frontend">
+   	 	<xpath expr="." position="inside">
+   	 		<link rel="stylesheet" href="/website_design/static/src/css/website_design.css"/>
+            <link rel="stylesheet" href="/website_design/static/src/css/sidebar.css"/>
+            <link rel="stylesheet" href="/website_design/static/src/css/datepicker.css"/>
+            <script type="text/javascript" src="/website_design/static/src/js/website_design.js"></script>
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript" src="/website_design/static/src/js/bootstrap-datepicker.js"></script>
+   	 	</xpath>
+    </template>
+
+    <template id="custom_footer_layout" inherit_id="website.layout_footer_copyright" name="Custom Footer">
+        <xpath expr="//footer/div[@class='container mt16 mb8']" position="replace">
+            <div class="container custom_footer">
+                <div class="pull-left text-muted" itemscope="itemscope" itemtype="http://schema.org/Organization">
+                    &amp;copy; All rights Reserved | Designed by Karimi Infotech Pvt. Ltd.
+                </div>
+                <div class="pull-right">
+                    <span>Institute Management Software</span>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+	<template id="custom_layout" inherit_id="website.layout" name="Custom layout">
+		<xpath expr="//header//ul[@id='top_menu']/li" position="before">
+            <li t-att-class="'' if request.env.user.user_type == 'student' else 'hidden'">
+                <a href="/student">
+                    Student
+                </a>
+            </li>
+        </xpath>
+        <xpath expr="//header//div[@class='navbar-header']" position="inside">
+            <button type="button" id="sidebarCollapse" class="btn" style="margin-top: 8px;float: left">
+                <i class="fa fa-align-left"></i>
+            </button>
+            <div class="header_search">
+                <t t-call="website.website_search_box"/>
+            </div>
+        </xpath>
+        <!--<xpath expr="//header//div[@class='navbar-header']" position="after">-->
+            <!--<div>-->
+                <!--<t t-call="website.website_search_box"/>-->
+            <!--</div>-->
+        <!--</xpath>-->
+        <xpath expr="//header//ul[@id='top_menu']/li" position="before">
+            <li>
+                <a href="#">
+                    <i class="fa fa-bell"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </li>
+        </xpath>
+        <xpath expr="//header//ul[@id='top_menu']/li[@class='divider']" position="replace"></xpath>
+        <xpath expr="//header//ul[@id='top_menu']/li[@class='dropdown'][@t-if='website.user_id != user_id']"
+               position="replace">
+            <li class="dropdown" t-ignore="true" t-if="website.user_id != user_id">
+                <div class="user_menu">
+                    <img src="/website_design/static/src/img/img_avatar.png" alt="Avatar"
+                         class="avatar_small"/>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <b>
+                            <span t-esc="(len(user_id.name)&gt;25) and (user_id.name[:23]+'...') or user_id.name"/>
+                            <span class="caret"></span>
+                        </b>
+                    </a>
+                    <ul class="dropdown-menu js_usermenu" role="menu">
+                        <li id="o_profile">
+                            <a t-attf-href="#" role="menuitem">
+                                <i class="fa fa-user" />
+                                Profile
+                            </a>
+                        </li>
+                        <li id="o_settings">
+                            <a t-attf-href="#" role="menuitem">
+                                <i class="fa fa-cog" />
+                                Settings
+                            </a>
+                        </li>
+                        <li id="o_help">
+                            <a t-attf-href="#" role="menuitem">
+                                <i class="fa fa-question-circle" />
+                                Help
+                            </a>
+                        </li>
+                        <li id="o_lock">
+                            <a t-attf-href="#" role="menuitem">
+                                <i class="fa fa-lock" />
+                                Lock
+                            </a>
+                        </li>
+                        <li id="o_logout">
+                            <a t-attf-href="/web/session/logout?redirect=/" role="menuitem">
+                                <i class="fa fa-sign-out" />
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </xpath>
+        <xpath expr="//header//ul[@id='top_menu']/li[last()]" position="after">
+            <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-ellipsis-v"></i>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li id="o_logout"><a t-attf-href="#" role="menuitem">Logout</a></li>
+                </ul>
+            </li>
+        </xpath>
+	</template>
+    <template id="website_design_footer_custom" inherit_id="website.footer_default" name="Website Design Custom Footer">
+        <xpath expr="//div[@id='footer']" position="replace"></xpath>
+    </template>
+
+	<template id="custom_login_layout" inherit_id="web.login_layout" name="Login Layout Custom">
+		<xpath expr="//div[@class='row']" position="replace">
+			<div class="row">
+                <div class="col-md-6" style="height: 135%; padding-left: 0;">
+					<img src="/website_design/static/src/img/Image for Login page-01.jpg"
+						style="width: 100%; height: 100%;"/>
+				</div>
+				<div class="col-md-6" style="position: relative; top: 25%;">
+					<div class="company_logo col-md-offset-4">
+						<a href="/" class="navbar-brand logo">
+							<img src="/logo.png" t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
+						</a>
+					</div>
+                    <div class="oe_website_login_container" t-raw="0"/>
+                </div>
+            </div>
+		</xpath>
+		<xpath expr="//t[@t-set='body_classname']" position="replace">
+   			<t t-set="body_classname" t-value="''"/>
+   		</xpath>
+
+   		<xpath expr="//div[@class='row']" position="attributes">
+   			<attribute name="class">body_login</attribute>
+   		</xpath>
+	</template>
+
+	<template id="login" inherit_id="web.login" name="Login Inherit">
+   		<xpath expr="//label[@for='db']" position="replace" />
+		<xpath expr="//label[@for='login']" position="replace" />
+		<xpath expr="//label[@for='password']" position="replace" />
+		<xpath expr="//input[@name='login']" position="replace">
+			<div class="input-group">
+				<div class="input-group-addon">
+					<i class="fa fa-envelope"></i>
+				</div>
+				<input type="text" name="login" t-att-value="login" id="login"
+					   class="form-control" required="required" autofocus="autofocus"
+					   autocapitalize="off" placeholder="Email ..."
+						autocomplete="off" autocorrect="off"/>
+		  </div>
+		</xpath>
+		<xpath expr="//input[@name='password']" position="replace">
+			<div class="input-group">
+				<div class="input-group-addon">
+					<i class="fa fa-key icon"></i>
+				</div>
+				<input type="password" name="password" id="password" class="form-control"
+				   required="required" autocomplete="current-password"
+				   t-att-autofocus="'autofocus' if login else None" maxlength="4096"
+				   placeholder="Password ..."/>
+		  	</div>
+		</xpath>
+		<xpath expr="//div[@class='form-group field-db']" position="replace">
+			<div class="form-group field-db" t-if="databases and len(databases) &gt; 1">
+				<div class="input-group">
+					<input type="text" name="db" t-att-value="request.db" id="db" class="form-control" required="required" readonly="readonly"/>
+					<span class="input-group-btn input-group-addon">
+					  <a href="/web/database/selector" class="btn btn-default"><i class="fa fa-database"></i></a>
+					</span>
+				</div>
+			</div>
+		</xpath>
+		<xpath expr="//button[@type='submit']" position="replace">
+			<button type="submit" class="btn btn-primary custom_btn">Log in to your account</button>
+		</xpath>
+	</template>
+
+	<template id="homepage_custom" inherit_id="website.homepage" name="Add Drawer to Home">
+        <xpath expr="//t[@t-call='website.layout']//div[@id='wrap']" position="inside">
+            <t t-call="website_design.DrawerSidebar" />
+        </xpath>
+	</template>
+
+	<template id="DrawerSidebar" name="Drawer Menu">
+		<nav id="sidebar" class="">
+            <div class="sidebar-header">
+                <div class="col-sm-4">
+                    <img src="/website_design/static/src/img/img_avatar.png" alt="Avatar" class="avatar"/>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <t t-esc="request.env.user.name" />
+                    </div>
+                    <div>
+                        ID: <t t-esc="request.env.user.login" />
+                    </div>
+                    <div>
+                        <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
+                        Online
+                    </div>
+                </div>
+
+                <!--<p t-att-data-letters="request.env.user.name"><t t-esc="request.env.user.name" /></p>-->
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="/">
+                        <i class="fa fa-dashboard"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <t t-if="request.env.user.user_type == 'student'">
+                    <li>
+                        <a href="/course/student">
+                            <i class="fa fa-graduation-cap"></i>
+                            My Course
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/student/leaveRequest">
+                            <i class="fa fa-calendar"></i>
+                            Leave Request
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/student/transferRequest">
+                            <i class="fa fa-exchange"></i>
+                            Transfer Request
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-file"></i>
+                            Exam Eligibility
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-money"></i>
+                            Withdrawal Request
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#feesDetailMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fa fa-money"></i>
+                            Fees Receipt
+                        </a>
+                        <ul class="collapse list-unstyled" id="feesDetailMenu">
+                            <li>
+                                <a href="#">Fees Due / Paid List</a>
+                            </li>
+                            <li>
+                                <a href="#">Fee Concession Request</a>
+                            </li>
+                            <li>
+                                <a href="#">Fee Receipts</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#attendanceMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fa fa-calendar"></i>
+                            Attendance
+                        </a>
+                        <ul class="collapse list-unstyled" id="attendanceMenu">
+                            <li>
+                                <a href="#">Warning Count</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-clock-o"></i>
+                            Classes Time Table
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Holiday List
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-sticky-note-o"></i>
+                            Exam Time Table
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/student/feedBackFrom">
+                            <i class="fa fa-comments-o"></i>
+                            Feedback
+                        </a>
+                    </li>
+                </t>
+                <t t-if="request.env.user.user_type == 'teacher'">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-calendar"></i>
+                            Leaves
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/tearcher/tomorrowsTopic">
+                            <i class="fa fa-newspaper-o"></i>
+                            Tomorrow's Topic
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-table"></i>
+                            Time Table
+                        </a>
+                    </li>
+                </t>
+            </ul>
+        </nav>
+	</template>
+    <template id="student_dashboard" name="Student Dashboard">
+        <t t-call="website.layout">
+            <div id="wrap" class="custom_wrap">
+                <t t-call="website_design.DrawerSidebar" />
+                <div class="container">
+                    <div>
+                        <h1>Dashboard</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card card-default">
+                                <div class="card-body card-7-5">
+                                    <h4>My Attendance</h4>
+                                    <div id="piechart"></div>
+                                    <div class="note">
+                                        <p>Note: Maximum allowed <span class="alert-danger">8 leaves</span> for this course. "Course Name: Prebigger"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card card-default">
+                                <div class="card-body card-7-5">
+                                    <h4>My Next Class Update</h4>
+                                    <h6 class="text-muted">Your tomorrow lesson update</h6>
+                                    <div id="topic_lines" t-if="tomorrows_topic">
+                                        <div class="row row_bottom_border" t-foreach="tomorrows_topic" t-as="topic">
+                                            <div class="col-sm-2">
+                                                <div style="padding: 0px 15px;">
+                                                    <img src="/website_design/static/src/img/img_avatar.png" alt="Avatar" class="avatar"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div style="text-transform: uppercase;">
+                                                    <t t-esc="topic.get('content')" />
+                                                </div>
+                                                <div>
+                                                    <div class="col-sm-4">
+                                                        <h6>Teacher: <t t-esc="topic.get('teacher')" /></h6>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <h6>Date: <t t-esc="topic.get('topic_date')" /></h6>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <h6>class: <t t-esc="topic.get('class')" /></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card card-default">
+                            <div class="card-body card-7-5">
+                                <h4>Fees Details</h4>
+                                <div class="table-responsive">
+                                    <table class="table" id="DTBasic">
+                                        <tr>
+                                            <th>Application No.</th>
+                                            <th>Student Name</th>
+                                            <th>Course Level</th>
+                                            <th>Fees Type</th>
+                                            <th>Date</th>
+                                            <th>Programm</th>
+                                            <th>Status</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Meli/HR/24</td>
+                                            <td>Ali Ansari</td>
+                                            <td>Pre Beginner</td>
+                                            <td>Monthly</td>
+                                            <td>12/03/2019</td>
+                                            <td>1 Year Diploma</td>
+                                            <td>Paid</td>
+                                            <td>2050</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Meli/HR/24</td>
+                                            <td>Ali Ansari</td>
+                                            <td>Pre Beginner</td>
+                                            <td>Monthly</td>
+                                            <td>12/03/2019</td>
+                                            <td>1 Year Diploma</td>
+                                            <td>Paid</td>
+                                            <td>2050</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Meli/HR/24</td>
+                                            <td>Ali Ansari</td>
+                                            <td>Pre Beginner</td>
+                                            <td>Monthly</td>
+                                            <td>12/03/2019</td>
+                                            <td>1 Year Diploma</td>
+                                            <td>Paid</td>
+                                            <td>2050</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Meli/HR/24</td>
+                                            <td>Ali Ansari</td>
+                                            <td>Pre Beginner</td>
+                                            <td>Monthly</td>
+                                            <td>12/03/2019</td>
+                                            <td>1 Year Diploma</td>
+                                            <td>Paid</td>
+                                            <td>2050</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card card-default">
+                            <div class="card-body card-7-5">
+                                <div class="row">
+                                    <div class="col-md-4"><h4>My Class Schedule</h4></div>
+                                    <div class="col-md-4"><h4 class="text-center">Monthly Time Table</h4></div>
+                                    <div class="col-md-4"><h4 class="text-center">For the Course: PreBeginner</h4></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card card-default">
+                                            <div class="card-body card-7-5">
+                                                Programm: One Year Diploma
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card card-default">
+                                            <div class="card-body card-7-5">
+                                                Class: KN/SB/EM/A
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card card-default">
+                                            <div class="card-body card-7-5">
+                                                Room Number: 1-40
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card card-default">
+                                            <div class="card-body card-7-5">
+                                                Course Level: Base One
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card card-default">
+                                            <div class="card-body card-7-5">
+                                                Shift: Morning One
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card card-default">
+                                            <div class="card-body card-7-5">
+                                                Total Periods: 2
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card card-default">
+                                            <div class="card-body card-7-5">
+                                                First Period Time: 6 to 7 am
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card card-default">
+                                            <div class="card-body card-7-5">
+                                                First Period Time: 7 to 7:55 am
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card card-default">
+                                            <div class="card-body card-7-5">
+                                                Starting Date: 06/01/1398
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card card-default">
+                            <div class="card-body card-7-5">
+                                <div class="table-responsive">
+                                    <table class="table timetable" id="DTBasic">
+                                        <thead>
+                                            <tr>
+                                                <th>Week Days</th>
+                                                <th>First Period</th>
+                                                <th>Subject Name</th>
+                                                <th>Second Period</th>
+                                                <th>Subject Name</th>
+                                                <th>Faculty Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Monday</td>
+                                                <td>English</td>
+                                                <td>G</td>
+                                                <td>English</td>
+                                                <td>A</td>
+                                                <td>Ibadullah</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Monday</td>
+                                                <td>English</td>
+                                                <td>G</td>
+                                                <td>English</td>
+                                                <td>A</td>
+                                                <td>Ibadullah</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Monday</td>
+                                                <td>English</td>
+                                                <td>G</td>
+                                                <td>English</td>
+                                                <td>A</td>
+                                                <td>Ibadullah</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="leaveRequest" name="Leave Request">
+        <t t-call="website.layout">
+            <div id="wrap" class="custom_wrap">
+                <t t-call="website_design.DrawerSidebar" />
+                <div class="container">
+                    <div>
+                        <h1>Dashboard / Leaves</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card card-default">
+                                <div class="card-body card-7-5">
+                                    <h4>Leave Request Form</h4>
+                                    <div>
+                                        <form role="form" t-attf-action="/api/save" method="post">
+                                            <div class="row">
+                                                <div class="form-group col-md-3">
+                                                    <label for="application_number">Application No.</label>
+                                                    <input type="text" class="form-control" id="application_number" placeholder="Application No."/>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="student_name">Student Name*</label>
+                                                    <select class="form-control" name="category">
+                                                         <t t-foreach="students" t-as="category">
+                                                             <option t-attf-value="#{category.id}"><t t-esc="category.name"/></option>
+                                                        </t>
+                                                     </select>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="course_level">Course Level*</label>
+                                                    <select class="form-control" name="category">
+                                                         <t t-foreach="students" t-as="category">
+                                                             <option t-attf-value="#{category.id}"><t t-esc="category.semester_id.name"/></option>
+                                                        </t>
+                                                     </select>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="phone_number">Phone Number</label>
+                                                    <input type="text" class="form-control" id="phone_number" placeholder="Phone Number"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <!--<div class="form-group col-md-6">-->
+                                                    <!--<label for="from_date">From Date*</label>-->
+                                                    <!--<input type="text" class="form-control datepicker" id="from_date" placeholder="From Date" required="required"/>-->
+                                                <!--</div>-->
+                                                <div class="form-group col-md-6">
+                                                    <div class="input-group">
+                                                        <input type="date" class="form-control datepicker" id="from_date" placeholder="From Date" required="required"/>
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <div class="input-group">
+                                                        <input type="date" class="form-control datepicker" id="to_date" placeholder="To Date" required="required"/>
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label for="reason_for_leave">Reason For Leave</label>
+                                                    <textarea class="form-control" id="reason_for_leave" rows="3" placeholder="Reason For Leave"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <button type="submit" name="submit" class="btn btn-primary">Apply</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                         <table class="table-striped table">
+                                             <thead style="font-size: 23px;">
+                                             <tr>
+                                               <h6>
+                                                 <b>
+                                                   <th>Student Name</th>
+                                                   <th>Course Level</th>
+                                                   <th>Class</th>
+                                                   <th><b>Balance Leaves</b></th>
+                                                   <th><b>Durations</b></th>
+
+                                                   
+                                                 </b>
+                                               </h6>
+                                             </tr>
+                                             </thead>
+                                             <tbody>
+                                               <t t-foreach="leave" t-as="order">
+                                               <tr>
+                                               <td><span t-esc="order.student_id.name"/></td>
+                                               <td><span t-esc="order.course_level"/></td>
+                                               <td><span t-esc="order.standard_id.standard"/></td>
+                                               <td><span t-esc="order.taken_leaves"/></td>
+                                               <td><span t-esc="order.days"/></td>
+                                               </tr>
+                                               </t>
+                                             </tbody>
+                                           </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+
+
+    </template>
+    <template id="feedBackFrom" name="Feedback">
+        <t t-call="website.layout">
+            <div id="wrap" class="custom_wrap">
+                <t t-call="website_design.DrawerSidebar" />
+                <div class="container">
+                    <div>
+                        <h1>Dashboard / Feedback</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card card-default">
+                                <div class="card-body card-7-5">
+                                    <h4>Your Feedback</h4>
+                                    <h6 class="text-muted">Please tell us what do you think about <span class="font-weight-bold">Muslim Institute</span>. Any kind of feedback is highly appreciated.</h6>
+                                    <div>
+                                        <form role="form" t-attf-action="/student/saveFeedBack" method="post">
+                                            <div class="row">
+                                                <div class="btn-group col-md-12 custom_selection" data-toggle="buttons">
+                                                    <label class="btn btn-primary active ml48">
+                                                        <i class="fa fa-lightbulb-o"></i>
+                                                        <input type="radio" name="options" id="option1" checked="checked"> Idea</input>
+                                                    </label>
+                                                    <label class="btn btn-primary ml48">
+                                                        <i class="fa fa-exclamation-triangle"></i>
+                                                        <input type="radio" name="options" id="option2"> Problem</input>
+                                                    </label>
+                                                    <label class="btn btn-primary ml48">
+                                                        <i class="fa fa-question-circle"></i>
+                                                        <input type="radio" name="options" id="option3"> Question</input>
+                                                    </label>
+                                                    <label class="btn btn-primary ml48">
+                                                        <i class="fa fa-heart-o"></i>
+                                                        <input type="radio" name="options" id="option3"> Praise</input>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label for="subject">Subject</label>
+                                                    <input type="text" class="form-control" id="subject" placeholder="Subject"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label for="feedback_msg">Feedback</label>
+                                                    <textarea class="form-control" id="feedback_msg" rows="3" placeholder="Type your Feedback"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <div class="form-group col-sm-3">
+                                                        <button type="submit" name="feedback" class="btn btn-primary">Submit Your Feedback</button>
+                                                    </div>
+                                                    <div class="form-group col-sm-3">
+                                                        <button type="submit" name="voice_mail" class="btn btn-primary custom_btn">Send Your VoiceMail</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+     <template id="course_details" name="Transfer Request">
+        <t t-call="website.layout">
+            <div id="wrap" class="custom_wrap">
+                <t t-call="website_design.DrawerSidebar" />
+                <div class="container">
+                    <div class="col-sm-6">
+                            <div class="card card-default">
+                                <div class="card-body card-7-5">
+                                    <h4>My Course</h4>
+                                    <div id="piechart"></div>
+                                    <t t-foreach="student" t-as="obj">
+                                    <div class="note">
+                                        <p> <span class="alert-danger"></span> <span t-esc="obj.program_id.name"/></p>
+                                        <p> <span class="alert-danger"></span> <span t-esc="obj.semester_id.name"/></p>
+                                    </div>
+                                </t>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="transferRequest" name="Transfer Request">
+        <t t-call="website.layout">
+            <div id="wrap" class="custom_wrap">
+                <t t-call="website_design.DrawerSidebar" />
+                <div class="container">
+                    <div>
+                        <h4 class="text-muted">Transfer Request</h4>
+                        <h1>Campus Transfer Application Form</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card card-default">
+                                <div class="card-body card-7-5">
+                                    <h4>Current Campus Details</h4>
+                                    <div>
+                                        <form role="form" t-attf-action="/student/saveFeedBack" method="post">
+                                            <div class="row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="application_no">Application No.</label>
+                                                    <input type="text" class="form-control" id="application_no" placeholder="Application No."/>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="student_name">Student Name*</label>
+                                                    <input type="text" class="form-control" id="student_name" placeholder="Student Name*" required="required"/>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="current_course_level">Current Course Level</label>
+                                                    <select class="form-control" id="current_course_level">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="current_campus">Current Campus</label>
+                                                    <input type="text" class="form-control" id="current_campus" placeholder="Current Campus"/>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="current_program">Current Program</label>
+                                                    <select class="form-control" id="current_program">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="current_class">Current Class</label>
+                                                    <input type="text" class="form-control" id="current_class" placeholder="Current Class: MC/PB/EM1/C"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label for="reason_for_transfer">Reason</label>
+                                                    <textarea class="form-control" id="reason_for_transfer" rows="3" placeholder="Your Person Statement / Reason"></textarea>
+                                                </div>
+                                            </div>
+                                            <h4>To Campus Details</h4>
+                                            <div class="row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="to_campus">To Campus</label>
+                                                    <select class="form-control" id="to_campus">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="start_date">Start Date</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control datepicker" id="start_date" placeholder="Start Date"/>
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="to_current_course_level">Current Course Level</label>
+                                                    <select class="form-control" id="to_current_course_level">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="shift_needed">Shift Needed</label>
+                                                    <select class="form-control" id="shift_needed">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="current_program">Current Program</label>
+                                                    <select class="form-control" id="current_program">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="to_current_class">Current Class</label>
+                                                    <input type="text" class="form-control" id="to_current_class"
+                                                           placeholder="Current Class"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <div class="form-group col-sm-3">
+                                                        <button type="submit" name="apply" class="btn btn-primary">Apply</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="tomorrowsTopic" name="Tomorrow's Topic">
+        <t t-call="website.layout">
+            <div id="wrap" class="custom_wrap">
+                <t t-call="website_design.DrawerSidebar" />
+                <div class="container">
+                    <div>
+                        <h1>Tomorrow's Topic</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card card-default">
+                                <div class="card-body card-7-5">
+                                    <div>
+                                        <form role="form" t-attf-action="/teacher/saveTomorrowsTopic" method="post">
+                                            <div class="row">
+                                                <div class="form-group col-md-3">
+                                                    <label for="topic_date">Date</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control datepicker" name="topic_date" id="topic_date" placeholder="Date" required="required"/>
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="classSelection">Class</label>
+                                                    <select class="form-control" id="classSelection" name="classSelection">
+                                                        <t t-foreach="classes" t-as="student_class">
+                                                            <option t-att-value="student_class.get('id')">
+                                                                <t t-esc="student_class.get('display_name')" />
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label for="topic">Topic</label>
+                                                    <textarea class="form-control" name="topic" id="topic" rows="3" placeholder="Topic"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <div class="col-md-3">
+                                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                        <button type="submit" name="save" class="btn btn-primary">Save</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--<div class="row">-->
+                                                <!--<div class="col-md-12 mt48">-->
+                                                    <!--<t t-esc="code if code else 'nothing'" />-->
+                                                    <!--<div t-if="result == 'success'" class="alert-success">-->
+                                                        <!--Saved-->
+                                                    <!--</div>-->
+                                                    <!--<div t-if="result == 'fail'" class="alert-warning">-->
+                                                        <!--Something went wrong, Please contact your admin.-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="sale_details_page" name="Sale Details">
+    <t t-call="website.layout">
+     <div class="oe_structure">
+       <div class="container">
+         <br />
+         <center><h3>Sale Order Details</h3></center>
+         <br />
+           <table class="table-striped table">
+             <thead style="font-size: 23px;">
+             <tr>
+               <h6>
+                 <b>
+                   <th>Sale Order</th>
+                   <th>Customer</th>
+                   <th>Date</th>
+                   <th><b>State</b></th>
+                 </b>
+               </h6>
+             </tr>
+             </thead>
+             <tbody>
+               <t t-foreach="leave" t-as="order">
+               <tr>
+               <td><span t-esc="order.student_id.name"/></td>
+              <!--  <td><span t-esc="order.partner_id.name"/></td>
+               <td><span t-esc="order.date_order"/></td>
+               <td><span t-esc="order.state"/></td> -->
+               </tr>
+               </t>
+             </tbody>
+           </table>
+       </div>
+     </div>
+ </t>
+</template>
+</odoo>

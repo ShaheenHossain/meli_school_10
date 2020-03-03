@@ -1,0 +1,181 @@
+<odoo>
+    <data>
+        <record id="hr_recruitment_stage_form_inherit" model="ir.ui.view">
+            <field name="name">Stages</field>
+            <field name="model">hr.recruitment.stage</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_recruitment_stage_form"/>
+            <field name="arch" type="xml">
+                <group position="replace">
+                    <group string="Interview Round">
+                        <group>
+                            <field name="name" string=""/>
+                            <field name="sequence" groups="base.group_no_one"/>
+                            <field name="job_id"/>
+                        </group>
+                        <group>
+                             <field name="fold"/>
+                            <field name="template_id" domain="[('model_id.model', '=', 'hr.applicant')]"/>
+                        </group>
+                    </group>
+                </group>
+
+                <field name="name" position="replace">
+                    <field name="name" string="Interview Name"/>
+                </field>
+
+                <field name="job_id" position="after">
+                    <field name="interviewer_name"/>
+                    <field name="interviewer_designation"/>
+                </field>
+                <field name="job_id" position="replace">
+                    <field name="job_id" string="Job Title"/>
+                </field> 
+            </field>
+        </record>
+
+
+
+        <record id="hr_recruitment_stage_tree_inherit" model="ir.ui.view">
+            <field name="name">Stages</field>
+            <field name="model">hr.recruitment.stage</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_recruitment_stage_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="replace">
+                    <field name="name" string="Interview Rounds"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="hr_employee_inherit_daily_report" model="ir.ui.view">
+            <field name = "name">Daily Report</field>
+            <field name = "model">hr.employee</field>
+            <field name = "inherit_id" ref="hr.view_employee_form"/>
+            <field name = "arch" type="xml">
+                    <div class="oe_button_box" position="inside">
+                        <button name="hr_daily_report_action" type="object" class="oe_stat_button" icon="fa-file-pdf-o">
+                             <field string="Daily Report" name="count" widget="statinfo"/>
+                        </button>
+                    </div>
+                <xpath expr="/form/sheet/notebook/page/group/group[2]/field[@name='parent_id']" position="after">
+                    <field name="ceo"/>
+                    <field name="finance"/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/group/group[2]/field[@name='parent_id']" position="replace">
+                    <field name="parent_id" string="Finance Manager"/>
+                </xpath>
+
+                <!-- <xpath expr="/form" position="attributes" >
+                    
+                        <attribute name="attrs">false</attribute>
+                        <attribute name="edit">false</attribute>
+                    
+                </xpath> -->
+            </field>
+        </record>
+
+
+        <record id="hr_daily_report_form" model="ir.ui.view">
+            <field name="name"> Daily Report Form</field>
+            <field name="model">hr.dailyreport</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="manager_name"/>
+                        </group>
+                        <group>
+                            <field name="month"/>
+                            <field name="work_date"/>
+                        </group>
+                    </group>
+                    <separator string="Daily Report"/>
+                    <field name="report_o2m">
+                        <tree string="Daily Report" editable="bottom">
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="planned_date"/>
+                            <field name="estimated_date"/>
+                            <field name="current_status"/>
+                        </tree>
+                    </field>
+                    <separator string="Upcoming Planned work"/>
+                    <field name="upcoming_work"/>
+                </form>
+            </field>
+        </record>
+        <record id="hr_daily_report_search_view" model="ir.ui.view">
+            <field name="name"> Daily Report Search View</field>
+            <field name="model">hr.dailyreport</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="name_search">
+                    <field name="name" string="Name" filter_domain="[('name','ilike',self)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="hr_daily_report_tree" model="ir.ui.view">
+            <field name="name"> Daily Report Tree</field>
+            <field name="model">hr.dailyreport</field>
+            <field name="context">{"search_default_name":1}</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="manager_name"/>
+                    <field name="month"/>
+                    <field name="work_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_daily_report_action1" model="ir.actions.act_window">
+            <field name="name"> Daily Report Tree</field>
+            <field name="res_model">hr.dailyreport</field>
+            <field name="domain">[('user_id','=',uid)]</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="hr_employee_inherit_kanban_view" model="ir.ui.view">
+            <field name="name">Hr Kanban</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban/templates/t/div/div[2]/div/button" position="replace">
+                    <button name="hr_daily_report_action" type="object" class="o_follow_btn o_following btn btn-sm btn-default">Daily Report</button>
+                </xpath>
+
+                <xpath expr="//kanban/templates/t/div/div[2]/div/button[2]" position="replace">
+                    <button name="hr_daily_report_action" type="object" invisible="1">Daily Report</button>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem
+            id="hr_employee_menu_main"
+            name="Daily Report"
+            parent="bi_hr.hr_employee_menu_main"
+            sequence="3"
+            action="hr_daily_report_action1"
+            groups="hr.group_hr_user,hr.group_hr_manager,base.group_user"
+            />
+         <menuitem
+            id="hr_employee_contacts"
+            name="Contacts"
+            parent="bi_hr.hr_employee_menu_main"
+            action="contacts.action_contacts"
+            />
+
+
+
+
+<!-- <record model="ir.actions.act_window" id="ir_attached_document_name_action">
+            <field name="name">Document</field>
+            <field name="res_model">ir.selectitem</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+ -->
+    </data>
+</odoo>

@@ -1,0 +1,68 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="payslips_approval_tree">
+			<field name="name">Payslip</field>
+			<field name="model">hr.afg.payroll.validation</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="requested_date"/>
+					<field name="start_date"/>
+					<field name="end_date"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="payslips_approval_form">
+			<field name="name">Payslip</field>
+			<field name="model">hr.afg.payroll.validation</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="send_to_gm" string="Send To GM" type="object" class="oe_highlight" states="draft"/>
+						<button name="send_to_ceo_action" string="Send To CEO" type="object" class="oe_highlight" states="gm"/>
+						<button name="done_action" string="Done" type="object" class="oe_highlight" states="ceo"/>
+						<!-- <field name="state" widget="statusbar" />-->
+						<field name="state" readonly="1" statusbar_visible=" draft, gm, ceo, done" widget="statusbar"/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="requested_date"/>
+							</group>
+							<group>
+								<field name="start_date"/>
+								<field name="end_date"/>
+							</group>
+						</group>
+						<field name="document">
+							<tree editable="bottom">
+								<field name="sequence"/>
+								<field name="batches"/>
+								<field name="document"/>
+								<!-- <button name="get_document" type="object" string="Get Document" class="oe_highlight"/> -->
+							</tree>
+						</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="payslips_approval_action" model="ir.actions.act_window">
+			<field name="name">Payslips</field>
+			<field name="res_model">hr.afg.payroll.validation</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem 
+			name="Payslips Approval" 
+			id="payslips_approval_menu" 
+			parent="hr_payroll_afg_payslip_batches" 
+			sequence="5"
+			groups="group_afg_payroll_manager_approve,group_afg_payroll_hr_user,group_afg_payroll_ceo_approve"
+			action="payslips_approval_action"/>
+
+
+    </data>
+</odoo>

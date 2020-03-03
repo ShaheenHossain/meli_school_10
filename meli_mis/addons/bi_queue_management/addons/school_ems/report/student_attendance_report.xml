@@ -1,0 +1,75 @@
+<odoo>
+	<report
+	    id="attendance_report"
+	    model="student.classwise.attendance"
+	    string="payroll Summary"
+	    report_type="qweb-html"
+	    name="school_ems.student_attendance_report11"
+	    file="school_ems.student_attendance_report11"
+	    menu="True"
+	/>
+	<template id="student_attendance_report11">
+	   	<t t-call="report.html_container">
+	       	<t t-call="report.external_layout">
+	       		<!-- <t t-foreach="docs" t-as="p"> -->
+	       			<table border="1" class="table table-condesed border-black" >
+		       			<tr>
+		       				<td class="text-center"><strong>Program</strong></td>
+							<td class="text-center"><span t-esc="docs[0]"/></td>
+							<td class="text-center"><strong>Course Level</strong></td>
+							<td class="text-center"><span t-esc="docs[1]"/></td>
+		       			</tr>
+		       			<tr>
+		       				<td class="text-center"><strong>class Name</strong></td>
+							<td class="text-center"><span t-esc="docs[2]"/></td>
+							<td class="text-center"><strong>Shift</strong></td>
+							<td class="text-center"><span t-esc="docs[3]"/></td>
+		       			</tr>
+		       			<tr>
+		       				<td class="text-center"><strong>Start Date</strong></td>
+							<td class="text-center"><span t-esc="docs[4]"/></td>
+							<td class="text-center"><strong>End Date</strong></td>
+							<td class="text-center"><span t-esc="docs[5]"/></td>
+		       			</tr>
+		       		</table>
+
+	       		<!-- </t> -->
+	          	<div class="page">
+	          		<h1 class="text-center">ATTENDANCE REPORT</h1>
+	          	</div>
+	          	<table border="1" class="table table-condesed border-black" >
+					<tr>
+						<td class="text-center"><strong>S.No</strong></td>
+						<td class="text-center"><strong>Student ID</strong></td>
+						<td class="text-center"><strong>Name</strong></td>
+						<td class="text-center"><strong>Father Name</strong></td>
+						<td class="text-center"><strong>Presents</strong></td>
+						<td class="text-center"><strong>Absents</strong></td>
+						<td class="text-center"><strong>Total Days</strong></td>
+					</tr>
+					<t t-foreach="students" t-as="o">
+						<tr>
+							<td class="text-center"><span t-esc="o"/></td>
+							<td class="text-center"><span t-esc="students[o][0]"/></td>
+							<td class="text-center"><span t-esc="students[o][1]"/></td>
+							<td class="text-center"><span t-esc="students[o][2]"/></td>
+							<td class="text-center"><span t-esc="students[o][3]"/></td>
+							<td class="text-center"><span t-esc="students[o][4]"/></td>
+							<td class="text-center"><span t-esc="students[o][5]"/></td>
+						</tr>
+					</t>
+
+				</table>
+	         </t>
+	    </t>
+	</template>
+	<!--  <report 
+            string="Student Results " 
+            id="report_purchase_quotation11" 
+            model="final.results" 
+            report_type="qweb-pdf"
+            name="school.report_purchasequotation" 
+            file="purchase.report_purchasequotation"
+        /> -->
+
+	 </odoo>

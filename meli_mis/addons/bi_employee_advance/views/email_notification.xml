@@ -1,0 +1,112 @@
+<odoo>
+	<data>		
+		<record id="advance_salary_reject_employee" model="mail.template">
+            <field name="name">CEO to Requester</field>
+            <field name="model_id" ref="bi_employee_advance.model_bi_employee_salary"></field>
+            <field name="email_from"><![CDATA[${object.ceo_email|safe}]]></field>
+            <field name="email_to">${object.employee_id.work_email|safe}</field>
+            <field name="subject">Advance Salary Reject</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="built_in" eval="True"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.employee_id.name},</p>
+                <p>${object.employee_id.name} Advance Salary Request Reject </p>
+                <p>Note : ${object.ceo_note}</p>
+	            </p>
+	            <p> Thanks&Regards </p>
+	            <p> CEO </p>
+	                <hr/>
+                
+            ]]>
+            </field>
+        </record>
+
+        <record id="advance_salary_reject_manager" model="mail.template">
+            <field name="name">CEO to Manager</field>
+            <field name="model_id" ref="bi_employee_advance.model_bi_employee_salary"></field>
+            <field name="email_from"><![CDATA[${object.ceo_email|safe}]]></field>
+            <field name="email_to">${object.employee_id.line_manager_id.work_email|safe}</field>
+            <field name="subject">${object.employee_id.name} Advance Salary Reject</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="built_in" eval="True"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.employee_id.line_manager_id.name},</p>
+                <p>${object.employee_id.name} Advance Salary Request Reject </p>
+                <p>Note : ${object.ceo_note}</p>
+            </p>
+            <p> Thanks&Regards </p>
+            <p> CEO </p>
+                <hr/>
+                
+            ]]>
+            </field>
+        </record>
+
+
+
+        <record id="advance_salary_approved_employee" model="mail.template">
+            <field name="name">CEO to Requester</field>
+            <field name="model_id" ref="bi_employee_advance.model_bi_employee_salary"></field>
+            <field name="email_from"><![CDATA[${object.ceo_email|safe}]]></field>
+            <field name="email_to">${object.employee_id.work_email|safe}</field>
+            <field name="subject">Advance Salary Approved</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="built_in" eval="True"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.employee_id.name},</p>
+                <p>${object.employee_id.name} Advance Salary Request Approved </p>
+
+	            </p>
+	            <p> Thanks&Regards </p>
+	            <p> CEO </p>
+	                <hr/>
+                
+            ]]>
+            </field>
+        </record>
+
+        <record id="advance_salary_approved_manager" model="mail.template">
+            <field name="name">CEO to Manager</field>
+            <field name="model_id" ref="bi_employee_advance.model_bi_employee_salary"></field>
+            <field name="email_from"><![CDATA[${object.ceo_email|safe}]]></field>
+            <field name="email_to">${object.employee_id.line_manager_id.work_email|safe}</field>
+            <field name="subject">${object.employee_id.name} Advance Salary Approved</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="built_in" eval="True"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.employee_id.line_manager_id.name},</p>
+                <p>${object.employee_id.name} Advance Salary Request Approved </p>
+
+            </p>
+            <p> Thanks&Regards </p>
+            <p> CEO </p>
+                <hr/>
+                
+            ]]>
+            </field>
+        </record>
+
+
+        <record id="advance_salary_approved_finance" model="mail.template">
+            <field name="name">CEO to Finance</field>
+            <field name="model_id" ref="bi_employee_advance.model_bi_employee_salary"></field>
+            <field name="email_from"><![CDATA[${object.ceo_email|safe}]]></field>
+            <field name="email_to">${object.employee_id.parent_id.work_email|safe}</field>
+            <field name="subject">${object.employee_id.name} Advance Salary Approved</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="built_in" eval="True"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.employee_id.parent_id.name},</p>
+                <p>${object.employee_id.name} Advance Salary Request Approved </p>
+
+            </p>
+            <p> Thanks&Regards </p>
+            <p> CEO </p>
+                <hr/>
+                
+            ]]>
+            </field>
+
+        </record>
+    </data>
+</odoo>

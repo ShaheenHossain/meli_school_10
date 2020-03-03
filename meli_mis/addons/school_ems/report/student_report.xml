@@ -1,0 +1,161 @@
+<odoo>
+	<data>
+
+		<record id="student_report_view" model='ir.ui.view'>
+			<field name="name">Student Report View</field>
+			<field name="model">student.admission.report</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+			            <button string="PDF" type="object" name="get_student_report" class="oe_highlight"/>
+			            <button string="Cancel" type="object" name="cancel_button"/>
+			        </header>
+					<sheet>
+						<group>
+							<group>
+								<field name="campus" widget="selection"/>
+								<field name="program" widget="selection"/>
+								<field name="level_id" domain="[('standard_id','=',program)]" widget="selection"/>
+								<field name="followup"/>
+								<field name="terminated"/>
+							</group>
+							<group>
+								<field name="s_date"/>
+								<field name="e_date"/>
+								<field name="types"/>
+								<field name="converted"/>
+								<field name="total"/>
+							</group>
+						</group>
+						<separator/>
+						<field name="report_id">
+							<tree editable="bottom" edit='false' delete='false' create='false'>
+								<field name="s_no"/>
+								<field name="application_no"/>
+								<field name="name"/>
+								<field name="f_name"/>
+								<field name="mobile"/>
+								<field name="email"/>
+								<field name="campus"/>
+								<field name="program"/>
+								<field name="c_level"/>
+								<field name="status"/>
+
+							</tree>
+						</field>
+					</sheet>
+
+
+				</form>
+			</field>
+		</record>
+
+		<record id="student_report_action_view" model="ir.actions.act_window">
+			<field name="name">Student Report Action View</field>
+			<field name="res_model">student.admission.report</field>
+			<field name="view_mode">form</field>
+			<field name="target">inline</field>
+			
+		</record>
+
+
+		<report id="action_student_report_xml"
+	      string="PDF"
+	      model="student.admission.report"
+	      report_type="qweb-pdf"
+	      file="school_ems.student_report_template"
+	      name="school_ems.student_report_template"
+	      menu="True" />
+
+	    
+
+
+	    <template id="student_report_template">
+	   	<t t-call="report.html_container">
+	       		<t t-call="report.external_layout">
+	       			<div class="page">
+	       			<table border="1" class="table table-condesed table-bordered" >
+		       			<tr>
+		       				<td class="text-center"><strong>Campus</strong></td>
+							<td class="text-center"><span t-esc="docs[0]"/></td>
+							<td class="text-center"><strong>Program</strong></td>
+							<td class="text-center"><span t-esc="docs[1]"/></td>
+						</tr>
+						<tr>
+							<td class="text-center"><strong>Course Level</strong></td>
+							<td class="text-center"><span t-esc="docs[2]"/></td>
+							<td class="text-center"><strong>Fee Type</strong></td>
+							<td class="text-center"><span t-esc="docs[5]"/></td>
+		       			</tr>
+		       			<tr>
+		       				<td class="text-center"><strong>Start Date</strong></td>
+							<td class="text-center"><span t-esc="docs[3]"/></td>
+							<td class="text-center"><strong>End Date</strong></td>
+							<td class="text-center"><span t-esc="docs[4]"/></td>
+						</tr>
+						<tr>
+		       				<td class="text-center"><strong>FollowUp</strong></td>
+							<td class="text-center"><span t-esc="docs[6]"/></td>
+							<td class="text-center"><strong>Converted</strong></td>
+							<td class="text-center"><span t-esc="docs[7]"/></td>
+						</tr>
+						<tr>
+							<td class="text-center"><strong>Terminated</strong></td>
+							<td class="text-center"><span t-esc="docs[8]"/></td>
+							<td class="text-center"><strong>Total</strong></td>
+							<td class="text-center"><span t-esc="docs[9]"/></td>
+						</tr>
+		       		</table>
+		       		<table border="1" class="table table-condesed table-bordered" >
+						<tr>
+							<td class="text-center"><strong>Serial NO.</strong></td>
+							<td class="text-center"><strong>Application No.</strong></td>
+							<td class="text-center"><strong>Student Name</strong></td>
+							<td class="text-center"><strong>Father Name</strong></td>
+							<td class="text-center"><strong>Mobile Number</strong></td>
+							<td class="text-center"><strong>Email</strong></td>
+							<td class="text-center"><strong>Campus</strong></td>
+							<td class="text-center"><strong>Program</strong></td>
+							<td class="text-center"><strong>Semester</strong></td>
+							<td class="text-center"><strong>Status</strong></td>
+						</tr>
+						
+						<t t-set="serial_number" t-value="0"/>
+						
+						<t t-foreach="students" t-as="p">
+							<tr>
+								<t t-set="serial_number" t-value="serial_number+1"/>
+								<td class="text-center"><span t-esc="serial_number"/></td>
+								<td class="text-center"><span t-esc="students[p][0]"/></td>
+								<td class="text-center"><span t-esc="students[p][1]"/></td>
+								<td class="text-center"><span t-esc="students[p][2]"/></td>
+								<td class="text-center"><span t-esc="students[p][3]"/></td>
+								<td class="text-center"><span t-esc="students[p][4]"/></td>
+								<td class="text-center"><span t-esc="students[p][5]"/></td>
+								<td class="text-center"><span t-esc="students[p][6]"/></td>
+								<td class="text-center"><span t-esc="students[p][7]"/></td>
+								<td class="text-center"><span t-esc="students[p][8]"/></td>
+							</tr>
+						</t>
+						
+
+					</table>
+		       	</div>
+		       </t>
+		   </t>
+		</template>
+
+	
+
+		<menuitem 
+			name="Sales Report"
+			id="student_report_menu_item"
+			parent="bi_queue_management.students_admission_target_menuitem"
+			action="student_report_action_view"
+			groups="school.group_school_administration"
+			sequence='26'
+			/>
+
+
+	</data>
+</odoo>

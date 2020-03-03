@@ -1,0 +1,84 @@
+<odoo>
+	<data>
+		<report
+	    id="all_classes_finalexam_report"
+	    model="student.report"
+	    string="final Summary"
+	    report_type="qweb-pdf"
+	    name="school_ems.all_classes_reports111"
+	    file="school_ems.all_classes_reports111"
+	    menu="True"/>
+
+	     <template id="all_classes_reports111">
+	   	<t t-call="report.html_container">
+	       		<t t-call="report.external_layout">
+	       			<div class="page">
+	       			<table border="1" class="table table-condesed table-bordered" >
+		       			<tr>
+		       				<td class="text-center"><strong>Campus</strong></td>
+							<td class="text-center"><span t-esc="docs[0]"/></td>
+							<td class="text-center"><strong>Program</strong></td>
+							<td class="text-center"><span t-esc="docs[1]"/></td>
+		       			</tr>
+		       			<tr>
+		       				<td class="text-center"><strong>Course Level</strong></td>
+							<td class="text-center"><span t-esc="docs[2]"/></td>
+							<t t-if="docs[5]== 'TYD'">
+								<td class="text-center"><strong>Class</strong></td>
+								<td class="text-center">
+									<span t-esc="docs[4]"/>
+								</td>
+							</t>
+							<t t-if="docs[5]== 'TT'">
+								<td class="text-center"><strong>Subject</strong></td>
+								<td class="text-center">
+									<span t-esc="docs[3]"/>
+								</td>
+							</t>
+		       			</tr>
+		       		</table>
+		       		<table border="1" class="table table-condesed table-bordered" >
+						<tr>
+							<td class="text-center"><strong>S.NO</strong></td>
+							<td class="text-center"><strong>Class</strong></td>
+							<td class="text-center"><strong>Passed Students</strong></td>
+							<td class="text-center"><strong>Failed Students</strong></td>
+						</tr>
+						<t t-set="pass_count" t-value="0"/>
+						<t t-set="fail_count" t-value="0"/>
+						<t t-set="serial_number" t-value="0"/>
+						
+						<t t-foreach="students" t-as="p">
+							<tr>
+								<t t-set="pass_count" t-value="pass_count+students[p][1]"/>
+								<t t-set="fail_count" t-value="fail_count+students[p][2]"/>
+								<t t-set="serial_number" t-value="serial_number+1"/>
+								<td class="text-center"><span t-esc="serial_number"/></td>
+								<td class="text-center"><span t-esc="students[p][0]"/></td>
+								<td class="text-center"><span t-esc="students[p][1]"/></td>
+								<td class="text-center"><span t-esc="students[p][2]"/></td>
+							</tr>
+						</t>
+						<tr style="background-color:orange;">
+							<td class="text-center"><strong></strong></td>
+							<td class="text-center"><strong>Total</strong></td>
+							<td class="text-center"><strong><span t-esc="pass_count"/></strong></td>
+							<td class="text-center"><strong><span t-esc="fail_count"/></strong></td>
+						</tr>
+
+					</table>
+				
+							
+						
+			</div>
+			</t>
+	
+	       		
+	       	</t>
+	    
+	     
+	  
+	   
+	</template>
+	</data>
+</odoo>
