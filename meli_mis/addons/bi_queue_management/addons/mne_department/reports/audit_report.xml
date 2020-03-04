@@ -1,0 +1,59 @@
+<odoo>
+	<data>
+
+		<report
+	    id="auditing_reporting_view"
+	    model="audit.audit"
+	    string="Auditing Report"
+	    report_type="qweb-pdf"
+	    name="mne_department.auditing_report_pdf"
+	    file="mne_department.auditing_report_pdf"
+	    menu="True"/>
+
+	    <template id="auditing_report_pdf">
+	   	<t t-call="report.html_container">
+	       		<t t-call="report.external_layout">
+	       			<div class="page">
+	       			<t t-foreach="docs" t-as="student">
+	       			<table border="1" class="table table-condesed table-bordered" >
+		       			<tr>
+		       				<td class="text-center"><strong>Campus</strong>
+		       			</td>
+		       			<td class="text-center"><span t-esc="student.name.name"/></td>
+							
+						<td class="text-center"><strong>Total</strong></td>
+						<td class="text-center"><span t-esc="student.total"/></td>
+						</tr>
+						<tr>
+							<td class="text-center"><strong>Date</strong></td>
+							<td class="text-center"><span t-esc="student.date"/></td>
+							<td class="text-center"><strong>Percentage</strong></td>
+							<td class="text-center"><span t-esc="student.percentage"/></td>
+		       			</tr>
+		       		</table>
+		       		<table border="1" class="table table-condesed table-bordered">
+		       			<tr>
+							<td class="text-center"><strong>Description</strong></td>
+							<td class="text-center"><strong>Marks</strong></td>
+							<td class="text-center"><strong>Percentage</strong></td>
+							<td class="text-center"><strong>Closing Date</strong></td>
+							<td class="text-center"><strong>Status</strong></td>
+						</tr>
+		       			<t t-foreach="student.whole_audit_id" t-as='obj'>
+		       			<tr>
+		       				<td class="text-center"><span t-esc="obj.description"/></td>
+		       				<td class="text-center"><span t-esc="obj.marks"/></td>
+		       				<td class="text-center"><span t-esc="obj.percentage"/></td>
+		       				<td class="text-center"><span t-esc="obj.closing_date"/></td>
+		       				<td class="text-center"><span t-esc="obj.status"/></td>
+
+		       			</tr>
+		       		</t>
+		       		</table>
+		       	</t>
+		       	</div>
+		       </t>
+		   </t>
+		</template>
+	</data>
+</odoo>

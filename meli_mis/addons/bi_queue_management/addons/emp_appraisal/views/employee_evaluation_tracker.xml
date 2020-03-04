@@ -1,0 +1,280 @@
+<odoo>
+	<data>
+		<record id="view_employee_evaluation_tree" model="ir.ui.view">
+			<field name="name">Employee Evaluation Tracker</field>
+            <field name="model">hr.employee.evaluation</field>
+            <field name="arch" type="xml">
+            	<tree>
+					<field name="name"/>
+					<field name="mobile_number"/>
+					<field name="email"/>
+					<field name="designation"/>
+					<field name="campus"/>
+                </tree>
+			</field>
+		</record>
+
+		<record id="view_employee_evaluation_form" model="ir.ui.view">
+			<field name="name">Employee Evaluation Tracker</field>
+            <field name="model">hr.employee.evaluation</field>
+            <field name="arch" type="xml">
+            	<form>
+                    <sheet>
+                        <group>
+							<group>
+								<field name="name" widget="selection"/>
+								<field name="mobile_number"/>
+								<field name="email"/>
+								<field name="joining_date"/>
+								<field name="average"/>
+							</group>
+							<group>
+								<field name="campus"/>
+								<field name="department"/>
+								<field name="designation"/>
+								<field name="salary"/>
+							</group>
+						</group>
+						<group>
+							<group string="Approach to Work">
+								<field name="sys_process"/>
+								<field name="follow_instructions"/>
+								<field name="adaptable_flexible"/>
+								<field name="ability_plan"/>
+							</group>
+							<group string="Technical Skills">
+								<field name="job_knowledge"/>
+								<field name="handle_work"/>
+								<field name="learn_skill"/>
+							</group>
+
+							<group string="Quality of Work">
+								<field name="accuracy"/>
+								<field name="reliability"/>
+								<field name="client_satisfaction"/>
+							</group>
+							<group string="Handling Targets">
+								<field name="work_competion_on_time"/>
+								<field name="ability_to_work_under_presure"/>
+								<field name="handling_portfolio"/>
+							</group>
+
+							<group string="Interpersonal Skills">
+								<field name="relationship_co_workers"/>
+								<field name="problem_solving"/>
+								<field name="decision"/>
+								<field name="time_management"/>
+							</group>
+							<group string="Communication Skills">
+								<field name="oral_written_ex"/>
+								<field name="sharing_knowledge"/>
+							</group>
+
+							<group string="Development">
+								<field name="seeks_td"/>
+								<field name="open_ideas"/>
+							</group>
+							<group string="Personality">
+								<field name="enthusiastic"/>
+								<field name="trustworthy"/>
+							</group>
+
+							<group string="Code of Conduct">
+								<field name="work_place_ettiquttes"/>
+								<field name="punctuality"/>
+								<field name="descipline"/>
+								<field name="attendance"/>
+							</group>
+							<group string="Leadership">
+								<field name="team_work"/>
+								<field name="team_building"/>
+								<field name="stratege_direction"/>
+								<field name="participation_hr_act"/>
+							</group>
+						</group>
+                        <button type="object" name="get_average" string="Get Average" class="oe_highlight"/>
+                    </sheet>
+            	</form>
+            </field>
+        </record>
+
+       <record model="ir.actions.act_window" id="view_employee_evaluation_action">
+            <field name="name">Evaluation Tracker</field>
+            <field name="res_model">hr.employee.evaluation</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record model="ir.ui.view" id="hr_employee_inherited_evaluation">
+        	<field name="name">Employee Evaluation</field>
+        	<field name = "model">hr.employee</field>
+            <field name = "inherit_id" ref="hr.view_employee_form"/>
+            <field name = "arch" type="xml">
+                    <div class="oe_button_box" position="inside">
+                        <button name="evaluation_action" type="object" class="oe_stat_button" icon="fa-file-pdf-o" string="Evaluation Tracker">
+                        </button>
+                    </div>
+            </field>
+        </record>
+
+        <!-- Payroll Menuitem Hiding start-->
+        <record model="ir.ui.menu" id="l10n_in_hr_payroll.menu_yearly_salary_detail">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="l10n_in_hr_payroll.menu_salary_employee_month">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_payroll.menu_department_tree">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="l10n_in_hr_payroll.hr_menu_payment_advice">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="bi_hr.menu_hr_payslip_run1">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="bi_hr.menu_hr_payslip_run2">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_payroll.menu_hr_payslip_run">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="bi_mustroll_excel.menu_reporting_mustroll_excel">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="bi_hr.details_ctc">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="bi_hr.menu_sale_incentive">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="bi_hr.menu_sale_incentive_line">
+		    <field name="action" eval="False"/>
+		</record>
+
+
+		<record model="ir.ui.menu" id="bi_report_excel.menu_reporting_payslip_excel_new">
+		    <field name="action" eval="False"/>
+		</record>
+
+
+		<record model="ir.ui.menu" id="bi_wages_excel.menu_reporting_wages_excel">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="l10n_in_hr_payroll.menu_reporting_payment_advice">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="l10n_in_hr_payroll.menu_reporting_payslip">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="bi_ledger_report.menu_reporting_employee_ledger_excel">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_payroll.menu_hr_payroll_structure_view">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_payroll.menu_hr_payroll_structure_tree">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_payroll.menu_hr_salary_rule_category">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_payroll.menu_hr_salary_rule_category_tree_view">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_payroll.menu_action_hr_contribution_register_form">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_payroll.menu_action_hr_salary_rule_form">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_payroll.menu_hr_payroll_global_settings">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="contacts.menu_contacts">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_timesheet.timesheet_menu_root">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_timesheet.menu_hr_time_tracking">
+		    <field name="action" eval="False"/>
+		</record>
+		<record model="ir.ui.menu" id="hr_timesheet.menu_hr_working_hours">
+		    <field name="action" eval="False"/>
+		</record>
+		<record model="ir.ui.menu" id="hr_timesheet.menu_timesheets_reports">
+		    <field name="action" eval="False"/>
+		</record>
+		<record model="ir.ui.menu" id="hr_timesheet.menu_hr_activity_analysis">
+		    <field name="action" eval="False"/>
+		</record>
+		
+		
+
+
+		
+		<!-- Payroll Menuitem Hiding end-->
+
+
+		<record id="view_res_partner_remove_notebook" model="ir.ui.view">
+            <field name="name">res.partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <notebook position="attributes">
+    				<attribute name="invisible">1</attribute>
+                </notebook>
+
+
+                <div class="oe_button_box" position="attributes">
+    				<attribute name="invisible">1</attribute>
+    			</div>
+
+    			<field name="function" position="attributes">
+    				<attribute name="invisible">1</attribute>
+    			</field>
+            </field>
+        </record>
+
+
+
+        <!-- Link Tracker Hiding start -->
+		<record model="ir.ui.menu" id="utm.menu_utm_source">
+		    <field name="action" eval="False"/>
+		</record>
+
+		<record model="ir.ui.menu" id="utm.menu_utm_medium">
+		    <field name="action" eval="False"/>
+		</record>
+
+        <record model="ir.ui.menu" id="utm.menu_utm_campaign_act">
+		    <field name="action" eval="False"/>
+		</record>
+		<!-- Link Tracker Hiding Ended -->
+
+	</data>
+</odoo>

@@ -337,7 +337,7 @@
                             <field name="semester_id" placeholder="Course Level" domain="[('standard_id','=',standard_id)]" required="1" widget="selection"/>
                             <field name="medium_id"  placeholder="Shift" domain="[('program','=',standard_id)]" widget="selection"/>
                             <field name="start_date" required="1"/>
-                            <field name="end_date" required="1"/>
+                            <field name="end_date" />
                         </group>
                         <group>
                             <field name="division_id" placeholder="Room Number" widget="selection"/>
@@ -930,6 +930,7 @@
                                         <field name="code" />
                                         <field name="male_leaves"/>
                                         <field name="female_leaves"/>
+                                        <field name="course_duration"/>
                     
                                     </tree>
                                 </field>
@@ -996,9 +997,11 @@
 					<form string="Student Transfer Request">
 					<header>
 					<button name="set_start" string="Start" type="object" help="start" states="draft" class="oe_highlight"/> 
-					<button name="set_close" string="Approve" type="object" help="close" states="in progress" class="oe_highlight" groups="school.group_school_administration,school.group_school_aam,school.group_school_gm"/> 
-					<button name="set_reject" string="Reject" type="object" help="reject" states="in progress" class="oe_highlight" groups="school.group_school_administration"/>
-					<field name="state" widget="statusbar" statusbar_visible="draft,in progress,approve,rejected"/>
+					<button name="set_close" string="Send(TO Campus AAM)" type="object" help="close" states="in progress" class="oe_highlight" groups="school.group_school_administration,school.group_school_aam"/>
+                    <button name="set_confirm" type="object" string="Approve" class="oe_highlight" states="approve"/>
+					<button name="set_reject" string="Reject" type="object" help="reject" states="in progress,approve" class="oe_highlight" groups="school.group_school_administration,school.group_school_aam"/>
+
+					<field name="state" widget="statusbar" statusbar_visible=" draft, in progress, approve, t_approve, rejected"/>
 					</header>
 					<sheet>
 						<group string="From Campus Details">
@@ -1327,9 +1330,9 @@
                     <form string="Teacher Transfer Request">
                     <header>
                     <button name="set_start" string="Start" type="object" help="start" states="draft" class="oe_highlight"/> 
-                    <button name="set_close" string="Approve" type="object" help="close" states="in progress" class="oe_highlight" groups="school.group_school_administration"/> 
-                    <button name="set_reject" string="Reject" type="object" help="reject" states="in progress" class="oe_highlight" groups="school.group_school_administration"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,in progress,approve,rejected"/>
+                    <button name="set_close" string="Send To Hr Approval" type="object" help="close" states="in progress" class="oe_highlight" groups="school.group_school_administration,school.group_school_aam"/> 
+                    <button name="set_reject" string="Reject" type="object" help="reject" states="in progress" class="oe_highlight" groups="school.group_school_administration,school.group_school_aam"/>
+                    <field name="state" widget="statusbar" statusbar_visible=" draft, in progress, approve, rejected"/>
                     </header>
                     <sheet>
                         <group>
@@ -1431,19 +1434,10 @@
                 <field name="arch" type="xml">
                     <form string="Staff Transfer Request">
                         <header>
-                            <button name="set_start" string="Start" type="object" help="start" states="draft" class="oe_highlight"/>
-
-                            <button name="hod_amm_action" string="Send To HR" type="object" states="hod_aam" class="oe_highlight"/>
-
-                            <button name="hr_action" string="Send To GM" type="object" states="hr" class="oe_highlight"/>
-
-                            <button name="gm_action" string="Send To Top Management" type="object" states="gm" class="oe_highlight"/>
-
-                            <button name="set_close" string="Approve" type="object" help="close" states="top_management" class="oe_highlight"/>
-
-                            <button name="set_reject" string="Reject" type="object" help="reject" states="top_management" class="oe_highlight"/>
-
-                            <field name="state" widget="statusbar" statusbar_visible=" draft, hod_aam, hr, gm, top_management, approve, rejected"/>
+                            <button name="set_start" string="Start" type="object" help="start" states="draft" class="oe_highlight"/> 
+                            <button name="set_close" string="Approve" type="object" help="close" states="in progress" class="oe_highlight"/> 
+                            <button name="set_reject" string="Reject" type="object" help="reject" states="in progress" class="oe_highlight"/>
+                            <field name="state" widget="statusbar" statusbar_visible="draft,in progress,approve,rejected"/>
                         </header>
                     <sheet>
                         <group>
@@ -1595,6 +1589,7 @@
             <field name="res_model">standard.medium</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name='context'>{'group_by':'program'}</field>
         </record>
         <!-- Action Of Form & Tree Views Of Standard Division Information Action -->
         <record id="action_standard_division_form" model="ir.actions.act_window">
@@ -1880,27 +1875,31 @@
 <!--           <menuitem id="menu_school_dashboard" name="Dashboard" action="school_dashboard_act" sequence="2"  -->
 <!--             parent="menu_ems" icon="fa-dashboard" web_icon="school,static/description/dashboard.png"/> -->
         <!-- MenuItem Of Admission Register -->
-        <menuitem id="admission_register" name="Admission Register" parent="menu_ems" sequence="2" groups="school.group_school_administration,school.group_is_admission,school.group_school_registrar_officer,school.group_school_academic_officer"/>
-        <menuitem id="reigistration_process" name="Student Registration" parent="sales_team.menu_sale_config" sequence="1"/>
+        <menuitem id="admission_register" name="Admission Register" parent="menu_ems" 
+            sequence="16" />
+        <menuitem id="reigistration_process" name="Student Registration" parent="sales_team.menu_base_partner" sequence="1"/>
         
         <menuitem id="menu_admission_form" name="Add Application" parent="reigistration_process" action="action_student_student_form_2" sequence="1" groups="school.group_school_administration,school.group_is_admission"/>
         <!-- Menu Item Of Teachers -->
-        <menuitem id="menu_teachers" name="Teacher" parent="menu_ems" sequence="4"/>
+        <menuitem id="menu_teachers" name="Teacher" parent="menu_ems" sequence="4" groups="school.group_school_administration,school.group_school_aam"/>
+        <menuitem id="teacher_menu_item" name='Teacher Requests' parent='menu_teachers' sequence='1' groups="school.group_school_administration,school.group_school_aam"/>
         <!-- Menu Item Of Students & Parents -->
         <menuitem id="menu_students_parents" name="Student" parent="menu_ems" sequence="3"/>
+        <menuitem id="student_requests_process" name="Student Requests" parent="menu_students_parents" sequence="1"/>
+
 <!--        <menuitem id="menu_student_profile" name="Student Profiles" parent="menu_students_parents" action="action_student_student_form_12" groups="school.group_school_administration,school.group_school_student,school.group_school_teacher,school.group_school_parent,school.group_school_registrar_officer,school.group_school_academic_officer,school.group_school_finance_officer,school.module_category_tv_user" sequence="1"/>-->
         <!-- MenuItem For Miscellaneous Services -->
 
        <!--  <menuitem id="menu_miscellaneous" name="Request Forms" sequence="5" groups="group_school_administration,base.group_user" /> -->
-        <menuitem id="menu_student_transfer_request" name="Student Transfer Request" parent="menu_students_parents" action="action_student_transfer_request_form" sequence="3" groups="group_school_student,group_school_administration,group_school_aam"/>
-        <menuitem id="menu_teacher_transfer_request" name="Teacher Transfer Request" parent="menu_teachers" action="action_teacher_transfer_request_form" sequence="4" groups="school.group_school_administration,school.group_school_teacher"/>
-        <menuitem id="menu_student_withdrawal_request" name="Student Withdrawal Request" parent="menu_students_parents" action="action_student_withdrawal_request_form" sequence="4" groups="school.group_school_administration,school.group_school_student"/>
+        <menuitem id="menu_student_transfer_request" name="Student Transfer Request" parent="student_requests_process" action="action_student_transfer_request_form" sequence="3" groups="group_school_student,group_school_administration,group_school_aam"/>
+        <menuitem id="menu_teacher_transfer_request" name="Teacher Transfer Request" parent="teacher_menu_item" action="action_teacher_transfer_request_form" sequence="4" groups="school.group_school_administration,school.group_school_teacher,school.group_school_gm,school.group_school_aam"/>
+        <menuitem id="menu_student_withdrawal_request" name="Student Withdrawal Request" parent="student_requests_process" action="action_student_withdrawal_request_form" sequence="4" groups="school.group_school_administration,school.group_school_student"/>
        <!--  <menuitem id="menu_taxi_expense_request" name="Expense Request" parent="menu_miscellaneous" action="hr_expense.action_hr_expense_form" /> -->
        
         <!-- MenuItem For Reminders -->
         <!-- <menuitem id="menu_reminders" name="Reminders" parent="menu_ems" action="action_student_reminder" sequence="8" groups="school.group_school_administration,school.group_school_student,school.group_school_teacher,school.group_school_parent,school.group_school_attendance_officer,school.group_school_finance_officer,school.group_school_academic_officer"/> -->
         <!-- MenuItem For Configurations -->
-        <menuitem id="menu_configuration" name="Configurations" parent="menu_ems" sequence="13" groups="group_school_administration,group_school_academic_officer,school.group_school_program_coordinator,group_school_head_of_the_incharge" />
+        <menuitem id="menu_configuration" name="Configurations" parent="menu_ems" sequence="13" groups="group_school_administration,group_school_academic_officer,school.group_school_program_coordinator,group_school_head_of_the_incharge,group_school_aam" />
         <!-- MenuItem For Configurations->School Configurations -->
         <menuitem id="menu_school_config_form1" name="Campus Configurations" parent="menu_configuration" groups="group_school_administration"/>
 <!--         <menuitem id="menu_grno" name="GR No." parent="menu_school_config_form1" action="action_student_grn_form" /> -->
@@ -1915,11 +1914,11 @@
         <menuitem id="menu_academic_year_sub_form" name="Years" parent="menu_academic_year_form" action="action_academic_year_form" />
         <menuitem id="menu_academic_month_form" name="Months" parent="menu_academic_year_form" action="action_academic_month_form" /> -->
         <!-- MenuItem For Configurations->Standards -->
-        <menuitem id="menu_school_standard_form" name="Courses Information" parent="menu_configuration" groups="group_school_administration,group_school_academic_officer,group_school_program_coordinator,group_school_head_of_the_incharge"/>
-        <menuitem id="menu_sub_school_standard_form" name="Classes" parent="menu_school_standard_form" action="action_school_standard_form" sequence="5" groups="group_school_administration,group_school_academic_officer,group_school_head_of_the_incharge"/>
+        <menuitem id="menu_school_standard_form" name="Courses Information" parent="menu_configuration" groups="group_school_administration,group_school_academic_officer,group_school_program_coordinator,group_school_head_of_the_incharge,group_school_aam"/>
+        <menuitem id="menu_sub_school_standard_form" name="Classes" parent="menu_school_standard_form" action="action_school_standard_form" sequence="5" groups="group_school_administration,group_school_academic_officer,group_school_head_of_the_incharge,group_school_aam"/>
         <!-- <menuitem id="menu_sub_school_book_form" name="Books" parent="menu_school_standard_form" action="action_school_standard_book" sequence="2" groups="group_school_administration,group_school_academic_officer"/> -->
-        <menuitem id="menu_sub_school_standard_form_running" name="Running Classes" parent="menu_school_standard_form" action="action_school_standard_running" sequence="6" groups="group_school_administration,group_school_academic_officer"/>
-        <menuitem id="menu_sub_school_standard_form_finished" name="Finished Classes" parent="menu_school_standard_form" action="action_school_standard_finished" sequence="7" groups="group_school_administration,group_school_academic_officer,group_school_program_coordinator"/>
+        <menuitem id="menu_sub_school_standard_form_running" name="Running Classes" parent="menu_school_standard_form" action="action_school_standard_running" sequence="6" groups="group_school_administration,group_school_academic_officer,group_school_aam"/>
+        <menuitem id="menu_sub_school_standard_form_finished" name="Finished Classes" parent="menu_school_standard_form" action="action_school_standard_finished" sequence="7" groups="group_school_administration,group_school_academic_officer,group_school_program_coordinator,group_school_aam"/>
         <menuitem id="menu_standard_standard_form" name="Programs" parent="menu_school_standard_form" action="action_standard_standard_form" sequence="1" groups="group_school_administration"/>
        <!--  <menuitem id="menu_standard_semester_form" name="Semesters" parent="menu_school_standard_form" action="action_standard_semester_form" sequence="2"/> -->
         <menuitem id="menu_standard_division_form" name="Room Number" parent="menu_school_standard_form" action="action_standard_division_form" sequence="4" groups="group_school_administration"/>
@@ -1930,13 +1929,13 @@
         <!-- <menuitem id="menu_subject_subject_sub_form" name="Subjects" parent="menu_subject_subject_form" action="action_subject_subject_form" /> -->
         <!-- <menuitem id="menu_subject_elective_form" name="Elective Subject(s)" parent="menu_subject_subject_form" action="action_elective_subject_form" /> -->
         <!-- Menuitem of alumni and terminate -->
-        <menuitem id="menu_student_alumni" name="Alumni" action="action_student_alumni" parent="admission_register" groups="school.group_school_administration,school.group_is_admission,school.group_school_registrar_officer,school.group_school_academic_officer,group_school_registrar_officer" sequence="22"/>
+        <!-- <menuitem id="menu_student_alumni" name="Alumni" action="action_student_alumni" parent="admission_register" groups="school.group_school_administration" sequence="22"/> -->
         
-        <menuitem id="menu_student_terminate" name="Terminated" action="action_student_terminate" parent="admission_register" groups="school.group_school_administration,school.group_is_admission,group_school_registrar_officer" sequence="23"/>
+        <menuitem id="menu_student_terminate" name="Terminated" action="action_student_terminate" parent="admission_register" groups="school.group_school_administration,group_school_registrar_officer" sequence="23"/>
 
-        <menuitem id="menu_student_followup" name="Offline Follow-up" action="action_student_followup" parent="reigistration_process" groups="school.group_school_administration,school.group_is_admission,group_school_registrar_officer" sequence="24"/>
+        <menuitem id="menu_student_followup" name="Offline Follow-up" action="action_student_followup" parent="reigistration_process" groups="school.group_school_administration,group_school_registrar_officer" sequence="24"/>
 
-        <menuitem id="menu_student_contacts" name="Students MIS" parent="school.menu_students_parents" action="action_student_contact" groups="school.group_school_administration,school.group_is_admission,school.group_school_program_coordinator,group_school_registrar_officer,school.group_school_head_of_the_incharge" sequence="1"/>
+        <menuitem id="menu_student_contacts" name="Students MIS" parent="school.menu_ems" action="action_student_contact" groups="school.group_school_administration,school.group_is_admission,school.group_school_program_coordinator,group_school_registrar_officer,school.group_school_head_of_the_incharge,school.group_school_finance_officer,school.group_school_attendance_officer" sequence="1"/>
         
 
         <menuitem
@@ -1945,6 +1944,14 @@
             groups="-hr.group_hr_manager,-hr.group_hr_user,-base.group_user,school.group_school_administration"
             web_icon="hr,static/description/icon.png"
             sequence="75"/>
+
+        <menuitem
+             id="menu_student_blocklist"
+             name="Blocklist"
+             action="action_student_blocklist"
+             parent="school.admission_register"
+             groups="school.group_school_administration"
+             />
 <!--         <menuitem id="menu_student_terminate" name="Terminate Student" action="action_student_terminate" parent="admission_register"/> -->
         <!-- MenuItem For Configurations->Subject -->
         <!-- Inherited Form View Of Company -->

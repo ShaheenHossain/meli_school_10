@@ -1,0 +1,89 @@
+<odoo>
+	<data>
+		<record id="it_request_tree_view" model="ir.ui.view">
+			<field name="name">IT Request</field>
+			<field name="model">it.request</field>
+			<field name="arch" type="xml">
+			<tree decoration-danger="state=='draft'" decoration-success="state=='done'">
+				<field name="requester"/>
+				<field name="campus"/>
+				<field name="contact"/>
+				<field name="probelm_type"/>
+				<field name="date"/>
+				<field name="priyority"/>
+				<field name="state"/>
+			</tree>
+			</field>
+		</record>
+		<record id="it_request_form_view" model="ir.ui.view">
+			<field name="name">IT Request</field>
+			<field name="model">it.request</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="changing_form_state" type="object" string="Send Request" class="oe_highlight" states="draft"/>
+
+						<button name="IT_Confirmation" type="object" string="Send To IT Department" class="oe_highlight" attrs="{'invisible': ['|',('probelm_type', '!=', 'it'),('state','in',('draft','it','assign','done'))]}"/>
+
+						<button name="changing_form_state" type="object" string="Send To Database Department" class="oe_highlight" attrs="{'invisible': ['|',('probelm_type', '!=', 'database'),('state','in',('draft','database','assign','done'))]}"/>
+
+						<button name="request_assigning" type="object" string="Assign" class="oe_highlight" attrs="{'invisible':[('state','in',('draft','done','sent_hod','assign'))]}"/>
+						<button name="DoneState" type="object" string="Done" class="oe_highlight" attrs="{'invisible':[('state','in',('draft','it','database','done','sent_hod'))]}"/>
+
+						<field name="state" widget="statusbar" statusbar_visible=" draft, sent_hod, it, database"/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+							<field name="requester" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+							<field name="campus"/>
+							<field name="designation" />
+							<field name="contact"/>
+						</group>
+						<group>
+							<field name="email"/>
+							<field name="date"/>
+							
+
+							<field name="probelm_type" attrs="{'readonly':[('state','!=','draft')]}"/>
+							<field name="priyority" attrs="{'readonly':[('state','!=','draft')]}"/>
+						</group>
+					</group>
+					<group>
+						<group>
+
+						<field name="description" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+						<field name="hod_note"  attrs="{'readonly':[('state','!=','sent_hod')],'required':[('state','=','sent_hod')],'invisible':[('state','!=','sent_hod')]}"/>
+						<field name="com_date" attrs="{'invisible':[('state','!=','done')]}" readonly="1"/>
+						<field name="it_confirmation" invisible="1"/>
+
+					</group>
+					
+						<group>
+							<field name="department" invisible="1"/>
+							<field name="assign_to" attrs="{'invisible':[('state','in',('draft','sent_hod'))],'required':[('state','in',('it','database'))],'readonly':[('state','in',('done'))]}" domain="[('department_id','=',department)]" widget="selection"/>
+							<field name="assign_tasks" attrs="{'invisible':[('state','in',('draft','sent_hod'))]}"/>
+						</group>
+					</group>
+					</sheet>
+					<div class="oe_chatter">
+		                <field name="message_follower_ids" widget="mail_followers"/>
+		                <field name="message_ids" widget="mail_thread"/>
+		            </div>
+
+				</form>
+			</field>
+		</record>
+		<record id="it_request_action_view" model="ir.actions.act_window">
+			<field name="name">IT Request</field>
+			<field name="res_model">it.request</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem
+			id="it_request_menu_item"
+			name="IT Request"
+			parent="bi_queue_management.it_ticketing_process"
+			action="it_request_action_view"/>
+
+	</data>
+</odoo>

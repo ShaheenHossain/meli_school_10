@@ -1,0 +1,87 @@
+<odoo>
+	<data>
+		<!-- Payslip Batches Tree -->
+		<record id="afg_payslip_batches_tree" model="ir.ui.view">
+	      	<field name="name">hr.afg.payroll.batches.tree</field>
+			<field name="model">hr.afg.payroll.batches</field>
+			<field name="arch" type="xml">
+	        	<tree string="Payslips Batches">
+		            <field name="name"/>
+		            <field name="date_start"/>
+		            <field name="date_end"/>
+		            <field name="credit_note"/>
+		            <field name="state"/>
+        		</tree>
+      		</field>
+    	</record>
+
+    	<record id="afg_payslip_batches_filter" model="ir.ui.view">
+	      	<field name="name">hr.afg.payroll.batches.filter</field>
+			<field name="model">hr.afg.payroll.batches</field>
+			<field name="arch" type="xml">
+	        	<search string="Search Payslip Batches">
+		            <field name="name" string="Payslip Batches"/>
+		            <field name="date_start"/>
+		            <field name="date_end"/>
+		            <filter string="Draft" domain="[('state','=','draft')]"/>
+		            <filter string="Done" name="done_filter" domain="[('state','=','close')]"/>
+		        </search>
+      		</field>
+    	</record>
+
+    <!-- Payslip Batches Form -->
+	    <record id="afg_payslip_batches_form" model="ir.ui.view">
+	      	<field name="name">hr.afg.payroll.batches.form</field>
+		    <field name="model">hr.afg.payroll.batches</field>
+		    <field name="arch" type="xml">
+		        <form string="Payslips Batches">
+	           		<header>
+		                <button name="close_payslip_run" type="object" string="Confirm" states="draft" class="oe_highlight"/>
+		             	<button name="%(afg_payslip_batches_wizard_action)d" type="action" states="draft" string="Generate Payslips" class="oe_highlight"/>
+		             	<button name="Submit_all_payslips" type="object" states="close" string="Submit" class="oe_highlight"/>
+		                <button string="Set to Draft" name="draft_payslip_run" type="object" states="close" />
+		                <field name="state" widget="statusbar"/>
+		            </header>
+		            <sheet>
+		                <label for="name" class="oe_edit_only"/>
+		                  <h1>
+		                    <field name="name"/>
+		                  </h1>
+		                <group>
+		                	<group>
+		                		<field name="company_id"/>
+			                    <label for="date_start" string="Period"/>
+			                    <div>
+			                        <field name="date_start" class="oe_inline"/> - <field name="date_end" class="oe_inline"/>
+			                    </div>
+			                </group>
+			                <group>
+			                	<field name="school_id"/>
+		                    	<field name="credit_note"/>
+		                    	<!-- <field name="test"/> -->
+		                    </group>
+		                </group>
+		                <separator string="Payslips"/>
+		                  	<field name="slip_ids"/>
+		            </sheet>
+	        	</form>
+	      	</field>
+	    </record>
+
+    <!-- Payslip Batches Action -->
+	    <record id="afg_payslip_batches_action" model="ir.actions.act_window">
+	      	<field name="name">Payslips Batches</field>
+	      	<field name="res_model">hr.afg.payroll.batches</field>
+	      	<field name="view_mode">tree,form</field>
+	      	<field name="search_view_id" ref="afg_payslip_batches_filter"/>
+	    </record>
+
+	<menuitem 
+		name="Payslip Batches" 
+		id="afg_payslips_batches_employee" 
+		parent="hr_payroll_afg_payslip_batches" 
+		sequence="3"
+		groups="group_afg_payroll_hr_user"
+		action="afg_payslip_batches_action"/>
+	</data>
+</odoo>

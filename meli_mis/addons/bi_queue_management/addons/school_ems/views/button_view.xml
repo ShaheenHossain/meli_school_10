@@ -1,0 +1,89 @@
+<odoo>
+
+	<data>
+		
+
+
+     <template id="detail_page222" name="Detail page" page="True">
+	   <t t-call="website.layout">
+	        <div class="oe_structure">
+	          <div class="container">
+	          	<center><h3>Student List</h3></center>
+	          	<p>
+             			
+              		<a t-attf-href="/example/campus" class="btn btn-info">Company details</a>
+            		</p>
+	       			
+		       		<table border="1" class="table table-condesed table-bordered" >
+						<tr>
+							
+							<td class="text-center"><strong>Application No.</strong></td>
+							<td class="text-center"><strong>Student Name</strong></td>
+							<td class="text-center"><strong>Father Name</strong></td>
+							<td class="text-center"><strong>Mobile Number</strong></td>
+							<td class="text-center"><strong>Email</strong></td>
+							<td class="text-center"><strong>Campus</strong></td>
+							<td class="text-center"><strong>Program</strong></td>
+							<td class="text-center"><strong>Semester</strong></td>
+							
+						</tr>
+						
+						
+						
+						<t t-foreach="students" t-as="p">
+							<tr>
+								
+								<td class="text-center"><span t-esc="p.pid"/></td>
+								<td class="text-center"><span t-esc="p.name"/></td>
+								<td class="text-center"><span t-esc="p.parent_id"/></td>
+								<td class="text-center"><span t-esc="p.mobile"/></td>
+								<td class="text-center"><span t-esc="p.email"/></td>
+								<td class="text-center"><span t-esc="p.school_id.name"/></td>
+								<td class="text-center"><span t-esc="p.program_id.name"/></td>
+								<td class="text-center"><span t-esc="p.semester_id.name"/></td>
+								
+							</tr>
+						</t>
+						
+
+					</table>
+		       	</div>
+		       </div>
+		       </t>
+		
+		</template>
+
+
+		<template id="campus_list" name="Campus Page" page="True">
+	   <t t-call="website.layout">
+	        <div class="oe_structure">
+	          <div class="container">
+	          	<center><h3>Campus List</h3></center>
+	          	<table border="1" class="table table-condesed table-bordered" >
+						<tr>
+							
+							<td class="text-center"><strong>Campus Name</strong></td>
+							<td class="text-center"><strong>Campus code</strong></td>
+							
+							
+						</tr>
+						
+						
+						
+						<t t-foreach="student" t-as="p">
+							<tr>
+								
+								<td class="text-center"><span t-esc="p.name"/></td>
+								<td class="text-center"><span t-esc="p.code"/></td>
+								
+							</tr>
+						</t>
+						
+
+					</table>
+	          </div>
+	      </div>
+	  </t>
+	</template>
+	</data>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<report 
+     id="action_student_report_attendance"
+     model="student.attendance.report"
+     string="Student Attedance report"
+     report_type="qweb-pdf"
+     name="school_attendance.student_attendace_report"
+     file="school_attendance.student_attendace_report" 
+/>
+</odoo>

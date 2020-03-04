@@ -1,0 +1,57 @@
+<odoo>
+	<data noupdate="1">
+
+      <record model="ir.cron" id="meli_joinning_invitation">
+            <field name="name">Invitation Of Student</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'student.student'"/>
+            <field name="function" eval="'MuslimInvitation'"/>
+            <field name="args" eval="'()'" />
+        </record>
+
+
+   <record id="school_ems.fsgfsgfjhsgfadssadeefdsfsd" model="mail.template">
+            <field name="name">Meli Invitation</field>
+            <field name="model_id" ref="school.model_student_student"/>
+            <field name="email_from">${}</field>
+            <field name="subject">Invitation</field>
+            <field name="email_to">${object.email |safe}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <header>
+                <img src="/school_ems/static/img/src/img/back.jpg" alt=""/>
+                <div class="container">
+                  <img src="http://muslim.af/wp-content/uploads/2015/07/muslim.png" style="max-width:200px;float: left; margin: 25px 0;"/>
+                </div>
+              </header>
+                 <div class="container" style="max-width: 600px;width: 100%;background-color: #e6e6e6;">
+                <section class="banner_sec">
+                  <img src="https://muslim.af/karimi-EM/assets/images/New%201.jpg" alt=""/>
+                  <div class="">
+                    <div class="img-cnt">
+                      <img src="images/banner1.jpg"/>
+                      <h2> CONGRATULATION </h2>
+                      <h3>WELCOME TO THE MELI</h3>
+                    </div>
+                  </div>
+                </section>
+            </div>
+                
+                
+            
+               
+
+           
+            
+            </field>
+        </record>
+         
+
+        
+
+	</data>
+</odoo>

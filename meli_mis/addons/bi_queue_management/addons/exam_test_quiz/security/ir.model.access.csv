@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+,,,,,,,
+,,,,,,,
+,,,,,,,
+access_online_exam_student,online.exam.student,model_exam_exam_validation,exam_test_quiz.group_online_exam_student,1,1,1,1
+access_online_exam_teacher,online.exam.teacher,model_exam_exam_validation,exam_test_quiz.group_online_exam_teacher,1,1,1,1
+access_etq_exam_student,etq.exam.student,model_etq_exam,exam_test_quiz.group_online_exam_student,1,1,1,1
+access_etq_question,etq.question.student,model_etq_question,exam_test_quiz.group_online_exam_student,1,1,1,1
+access_etq_question_option_student,etq.question.option.student,model_etq_question_option,exam_test_quiz.group_online_exam_student,1,1,1,1
+access_etq_question_optionblank_student,etq.question.optionblank.student,model_etq_question_optionblank,exam_test_quiz.group_online_exam_student,1,1,1,1
+access_etq_result_student,etq.result.student,model_etq_result,exam_test_quiz.group_online_exam_student,1,1,1,1
+,,,,,,,
+access_etq_result_question,Etq.question.student,model_etq_result_question,exam_test_quiz.group_online_exam_student,1,1,1,1
+question_student,question.student,model_question_question,exam_test_quiz.group_online_exam_student,1,1,1,1

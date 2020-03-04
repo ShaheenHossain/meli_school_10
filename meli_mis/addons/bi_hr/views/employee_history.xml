@@ -1,208 +1,47 @@
 <odoo>
-    <data>
-        <record id="hr_employee_history_form" model="ir.ui.view">
+	<data>
+		<record id="hr_employee_history_form" model="ir.ui.view">
             <field name = "name">Employee</field>
             <field name = "model">hr.employee</field>
             <field name = "inherit_id" ref="hr.view_employee_form"/>
             <field name = "arch" type="xml">
-                <field name="name" position="after">
-                    <field name="employee_tranfer" invisible="1"/>
-                </field>
+            	<field name="name" position="after">
+            		<field name="employee_tranfer" invisible="1"/>
+            	</field>
 
-                <div class="oe_button_box" position="inside">
-                    <button name="get_history" type="object" class="oe_stat_button" string="History" icon="fa-file-pdf-o">
+            	<div class="oe_button_box" position="inside">
+                    <button name="get_history" type="object" class="oe_stat_button" string="History" icon="fa-fa-file-o">
+                    </button>
+                    <button name="ItTicketing_Request" type="object" class="oe_stat_button" string="IT Ticket" icon="fa-fa-file-o">
                     </button>
                 </div>
+
+                
             </field>
         </record>
 
         <record id="employee_history_form" model="ir.ui.view">
-            <field name="name">History</field>
-            <field name="model">employee.history</field>
-            <field name="arch" type="xml">
-                <form create="0" edit="0" delete="0">
-                    <header>
-                        <button name="GetPrint" string="Print" type="object" class="oe_highlight"/>
-                    </header>
-                    <separator string="Employee Transfer History"/>
-                    <field name="employee_transfer">
-                        <tree create="0" edit="0" delete="0">
-                            <field name="name"/>
-                            <field name="date"/>
-                            <field name="designation"/>
-                            <field name="from_campus"/>
-                            <field name="to_campus"/>
-                            <field name="work_location"/>
-                            <field name="reason"/>
-                            <field name="state"/>
-                        </tree>
-                    </field>
-                    <separator string="Employee Complaints Raise History"/>
-                    <field name="emp_complaints">
-                        <tree create="0" edit="0" delete="0">
-                            <field name="name"/>
-                            <field name="dep"/>
-                            <field name="issue_date"/>
-                            <field name="campus_name"/>
-                            <field name="issue_of_dep"/>
-                            <field name="description"/>
-                            <field name="state"/>
-                        </tree>
-                    </field>
-                    <separator string="Advance Salary History"/>
-                    <field name="emp_advance_salary">
-                        <tree create="0" edit="0" delete="0">
-                            <field name="sequence"/>
-                            <field name="department"/>
-                            <field name="requested_date"/>
-                            <field name="confirm_date"/>
-                            <field name="name"/>
-                            <field name="designation"/>
-                            <field name="requested_amount"/>
-                            <field name="salary_deduction"/>
-                            <field name="state"/>
-                        </tree>
-                    </field>
+        	<field name="name">History</field>
+        	<field name="model">employee.history</field>
+        	<field name="arch" type="xml">
+        		<form>
+        			<separator string="Employee Transfer History"/>
+        			<field name="employee_transfer">
+        				<tree create="0" edit="0" delete="0">
+        					<field name="name"/>
+        					<field name="date"/>
+        					<field name="designation"/>
+        					<field name="from_campus"/>
+        					<field name="to_campus"/>
+        					<field name="work_location"/>
+        					<field name="reason"/>
+        				</tree>
+        			</field>
 
-                    <separator string="Employee Material Request History"/>
-                    <field name="emp_materialinfo">
-                        <tree create="0" edit="0" delete="0">
-                            <field name="name"/>
-                            <field name="school_id"/>
-                            <field name="technical_team"/>
-                            <field name="location_id"/>
-                            <field name="transfer_date"/>
-                            <field name="condition"/>
-                            <field name="product"/>
-                            <field name="quantity"/>
-                            <field name="state"/>
-                        </tree>
-                    </field>
-                </form>
-            </field>
+        			<separator string="Employee Complaints History"/>
+        		</form>
+        	</field>
         </record>
 
-        <report
-            id="employee_history"
-            model="employee.history"
-            string="Employee History"
-            report_type="qweb-html"
-            name="bi_hr.employee_history_report"
-            file="bi_hr.employee_history_report"
-            menu="True"
-            />
-
-        <template id="employee_history_report">
-            <t t-call="report.html_container">
-                <t t-call="report.external_layout">
-                    <div class="page">
-                        <h2><center>Employee Transfer History</center></h2>
-                        <table border="1" class="table table-condesed table-bordered" >
-                            <tr>
-                                <td class="text-center"><strong>Name</strong></td>
-                                <td class="text-center"><strong>Date</strong></td>
-                                <td class="text-center"><strong>Designation</strong></td>
-                                <td class="text-center"><strong>From Campus</strong></td>
-                                <td class="text-center"><strong>To Campus</strong></td>
-                                <td class="text-center"><strong>Work Location</strong></td>
-                                <td class="text-center"><strong>Purpose Of Change</strong></td>
-                                <td class="text-center"><strong>Status</strong></td>
-                            </tr>
-                            <t t-foreach="transfer" t-as="o">
-                                <tr>
-                                    <td class="text-center"><span t-esc="transfer[o][0]"/></td>
-                                    <td class="text-center"><span t-esc="transfer[o][1]"/></td>
-                                    <td class="text-center"><span t-esc="transfer[o][2]"/></td>
-                                    <td class="text-center"><span t-esc="transfer[o][3]"/></td>
-                                    <td class="text-center"><span t-esc="transfer[o][4]"/></td>
-                                    <td class="text-center"><span t-esc="transfer[o][5]"/></td>
-                                    <td class="text-center"><span t-esc="transfer[o][6]"/></td>
-                                    <td class="text-center"><span t-esc="transfer[o][7]"/></td>
-                                </tr>
-                            </t>
-                        </table>
-
-                        <h2><center>Employee Complaints Raise History</center></h2>
-                        <table border="1" class="table table-condesed table-bordered" >
-                            <tr>
-                                <td class="text-center"><strong>Name</strong></td>
-                                <td class="text-center"><strong>Department</strong></td>
-                                <td class="text-center"><strong>Issue Date</strong></td>
-                                <td class="text-center"><strong>Campus Name</strong></td>
-                                <td class="text-center"><strong>Issu of Department</strong></td>
-                                <td class="text-center"><strong>Description</strong></td>
-                                <td class="text-center"><strong>Status</strong></td>
-                            </tr>
-                            <t t-foreach="Complaints" t-as="o">
-                                <tr>
-                                    <td class="text-center"><span t-esc="Complaints[o][0]"/></td>
-                                    <td class="text-center"><span t-esc="Complaints[o][1]"/></td>
-                                    <td class="text-center"><span t-esc="Complaints[o][2]"/></td>
-                                    <td class="text-center"><span t-esc="Complaints[o][3]"/></td>
-                                    <td class="text-center"><span t-esc="Complaints[o][4]"/></td>
-                                    <td class="text-center"><span t-esc="Complaints[o][5]"/></td>
-                                    <td class="text-center"><span t-esc="Complaints[o][6]"/></td>
-                                </tr>
-                            </t>
-                        </table>
-                        <h2><center>Advance Salary History</center></h2>
-                        <table border="1" class="table table-condesed table-bordered" >
-                            <tr>
-                                <td class="text-center"><strong>Sequence</strong></td>
-                                <td class="text-center"><strong>Department</strong></td>
-                                <td class="text-center"><strong>Requested Date</strong></td>
-                                <td class="text-center"><strong>Confirm Date</strong></td>
-                                <td class="text-center"><strong>Name</strong></td>
-                                <td class="text-center"><strong>Designation</strong></td>
-                                <td class="text-center"><strong>Amount</strong></td>
-                                <td class="text-center"><strong>Installment</strong></td>
-                                <td class="text-center"><strong>Status</strong></td>
-                            </tr>
-                            <t t-foreach="advance" t-as="o">
-                                <tr>
-                                    <td class="text-center"><span t-esc="advance[o][0]"/></td>
-                                    <td class="text-center"><span t-esc="advance[o][1]"/></td>
-                                    <td class="text-center"><span t-esc="advance[o][2]"/></td>
-                                    <td class="text-center"><span t-esc="advance[o][3]"/></td>
-                                    <td class="text-center"><span t-esc="advance[o][4]"/></td>
-                                    <td class="text-center"><span t-esc="advance[o][5]"/></td>
-                                    <td class="text-center"><span t-esc="advance[o][6]"/></td>
-                                    <td class="text-center"><span t-esc="advance[o][7]"/></td>
-                                    <td class="text-center"><span t-esc="advance[o][8]"/></td>
-                                </tr>
-                            </t>
-                        </table>
-
-                        <h2><center>Employee Material Request History</center></h2>
-                        <table border="1" class="table table-condesed table-bordered" >
-                            <tr>
-                                <td class="text-center"><strong>Name</strong></td>
-                                <td class="text-center"><strong>Campus Name</strong></td>
-                                <td class="text-center"><strong>Technical Team</strong></td>
-                                <td class="text-center"><strong>Location</strong></td>
-                                <td class="text-center"><strong>Transfer Date</strong></td>
-                                <td class="text-center"><strong>Condition</strong></td>
-                                <td class="text-center"><strong>Product</strong></td>
-                                <td class="text-center"><strong>Quantity</strong></td>
-                                <td class="text-center"><strong>Status</strong></td>
-                            </tr>
-                            <t t-foreach="material" t-as="o">
-                                <tr>
-                                    <td class="text-center"><span t-esc="material[o][0]"/></td>
-                                    <td class="text-center"><span t-esc="material[o][1]"/></td>
-                                    <td class="text-center"><span t-esc="material[o][2]"/></td>
-                                    <td class="text-center"><span t-esc="material[o][3]"/></td>
-                                    <td class="text-center"><span t-esc="material[o][4]"/></td>
-                                    <td class="text-center"><span t-esc="material[o][5]"/></td>
-                                    <td class="text-center"><span t-esc="material[o][6]"/></td>
-                                    <td class="text-center"><span t-esc="material[o][7]"/></td>
-                                    <td class="text-center"><span t-esc="material[o][8]"/></td>
-                                </tr>
-                            </t>
-                        </table>
-                    </div>
-                </t>
-            </t>
-        </template>
-    </data>
+	</data>
 </odoo>

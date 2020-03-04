@@ -1,0 +1,208 @@
+<odoo>
+    <data>
+      <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="emp_appraisal_tree">
+              <field name="name">Emp Appraisal Tree</field>
+              <field name="model">hr.emp_appraisal</field>
+              <field name="arch" type="xml">
+                  <tree>
+                      <field name="name"/>
+                      <field name="mobile_number"/>
+                      <field name="email"/>
+                      <field name="designation"/>
+                      <field name="campus"/>
+                      <field name="requested_date"/>
+                      <field name="appraisal_deadline"/>
+                      <field name="state"/>
+                  </tree>
+              </field>
+        </record>
+
+        <record model="ir.ui.view" id="emp_appraisal_from">
+            <field name="name">Emp Appraisal Form</field>
+            <field name="model">hr.emp_appraisal</field>
+            <field name="arch" type="xml">
+                <form>
+                  <header>
+                    <button name="confirm_action" type="object" string="Confirm" states="draft" class="oe_highlight"/>
+
+                    <button name="send_to_hr" type="object" string="Send To Hr" states="confirm" class="oe_highlight"/>
+
+                    <button name="hr_approve_action" type="object" string="Send To CEO" states="send_to_hr" class="oe_highlight" groups="emp_appraisal.group_appraisal_manager"/>
+
+                    <button name="ceo_approve_action" type="object" string="Approve" states="send_to_ceo" class="oe_highlight" groups="emp_appraisal.group_appraisal_amm_ceo"/>
+
+                    <button name="rejection_action" type="object" string="Reject" states="send_to_ceo" class="oe_highlight" groups="emp_appraisal.group_appraisal_amm_ceo"/>
+
+                    <field name="state" readonly="1" statusbar_visible=" draft, confirm,  send_to_hr, send_to_ceo, approved, reject" widget="statusbar"/>
+                  </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" widget="selection"/>
+                                <field name="mobile_number"/>
+                                <field name="email"/>
+                                <field name="joining_date"/>
+                                <field name="salary"/>
+                                <field name="average"/>
+                              </group>
+                              <group>
+                                  <field name="campus"/>
+                                  <field name="department"/>
+                                  <field name="designation"/>
+                                  <field name="requested_date"/>
+                                  <field name="appraisal_deadline"/>
+                                  <field name="hike"/>
+                              </group>
+                          </group>
+                          <group groups="emp_appraisal.group_appraisal_manager,emp_appraisal.group_appraisal_amm_ceo">
+                            <group string="Approach to Work">
+                              <field name="sys_process"/>
+                              <field name="follow_instructions"/>
+                              <field name="adaptable_flexible"/>
+                              <field name="ability_plan"/>
+                            </group>
+                            <group string="Technical Skills">
+                              <field name="job_knowledge"/>
+                              <field name="handle_work"/>
+                              <field name="learn_skill"/>
+                            </group>
+
+                            <group string="Quality of Work">
+                              <field name="accuracy"/>
+                              <field name="reliability"/>
+                              <field name="client_satisfaction"/>
+                            </group>
+                            <group string="Handling Targets">
+                              <field name="work_competion_on_time"/>
+                              <field name="ability_to_work_under_presure"/>
+                              <field name="handling_portfolio"/>
+                            </group>
+
+                            <group string="Interpersonal Skills">
+                              <field name="relationship_co_workers"/>
+                              <field name="problem_solving"/>
+                              <field name="decision"/>
+                              <field name="time_management"/>
+                            </group>
+                            <group string="Communication Skills">
+                              <field name="oral_written_ex"/>
+                              <field name="sharing_knowledge"/>
+                            </group>
+
+                            <group string="Development">
+                              <field name="seeks_td"/>
+                              <field name="open_ideas"/>
+                            </group>
+                            <group string="Personality">
+                              <field name="enthusiastic"/>
+                              <field name="trustworthy"/>
+                            </group>
+
+                            <group string="Code of Conduct">
+                              <field name="work_place_ettiquttes"/>
+                              <field name="punctuality"/>
+                              <field name="descipline"/>
+                              <field name="attendance"/>
+                            </group>
+                            <group string="Leadership">
+                              <field name="team_work"/>
+                              <field name="team_building"/>
+                              <field name="stratege_direction"/>
+                              <field name="participation_hr_act"/>
+                            </group>
+                          </group>
+                          <button type="object" name="get_average" string="Get Average" class="oe_highlight" groups="emp_appraisal.group_appraisal_manager,emp_appraisal.group_appraisal_amm_ceo"/>
+                      </sheet>
+                  </form>
+              </field>
+          </record>
+
+      <!-- actions opening views on models -->
+      
+        <record model="ir.actions.act_window" id="emp_appraisal_action_window">
+            <field name="name">Appraisal</field>
+            <field name="res_model">hr.emp_appraisal</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('name.user_id','=',uid)]</field>      
+        </record>
+
+        <record model="ir.actions.act_window" id="emp_appraisal_approve_action_window">
+            <field name="name">Appraisal</field>
+            <field name="res_model">hr.emp_appraisal</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="domain">[('state','in', ('send_to_hr','send_to_ceo','approved'))]</field> -->
+            <field name="domain">[('state','in', ('send_to_hr','send_to_ceo','approved')),('name.line_manager_id.user_id','=',uid)]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="emp_appraisal_approve_ceo_action_window">
+            <field name="name">Appraisal</field>
+            <field name="res_model">hr.emp_appraisal</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="domain">[('state','in', ('send_to_hr','send_to_ceo','approved'))]</field> -->
+            <field name="domain">[('state','in', ('send_to_ceo','approved'))]</field>
+        </record>
+
+
+
+        <menuitem name="Appraisal" 
+                  id="emp_appraisal_menu" 
+                  parent="bi_hr.hr_requests_menu_main"
+                  sequence="1"
+                  action="emp_appraisal_action_window"
+                  />
+
+
+        <menuitem name="Hr Appraisal Approve"
+                  id="emp_appraisal_approve_menu"
+                  parent ="bi_hr.hr_approve_menu_main"
+                  sequence="1"
+                  action="emp_appraisal_approve_action_window"
+                  groups="emp_appraisal.group_appraisal_manager"
+                  />
+                  
+        <menuitem name="Ceo Appraisal Approve"
+                  id="emp_appraisal_approve_menu_ceo"
+                  parent ="bi_hr.hr_approve_menu_main"
+                  sequence="1"
+                  action="emp_appraisal_approve_ceo_action_window"
+                  groups="emp_appraisal.group_appraisal_amm_ceo"
+                  />
+
+
+
+      
+
+      <!-- server action to the one above -->
+      <!--
+      <record model="ir.actions.server" id="emp_appraisal.action_server">
+        <field name="name">emp_appraisal server</field>
+        <field name="model_id" ref="model_emp_appraisal_emp_appraisal"/>
+        <field name="code">
+          action = {
+            "type": "ir.actions.act_window",
+            "view_mode": "tree,form",
+            "res_model": self._name,
+          }
+        </field>
+      </record>
+      -->
+
+      <!-- Top menu item -->
+      <!--
+      <menuitem name="emp_appraisal" id="emp_appraisal.menu_root"/>
+      -->
+      <!-- menu categories -->
+      <!--
+      <menuitem name="Menu 1" id="emp_appraisal.menu_1" parent="emp_appraisal.menu_root"/>
+      <menuitem name="Menu 2" id="emp_appraisal.menu_2" parent="emp_appraisal.menu_root"/>
+      -->
+      <!-- actions -->
+      <!--
+      <menuitem name="List" id="emp_appraisal.menu_1_list" parent="emp_appraisal.menu_1"
+                action="emp_appraisal.action_window"/>
+      <menuitem name="Server to list" id="emp_appraisal" parent="emp_appraisal.menu_2"
+                action="emp_appraisal.action_server"/>
+      -->
+    </data>
+</odoo>

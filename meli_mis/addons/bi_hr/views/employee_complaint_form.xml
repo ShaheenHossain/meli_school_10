@@ -5,7 +5,7 @@
 			<field name="model">hr.employee_complaint</field>
 			<!-- <field name="domain">[('status', '=', 'draft')]</field> -->
 			<field name="arch" type="xml">
-				<tree>	
+				<tree>
 					<field name="name"/>
 					<field name="email"/>
 					<field name="phone"/>
@@ -16,13 +16,14 @@
 			</field>
 		</record>
 
+
 		<record id="empoyee_complaint_form" model="ir.ui.view">
 			<field name="name">Employee Complaint Form </field>
 			<field name="model">hr.employee_complaint</field>
 			<field name="arch" type="xml">
 				<form>
 					<header>
-						<button name="send_to_hr" type='object' string="Send To Hr"  attrs="{'invisible': ['|',('issue_of_dep', '!=', 'hr'),('state','in',('hr','in progress','solved','closed','draft'))]}" />
+						<button name="send_to_hr" type='object' string="Send To Hr"  attrs="{'invisible': ['|',('issue_of_dep', '!=', 'hr'),('state','in',('hr','in progress','solved','closed','draft'))]}"/>
 
 						<button name="send_to_it" type='object' string="Send To IT" attrs="{'invisible': ['|',('issue_of_dep', '!=', 'it'),('state','in',('in progress','it','solved','closed','draft'))]}"/>
 
@@ -38,6 +39,8 @@
 
 						<button name="cancel" string="Cancel" attrs="{'invisible':['|',('state','in',('hr','it','gravience','solved','closed','in progress'))]}"/>
 						<field name="state" widget="statusbar" statusbar_visible=" draft, confirm, it, hr, gravience, in progress, solved, cancel, closed"/>
+
+
 					</header>
 					<sheet>
 						<group>
@@ -71,34 +74,35 @@
 							</group>
 						</group>
 
-						<group string="COMPLAINT FILED AGAINST" attrs="{'invisible':[('issue_of_dep','in',('it',False))]}">
-							<group>
-								<field name="name1" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
-								<field name="dep1" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
+
+							<group string="COMPLAINT FILED AGAINST" attrs="{'invisible':[('issue_of_dep','in',('it',False))]}">
+								<group>
+									<field name="name1" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
+									<field name="dep1" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
+								</group>
+								<group>
+									
+									<field name="work_location" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
+								</group>
 							</group>
-							<group>
-								
-								<field name="work_location" attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
-							</group>
-						</group>
 							
-						<group>
-							<field name="previous_complaint" widget='radio' default='no'  attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
+							<group>
+								<field name="previous_complaint" widget='radio' default='no'  attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
 
-							<field name="yes_action" attrs="{'invisible':[('previous_complaint','!=','yes')]}"/>
-							<field name="yes_action2" attrs="{'invisible':[('previous_complaint','!=','yes')]}"/>
+								<field name="yes_action" attrs="{'invisible':[('previous_complaint','!=','yes')]}"/>
+								<field name="yes_action2" attrs="{'invisible':[('previous_complaint','!=','yes')]}"/>
+							
+								<field name="complaint_discuss" widget='radio'  attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
 						
-							<field name="complaint_discuss" widget='radio'  attrs="{'readonly':[('state','in',('hr','it','gravience','solved','closed','cancel','in progress'))],'invisible':[('issue_of_dep','in',('it',False))]}"/>
-					
-							<field name="discuss_action1" attrs="{'invisible':[('complaint_discuss','!=','yes')]}"/>
+								<field name="discuss_action1" attrs="{'invisible':[('complaint_discuss','!=','yes')]}"/>
 
-							<group>
-								<field name="description" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<group>
+									<field name="description" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+								</group>
+								<group>
+									<field name="remarks" attrs="{'invisible':[('state','in',('draft','confirm','hr','it','gravience'))],'readonly':[('state','in',('solved','closed'))],'required':[('state','in',('in progress'))]}"/>
+								</group>
 							</group>
-							<group>
-								<field name="remarks" attrs="{'invisible':[('state','in',('draft','confirm','hr','it','gravience'))],'readonly':[('state','in',('solved','closed'))],'required':[('state','in',('in progress'))]}"/>
-							</group>
-						</group>
 					</sheet>
 				</form>
 			</field>
@@ -109,7 +113,7 @@
 		<record id="employee_complaint_action" model="ir.actions.act_window">
 			<field name="name">Employee Complaint Action</field>
 			<field name="res_model">hr.employee_complaint</field>
-			<!-- <field name="domain">[('name.user_id','=',uid),]</field> -->
+			<field name="domain">[('name.user_id','=',uid),]</field>
 			<field name="view_mode">tree,form</field>
 		</record>
 
@@ -138,6 +142,7 @@
             id="hr_employee_menu_main111"
             name="Complaint Form"
             parent="hr.menu_hr_root"
+
             />
             <!--  groups="bi_hr.group_help_desk_employee12,bi_hr.group_help_desk_employee_manager13,bi_hr.group_help_desk_employee_it_manager,bi_hr.group_help_desk_employee_ceo" -->
 

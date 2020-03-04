@@ -1,0 +1,112 @@
+<odoo>
+	<data>
+		 <record id="hr_employee_inherit_employee_deciplane" model="ir.ui.view">
+            <field name = "name">Employee Deciplane</field>
+            <field name = "model">hr.employee</field>
+            <field name = "inherit_id" ref="hr.view_employee_form"/>
+            <field name = "arch" type="xml">
+                
+                    <div class="oe_button_box" position="inside">
+                        <button name="hr_employee_deciplane1" type="object" class="oe_stat_button" icon="fa-file-pdf-o" string="Employee Deciplane">
+                             <!-- <field string="Employee Deciplane" name="document_count" widget="statinfo"/> -->
+                        </button>
+                    </div>
+               
+                
+    
+            </field>
+        </record>
+
+<!-- 
+        <record id="hr_employee_inherit_employee_deciplane" model="ir.ui.view">
+        <field name="name">Employee Deciplane</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_kanban_details']/ul" position="inside">
+                <li t-if="record.task_count.raw_value" groups="bi_employee_task.group_employee_task"><span>Tasks: <field name="task_count" string="Tasks"/></span></li>
+            </xpath>
+        </field>
+    </record> -->
+
+
+
+    <record id="hr_employee_decipalne_form_view" model="ir.ui.view">
+            <field name="name"> Employee FormView</field>
+            <field name="model">hr.employee.deciplane</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="confirmation_for_diciplain" string="Confirm" type="object"  attrs="{'invisible':[('status','=','done')]}"
+                            />
+                        <field name="status" status_visible="draft,done" widget="statusbar" readonly="1"/> 
+                    </header>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="job_title"/>
+                            <field name="campus"/>
+                        </group>
+                        <group>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="department"/>
+
+                        </group>
+                    </group>
+                    <separator string="Employee Diciplain"/>
+                    <field name="diciplane">
+                        <tree string="Employee Deciplane" editable="bottom">
+                        	<field name="sequence"/>
+                            <field name="diciplane_title"/>
+                            <field name="description"/>
+                            <field name="date"/>
+                  
+                        </tree>
+                    </field>
+                    
+                </form>
+            </field>
+        </record>
+        <!-- <record id="hr_daily_report_search_view" model="ir.ui.view">
+            <field name="name"> Daily Report Search View</field>
+            <field name="model">hr.dailyreport</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <search string="name_search">
+                    <field name="name" string="Name" filter_domain="[('name','ilike',self)]"/>
+                </search>
+            </field>
+        </record> -->
+
+        <record id="hr_employee_diciplane_tree" model="ir.ui.view">
+            <field name="name">Employee Deciplane Tree</field>
+            <field name="model">hr.employee.deciplane</field>
+            <field name="context">{"search_default_name":1}</field>
+           <!--  <field name="domain">[('name.user_id','=',uid),]</field> -->
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree>
+                	<field name="sequence"/>
+                    <field name="name"/>
+                    <field name="job_title"/>
+                    <field name="department"/>
+                    <field name="campus"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="deciplane_id" model="ir.sequence">
+                <field name="name">Deciplane_id</field>
+                <field name="code">employee_id_generated</field>
+               
+                <field name="padding">1</field>
+                <field name="company_id" eval="False"/>
+            </record>
+
+
+
+
+	</data>
+</odoo>

@@ -1,0 +1,299 @@
+
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.content-results{
+		position: absolute;
+  		top: 460px;
+ 		left: 400px;
+ 		right:400px;
+ 		font-size: 20px;
+ 		font-style: calibri;
+ 		line-height: 200%;
+}
+.semester-results{
+		position: absolute;
+  		top: 400px;
+ 		left: 90px;
+ 		right:90px;
+ 		font-size: 22px;
+ 		font-style: calibri;
+ 		/*line-height: 200%;*/
+		}
+.line-weight{
+	line-height: 250%;
+}
+
+.grade-line{
+	line-height: 250%;
+	color: #37336F;
+	
+    
+}
+.logo{
+		position: absolute;
+		margin-top: 80px;
+		margin-left:260px;
+ 		max-width: 250px;
+ 		max-height: 100px
+
+}
+.logo-content{
+		position: absolute;
+		margin-top: 150px;
+		margin-left:150px;
+		font-size: 30px;
+		color:  #37336F;
+
+}
+.content-logo{
+		position: absolute;
+		margin-top: 190px;
+		margin-left:250px;
+		font-size: 26px;
+		color:  #F58429;
+
+}
+.result-content{
+	 	
+        font-size: 16px;
+        position: absolute;
+		margin-top: 240px;
+		margin-left:5px;
+		
+		}
+table.s1{ 
+      border-spacing: 5px;   
+      border-collapse: separate;
+     /* border: 1px solid black;*/ 
+      } 
+      tr.s2{ 
+      background-color: #BDBEC0; 
+      color: black; 
+      } 
+      td.s3{ 
+      width: 150px; 
+      text-align: center; 
+      border: 0px solid black;
+      padding: 5px;
+      background-color: #D3D4D6;
+      }
+      td.s4{ 
+      width: 150px; 
+      border: 0px solid black; 
+      padding: 5px;
+
+      }
+     tr.marks{
+     	background-color: #D3D4D6; 
+      	color: white;
+
+     }
+     td.main{ 
+      width: 150px; 
+      text-align: center; 
+      border: 0px solid black;
+      padding: 5px;
+      background-color: #BDBEC0;
+      }
+      td.data{ 
+      width: 150px; 
+      text-align: center; 
+      border: 0px solid black;
+      padding: 5px;
+      background-color: #E7E8E9;
+      }
+
+
+
+/*#s1,#s3{
+	  border: 2px solid #989a9c;
+	  border-spacing: 5px 5px 5px 5px;
+	  text-align: center;
+	  background-color: #989a9c;
+}
+
+#s2{
+  
+  text-align: center;
+  background-color: #f5f7f5;
+
+
+}*/
+
+
+
+/*.t1.tr:nth-child(even) {
+  background-color: #989a9c;
+}
+*/
+
+
+.director-sign{
+	  margin: 1110px 60px 5px 0px;
+    position: absolute;
+    font-size: 20;
+    font-weight: 400;
+    color: #F58429;
+		  	
+
+}
+.controller-of-examinator{
+				margin: 1110px 0px 5px 550px;
+     		position: absolute;
+     		font-size: 20;
+      	font-weight: 400;
+      	color: #F58429;s
+
+}
+.footer-logo{
+			margin: 1150px 0px 0px 0px;
+     	position: absolute;
+
+}
+
+.certificate-image img  {
+            width:130px;
+            height:159px;
+            margin-left: 177px;
+            position: absolute;
+		  	    top: 153px;
+		  	
+
+            }
+
+.student-name{
+			margin-left: 230px;
+      position: absolute;
+		  top: 380px;
+	 		font-style: calibri;
+
+ 		
+}
+.father-name{
+			margin-left: 253px;
+      position: absolute;
+		  top: 408px;
+	 		font-style: calibri;
+
+}
+.student-code{
+			margin-left: 311px;
+      position: absolute;
+		  top: 440px;
+		  font-size:20px
+
+	 		
+	 		
+}
+
+.total-marks{
+			margin-left: 181px;
+      position: absolute;
+		  top: 647px;
+		  font-size:18px
+
+}
+.grade{
+      margin-left: 165px;
+      position: absolute;
+      top: 675px;
+   
+
+}
+
+.date-certificate{
+			margin-left: 270px;
+      position: absolute;
+		  top: 725px;
+		  font-size:20px
+
+}
+.persian-name{
+        margin-left: 680px;
+        position: absolute;
+        top: 360px;
+        font-style: calibri;
+
+}
+.persian-father-name{
+        margin-left: 680px;
+        position: absolute;
+        top: 390px;
+        min-width: 15%;
+        font-style: calibri;
+       
+
+}
+.persian-number{
+        margin-left:635px;
+        position: absolute;
+        top: 420px;
+}
+.for-persian{
+         margin-left:700px;
+        position: absolute;
+        top: 591px;
+        font-size:18px
+
+
+}
+.persian-date{
+  margin-left:565px;
+        position: absolute;
+        top: 644px;
+
+}
+.grade1{
+      margin-left: 549px;
+      position: absolute;
+      top: 591px;
+   
+
+}
+
+
+.persian-name2{
+        margin-left: 1080px;
+        position: absolute;
+        top: 350px;
+        font-style: calibri;
+
+}
+.persian-father-name2{
+        margin-left: 1080px;
+        position: absolute;
+        top: 390px;
+        min-width: 15%;
+        font-style: calibri;
+       
+
+}
+.persian-number2{
+        margin-left:1150px;
+        position: absolute;
+        top: 420px;
+}
+.for-persian2{
+         margin-left:1185px;
+        position: absolute;
+        top: 587px;
+        font-size:18px
+
+
+}
+.persian-date2{
+  margin-left:926px;
+        position: absolute;
+        top: 615px;
+
+}
+.grade2{
+      margin-left: 1000px;
+      position: absolute;
+      top: 587px;
+   
+
+}

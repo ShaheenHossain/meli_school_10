@@ -34,8 +34,9 @@ class StudentStudent(models.Model):
 	_table = "student_student"
 	_description = 'Student Information'
 	_order = "roll_no"
-	_inherit = ['ir.needaction_mixin']
+	_inherit = ["mail.thread", "ir.needaction_mixin"]
 
+	
 
 	api.constrains('email')
 	def email_validating(self):
@@ -64,6 +65,7 @@ class StudentStudent(models.Model):
 			
 			else:
 				raise UserError(_("Invlid  Your Tazkira Number Please Enter Numbers only"))
+
 
 	
 	# @api.constrains('student_name')
@@ -178,59 +180,7 @@ class StudentStudent(models.Model):
 				if age_calc > 0.0:
 					rec.age = age_calc
 
-	@api.constrains('date_of_birth')
-	def check_age(self):
-		'''Method to check age should be greater than 5'''
-		current_dt = datetime.today()
-		if self.date_of_birth:
-			start = datetime.strptime(self.date_of_birth,
-									  DEFAULT_SERVER_DATE_FORMAT)
-			age_calc = ((current_dt - start).days / 365)
-			# Check if age less than 5 years
-			if age_calc < 5:
-				raise ValidationError(_('''Age of student should be greater
-				than 5 years!'''))
-
-	# @api.constrains('nid')
-	# def check_nid(self):
-	# 	'''Method to check age should be greater than 5'''
-	# 	num = self.search([('nid','=',self.nid)])
-	# 	raise UserError(str(self.nid))
-	# 	nidnum = self.env['student.student'].search([('nid','=',self.nid)]).mapped('nid')
-	# 	raise UserError(str(nidnum))
-
-	# 	if self.nid == nidnum:
-	# 		raise ValidationError(_('''xcvbhnm,'''))	
-	# 	else:
-	# 		raise UserError(str("sdfghjk"))				
-
-	# @api.multi
-	# @api.depends('student_code')	
-	# def _generate_qr_code(self):
-	# 	qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=20, border=4)
-	# 	if self.student_code:
-	# 		crnt_time = datetime.now().strftime("%Y-%m-%d %H:%M")	
-	# 		name = self.student_code + '_ code.png'
-	# 		qr.add_data(self.student_code+str(crnt_time))
-	# 		qr.make(fit=True)
-	# 		img = qr.make_image()
-	# 		buffer = cStringIO.StringIO()
-	# 		img.save(buffer, format="PNG")
-	# 		qrcode_img = base64.b64encode(buffer.getvalue())
-	# 		self.qr_code=qrcode_img
-			# c= open("/home/bassam5/error.txt", "a")
-			# c.write(str(qrcode_img+'------------'+self.student_code+'///////////'))
-			# c.close()
-
-	# @api.onchange('program_id')
-	# def filtering_shift(self):
-	# 	fe=self.env['standard.medium'].search([])
-	# 	for x in fe:
-	# 		x.program.name,"6666666666666666666666666666666"
-			# if self.program_id.name==x.program.name:
-			# 	if 
-			# else:
-			# 	pass
+	
 
 
 
@@ -241,6 +191,7 @@ class StudentStudent(models.Model):
 
 	@api.model
 	def create(self, vals):
+		print "@@@@@@@@@@@@@@@@@@@@@@@@@@"
 		'''Method to create user when student is created'''
 		ir_sequence = self.env['ir.sequence']
 		student_app = ir_sequence.next_by_code('student.student')
@@ -474,7 +425,8 @@ class StudentStudent(models.Model):
 							  ('cancel', 'Cancel'),
 							  ('alumni', 'Alumni'),
 							  ('followup', 'Follow Up'),
-							  ('extend','Course Extended')],
+							  ('extend','Course Extended'),
+							  ('block','Blocklist')],
 							 'State', readonly=True,default="draft")
 	history_ids = fields.One2many('student.history', 'student_id', 'History')
 	certificate_ids = fields.One2many('student.certificate', 'student_id',
@@ -522,11 +474,11 @@ class StudentStudent(models.Model):
 	occupation = fields.Char("Occupation")
 
 
-	city=fields.Char('Campus Name',required=True)
+	city=fields.Char('Campus Name')
 	street=fields.Char('Street')
 	zip=fields.Char('District')
 	street2=fields.Char('Street2')
-	state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict',required=True)
+	state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict')
 	country_id = fields.Many2one('res.country', string='Country', ondelete='restrict',default=lambda self: self.env['res.country'].browse([(3)]))
 	currency_id = fields.Many2one('res.currency', string='Currency',default=lambda self: self.env.user.company_id.currency_id,readonly=True)
 	company_id = fields.Many2one('res.company', string='Company',default=lambda self: self.env.user.company_id)
@@ -574,6 +526,21 @@ class StudentStudent(models.Model):
  		for x in rec:
  			if x.program.name==self.program_id.name:
  				list_names.append(x.name)
+
+
+ 		# self.write({
+			# 'school_id':self.env.user.campus.id,
+			# })
+
+
+ 	# @api.model
+ 	# def create(self,vals):
+ 	# 	res=super(StudentStudent,self).create(vals)
+ 	# 	print "5555555555555555555555555555555555"
+ 	# # 	student = self.env.ref('school_ems.students_happy_birthday_wishes')
+		# # self.env['mail.template'].browse(student.id).send_mail(x.id, force_send=True)
+		# return res
+
 
 
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<odoo>
+        <record id="view_school_teacher_form_inherited_add_exminer_duties" model="ir.ui.view">
+            <field name="name">view.school.teacher.form.inherited.add.exminer.duties</field>
+            <field name="model">school.teacher</field>
+            <field name="inherit_id" ref="school.view_school_teacher_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+				<page string="Duties" attrs="{'invisible': [('examiner', '=', False)]}">
+					<group>
+						<group>
+					<field name="examiner_program_id" placeholder="Program"
+								options="{'no_create_edit': True,'no_create': True,'no_open': True}"
+								attrs="{'required': [('examiner', '=', True)]}"/>
+					<field name="examiner_is_shift" invisible="1"/>
+					
+					
+					<field name="examiner_medium_id" placeholder="Shift" attrs="{'invisible': [('examiner_is_shift', '=', 'no')], 'required': [('examiner_is_shift', '=', 'yes')]}"
+								options="{'no_create_edit': True,'no_create': True,'no_open': True}"
+								/>
+								<field name="start_time" attrs="{'required': [('examiner', '=', True)]}"/>
+					</group>
+					<group>
+					<field name="examiner_semester_id" attrs="{'required': [('examiner', '=', True)]}"
+								domain="[('standard_id','=',examiner_program_id)]"
+								options="{'no_create_edit': True,'no_create': True,'no_open': True}"
+								 />
+					<field name="examiner_room_no" attrs="{'required': [('examiner', '=', True)]}"
+					options="{'no_create_edit':True, 'no_create':True, 'no_open':True}"/>
+					<field name="end_time" attrs="{'required': [('examiner', '=', True)]}"/>
+					</group>
+					</group>
+				</page>
+                </notebook>
+            </field>
+        </record>
+        </odoo>
+        

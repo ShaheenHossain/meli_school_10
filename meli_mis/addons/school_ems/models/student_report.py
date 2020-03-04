@@ -9,13 +9,15 @@ class StudentReport(models.TransientModel):
 
 	campus=fields.Many2one('school.school',string="Campus",required=True)
 	program=fields.Many2one('standard.standard',string="Program",required=True)
-	level_id=fields.Many2one('standard.semester',string="Course Level",required=True)
+	level_id=fields.Many2one('standard.semester',string="Course Level")
 	s_date =fields.Date(string="Start Date")
 	e_date = fields.Date(string="End Date")
 	types=fields.Selection([('general','General'),('paid','Paid'),('unpaid','UnPaid')],string='Report-Type')
 	report_id =fields.One2many('student.report.addmission','r_id')
 	followup=fields.Integer(string="Followup", compute="calculate_students_list")
 	converted=fields.Integer(string="Converted", compute="calculate_students_list")
+	terminated=fields.Integer(string="Terminated", compute="calculate_students_list")
+	total=fields.Integer(string="Total", compute="calculate_students_list")
 
 
 	
@@ -23,21 +25,25 @@ class StudentReport(models.TransientModel):
 	@api.depends('types')
 	def calculate_students_list(self):
 
-		print self.converted,"11111111111111111111111111111111"
-
 		rec=self.env['student.student'].search([])
 		
 		if self.types=='general':
 			follow_count=0
 			paid_count=0
+			terminated=0
 			for x in rec:
-				if self.campus.name == x.school_id.name and self.level_id.name == x.semester_id.name and x.admission_date>self.s_date and x.admission_date<=self.e_date:
-					if x.state=='done':
+				if self.campus.name == x.school_id.name and self.level_id.name in (x.semester_id.name,False)  and x.admission_date>self.s_date and x.admission_date<=self.e_date:
+					if x.state in ('done','invoiced'):
 						paid_count+=1
 					if x.state in('followup','draft'):
 						follow_count+=1
+					if x.state=='terminate':
+						terminated+=1
+
 			self.followup=follow_count
 			self.converted=paid_count
+			self.terminated=terminated
+			self.total=int(self.followup)+int(self.converted)+int(self.terminated)
 
 		if self.types=='paid':
 			self.followup=False
@@ -45,26 +51,32 @@ class StudentReport(models.TransientModel):
 			follow_count1=0
 			paid_count1=0
 			for x in rec:
-				if self.campus.name == x.school_id.name and self.level_id.name == x.semester_id.name and x.admission_date>self.s_date and x.admission_date<=self.e_date:
-					if x.state=='done':
+				if self.campus.name == x.school_id.name and self.level_id.name in (x.semester_id.name,False) and x.admission_date>self.s_date and x.admission_date<=self.e_date:
+					if x.state in ('done','invoiced'):
 						paid_count1+=1
 						
 			self.converted=paid_count1
+			self.total=int(self.followup)+int(self.converted)+int(self.terminated)
 
 		if self.types=='unpaid':
 			self.followup=False
 			self.converted=False
 			follow_count2=0
 			paid_count2=0
-			
+			terminated=0
 			for x in rec:
-				if self.campus.name == x.school_id.name and self.level_id.name == x.semester_id.name and x.admission_date>self.s_date and x.admission_date<=self.e_date:
+				if self.campus.name == x.school_id.name and self.level_id.name in (x.semester_id.name,False) and x.admission_date>self.s_date and x.admission_date<=self.e_date:
 					if x.state=='done':
 						paid_count2+=1
 					if x.state in('followup','draft'):
 						follow_count2+=1
+					if x.state=='terminate':
+						terminated+=1
+
 			self.followup=follow_count2
 			self.converted=paid_count2
+			self.terminated=terminated
+			self.total=int(self.followup)+int(self.converted)+int(self.terminated)
 
 			
 
@@ -84,15 +96,18 @@ class StudentReport(models.TransientModel):
 
 		
 
-	@api.onchange('types')
+	@api.onchange('types','level_id')
 	def get_students_addmission_status(self):
 		rec=self.env['student.student'].search([])
 		if self.types=='general':
 			students=[]
+			count=0
 			for x in rec:
-				if self.campus.name == x.school_id.name and self.level_id.name == x.semester_id.name and x.admission_date>self.s_date and x.admission_date<=self.e_date:
+				if self.campus.name == x.school_id.name and self.level_id.name in (x.semester_id.name,False) and x.admission_date>self.s_date and x.admission_date<=self.e_date:
+					count=count+1
 					
 					values={
+							's_no':count,
 							'application_no':x.pid,
 							'name':x.id,
 							'f_name':x.parent_id,
@@ -107,9 +122,12 @@ class StudentReport(models.TransientModel):
 			self.report_id=students
 		if self.types=='paid':
 			students=[]
+			count=0
 			for x in rec:
-				if self.campus.name == x.school_id.name and self.level_id.name == x.semester_id.name and x.admission_date>self.s_date and x.admission_date<=self.e_date and (x.state in ['done','invoiced']):
+				if self.campus.name == x.school_id.name and self.level_id.name in (x.semester_id.name,False) and x.admission_date>self.s_date and x.admission_date<=self.e_date and (x.state in ['done','invoiced']):
+					count=count+1
 					values={
+							's_no':count,
 							'application_no':x.pid,
 							'name':x.id,
 							'f_name':x.parent_id,
@@ -124,9 +142,12 @@ class StudentReport(models.TransientModel):
 			self.report_id=students
 		if self.types=='unpaid':
 			students=[]
+			count=0
 			for x in rec:
-				if self.campus.name == x.school_id.name and self.level_id.name == x.semester_id.name and x.admission_date>self.s_date and x.admission_date<=self.e_date and x.state=='draft':
+				if self.campus.name == x.school_id.name and self.level_id.name in (x.semester_id.name,False) and x.admission_date>self.s_date and x.admission_date<=self.e_date and x.state=='draft':
+					count=count+1
 					values={
+							's_no':count,
 							'application_no':x.pid,
 							'name':x.id,
 							'f_name':x.parent_id,
@@ -144,7 +165,6 @@ class StudentReport(models.TransientModel):
 	def get_student_report(self):
 		self.ensure_one()
 		active_ids = self.env.context.get('active_ids', [])
-		print self.converted,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 		datas={
 		'ids':active_ids,
 		'model': 'student.student',
@@ -162,7 +182,7 @@ class Student_Admission_Template(models.AbstractModel):
 			class_info = {}
 			for x in student_records:
 				results = []
-				if campus_id[1] == x.school_id.name and level[1] == x.semester_id.name:
+				if campus_id[1] == x.school_id.name and level[1] in (x.semester_id.name,False):
 					print "22222222222222222"
 					if x.admission_date>s_date and x.admission_date<e_date:
 					
@@ -174,7 +194,7 @@ class Student_Admission_Template(models.AbstractModel):
 			class_info = {}
 			for x in student_records:
 				results = []
-				if campus_id[1] == x.school_id.name and level[1] == x.semester_id.name:
+				if campus_id[1] == x.school_id.name and level[1] in (x.semester_id.name,False):
 					if x.admission_date>s_date and x.admission_date<e_date and (x.state in ['done','invoiced']):
 						results.extend([x.pid,x.name,x.parent_id,x.mobile,x.email,x.school_id.name,x.program_id.name,x.semester_id.name,x.state])
 					class_info[x.pid]=results
@@ -183,19 +203,19 @@ class Student_Admission_Template(models.AbstractModel):
 			class_info = {}
 			for x in student_records:
 				results = []
-				if campus_id[1] == x.school_id.name and level[1] == x.semester_id.name:
+				if campus_id[1] == x.school_id.name and level[1] in (x.semester_id.name,False):
 					if x.admission_date>s_date and x.admission_date<e_date and x.state=='draft':
 						results.extend([x.pid,x.name,x.parent_id,x.mobile,x.email,x.school_id.name,x.program_id.name,x.semester_id.name,x.state])
 					class_info[x.pid]=results
 			return class_info
 
 
-	def campus_student_details(self,campus_id,program,level,s_date,e_date,r_type,followup,converted):
+	def campus_student_details(self,campus_id,program,level,s_date,e_date,r_type,followup,converted,terminated,total):
 		rec = self.env['student.student'].search([])
 		student_details = []
 		for dts in rec:
 			if dts.school_id.name == campus_id[1] and dts.program_id.name == program[1] and  dts.semester_id.name == level[1]:
-				student_details.extend([dts.school_id.name,dts.program_id.name,dts.semester_id.name,s_date,e_date,r_type,followup,converted])
+				student_details.extend([dts.school_id.name,dts.program_id.name,dts.semester_id.name,s_date,e_date,r_type,followup,converted,terminated,total])
 		return student_details
 
 	@api.model
@@ -209,9 +229,11 @@ class Student_Admission_Template(models.AbstractModel):
 		r_type=data['form'].get('types')
 		followup=data['form'].get('followup')
 		converted=data['form'].get('converted')
-		print converted,"2222222222222222"
+		terminated=data['form'].get('terminated')
+		total=data['form'].get('total')
+		
 		get_data = self.get_all_students(campus_id,program,level,s_date,e_date,r_type)
-		student_details = self.campus_student_details(campus_id,program,level,s_date,e_date,r_type,followup,converted)
+		student_details = self.campus_student_details(campus_id,program,level,s_date,e_date,r_type,followup,converted,terminated,total)
 		docargs = {
 		'doc_model':'final.results',
 		'data': data,
@@ -224,7 +246,7 @@ class Student_Admission_Template(models.AbstractModel):
 
 class StudentAddmissionReport(models.TransientModel):
 	_name = 'student.report.addmission'
-
+	s_no =fields.Integer('S.No',readonly=True)
 	application_no = fields.Char(string='Appliation No.')
 	name = fields.Many2one('student.student',string="Student Name")
 	f_name = fields.Char(string="Father Name")

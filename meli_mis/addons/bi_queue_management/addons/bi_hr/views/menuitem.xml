@@ -1,0 +1,34 @@
+<odoo>
+	<data>
+		<!-- <menuitem
+            id="bi_hr.menu_hr_root"
+            name="IT"           
+    	    sequence="21"
+            groups="bi_hr.group_help_desk_employee_it_manager,bi_hr.group_help_desk_employee_manager13,bi_hr.group_help_desk_employee_ceo"/> -->
+
+
+       <!--  <menuitem
+            id="bi_hr.menu_complaint_box_it"
+            name="Complaint Box"           
+    	    sequence="4"
+    	    parent="help_desk_main"
+    	    action="help_desk_form_action_itmanager"
+            groups="bi_hr.group_help_desk_employee_it_manager"/>
+
+        <menuitem
+            id="bi_hr.menu_complaint_box_hr"
+            name="Complaint Box"           
+    	    sequence="2"
+    	    parent="help_desk_main"
+    	    action="help_desk_form_action_hrmanager"
+            groups="bi_hr.group_help_desk_employee_manager13"/>
+
+        <menuitem
+            id="bi_hr.menu_complaint_box_gravience"
+            name="Complaint Box"           
+    	    sequence="5"
+    	    parent="help_desk_main"
+    	    action="help_desk_form_action_gravience"
+            groups="bi_hr.group_help_desk_employee_ceo"/> -->
+    </data>
+</odoo>
