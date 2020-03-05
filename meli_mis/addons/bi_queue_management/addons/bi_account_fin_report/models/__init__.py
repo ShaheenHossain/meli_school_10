@@ -1,2 +1,0 @@
-import account_journal
-import account_report
